@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# St.School
 
-## Getting Started
+The redesigned marketing site for **St.School** — Student Tribe's career-launchpad
+program for Python Full-Stack + AI and UI/UX Design.
 
-First, run the development server:
+## Stack
+
+- [Next.js 16](https://nextjs.org) (App Router, TypeScript, Turbopack)
+- [Tailwind CSS v4](https://tailwindcss.com) for styling, with design tokens defined in `src/app/globals.css`
+- [Framer Motion](https://motion.dev) for scroll reveals, the animated hero, the curriculum timeline, and the FAQ accordion
+- [lucide-react](https://lucide.dev) for icons
+
+## Project structure
+
+- `src/data/content.ts` — single source of truth for all copy (nav, hero, stats, courses, process, testimonials, FAQs, contact info). Update copy here rather than inline in components.
+- `src/components/ui/` — shared primitives (`Container`, `Button`, `Badge`, `SectionHeading`).
+- `src/components/motion/` — animation primitives (`Reveal`, `Counter`, `Marquee`).
+- `src/components/layout/` — `Navbar` and `Footer`, rendered globally from `src/app/layout.tsx`.
+- `src/components/sections/` — homepage sections (hero, trust marquee, stats, why-us, programs preview, process, testimonials, FAQ, final CTA).
+- `src/components/courses/` — building blocks for the course detail pages (curriculum timeline, outcome list, stack chips, etc).
+- `src/app/` — routes: `/` (home), `/courses` (index), `/courses/[slug]` (Python Full-Stack + AI, UI/UX Design), `/about`, `/contact`.
+
+## Getting started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+## Notes for whoever picks this up next
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Design provenance**: the live reference sites (`studenttribe.in`, `stschool.studenttribe.in`) were not reachable from the build environment (network policy), so the palette (violet/coral/acid on near-black), typography (Space Grotesk + Inter), and layout are an original system inspired by Student Tribe's Gen-Z positioning and researched brand facts — not a pixel match. Swap tokens in `src/app/globals.css` (`@theme` block) if you have the real brand kit.
+- **Content**: course details, stats, and process copy are sourced from public research about ST School / Student Tribe (course structure, 33-seat cohorts, 95% placement track record, parent brand stats). Testimonials on the homepage are illustrative placeholders and should be swapped for real quotes before shipping.
+- **Contact form**: `/contact` is a static, client-side-only form (no backend). Wire `src/app/contact/apply-form.tsx`'s `onSubmit` to a real endpoint (API route, form service, CRM) before launch.
