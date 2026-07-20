@@ -67,6 +67,9 @@ export default async function CourseDetailPage({
 
   const otherCourse = courses.find((c) => c.slug !== course.slug) ?? null;
   const theme = COLOR_THEME[course.color];
+  // The two programs share this template, so give each a distinct reading
+  // rhythm across outcomes / curriculum / highlights — not just a color swap.
+  const isAlt = course.color === "coral";
 
   return (
     <>
@@ -149,8 +152,13 @@ export default async function CourseDetailPage({
             eyebrow="Outcomes"
             title="What you'll walk away able to do"
             description={`Every ${course.shortName} cohort is built around outcomes you can put on a resume, not a syllabus.`}
+            align={isAlt ? "center" : "left"}
           />
-          <OutcomeList outcomes={course.outcomes} color={course.color} />
+          <OutcomeList
+            outcomes={course.outcomes}
+            color={course.color}
+            variant={isAlt ? "grid" : "list"}
+          />
         </Container>
       </section>
 
@@ -165,7 +173,7 @@ export default async function CourseDetailPage({
             title="The roadmap, phase by phase"
             description={`A ${course.duration} path from first principles to a portfolio you can defend in an interview.`}
           />
-          <CurriculumTimeline curriculum={course.curriculum} color={course.color} />
+          <CurriculumTimeline curriculum={course.curriculum} color={course.color} stagger={isAlt} />
         </Container>
       </section>
 
@@ -176,7 +184,11 @@ export default async function CourseDetailPage({
             eyebrow="Why this program"
             title="Built different, on purpose"
           />
-          <HighlightGrid highlights={course.highlights} color={course.color} />
+          <HighlightGrid
+            highlights={course.highlights}
+            color={course.color}
+            variant={isAlt ? "stagger" : "grid"}
+          />
         </Container>
       </section>
 

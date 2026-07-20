@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import { Mail, Phone, MapPin, Sparkles, Globe } from "lucide-react";
+import { Mail, Phone, MapPin, Globe } from "lucide-react";
 import { Container } from "@/components/ui/container";
-import { Badge } from "@/components/ui/badge";
 import { Reveal } from "@/components/motion/reveal";
 import { site, contact, stats } from "@/data/content";
 import { ApplyForm } from "./apply-form";
@@ -25,52 +24,61 @@ export default function ContactPage() {
           <div className="absolute inset-0 bg-[linear-gradient(rgba(246,244,251,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(246,244,251,0.05)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_70%_50%_at_50%_0%,black,transparent)]" />
         </div>
 
-        <Container className="flex flex-col items-center text-center">
-          <Reveal>
-            <Badge>
-              <Sparkles className="size-3.5 text-acid" strokeWidth={2.5} />
-              {seats?.label ?? "33 seats, per cohort"}
-            </Badge>
-          </Reveal>
+        <Container>
+          <div className="grid gap-10 lg:grid-cols-[1.4fr_0.6fr] lg:items-end lg:gap-8">
+            <div>
+              <Reveal>
+                <span className="text-xs font-semibold uppercase tracking-[0.24em] text-muted-soft">
+                  Get in touch
+                </span>
+              </Reveal>
+              <Reveal delay={0.08}>
+                <h1 className="font-display mt-6 max-w-2xl text-balance text-5xl font-medium leading-[1.02] tracking-tight sm:text-7xl lg:text-[5.5rem]">
+                  Apply for a{" "}
+                  <span className="text-gradient">seat.</span>
+                </h1>
+              </Reveal>
+              <Reveal delay={0.16}>
+                <p className="mt-7 max-w-xl text-balance text-base leading-relaxed text-muted sm:text-lg">
+                  Tell us who you are and where you want to go — admissions reviews every
+                  application personally.
+                </p>
+              </Reveal>
+            </div>
 
-          <Reveal delay={0.08}>
-            <h1 className="font-display mt-8 max-w-3xl text-balance text-[2.5rem] font-medium leading-[1.08] tracking-tight sm:text-6xl">
-              Apply for a seat at{" "}
-              <span className="text-gradient">{site.name}.</span>
-            </h1>
-          </Reveal>
-
-          <Reveal delay={0.16}>
-            <p className="mt-7 max-w-2xl text-balance text-lg leading-relaxed text-muted sm:text-xl">
-              {seats?.detail ?? "Only 33 students get in per batch."} Tell us who you are and
-              where you want to go — admissions reviews every application personally.
-            </p>
-          </Reveal>
+            <Reveal delay={0.14} className="rounded-2xl border border-white/10 bg-ink-elevated/60 p-6 lg:mb-1">
+              <span className="font-display text-gradient text-4xl font-semibold sm:text-5xl">
+                {seats?.value ?? 33}
+              </span>
+              <p className="mt-2 text-sm leading-relaxed text-muted">
+                {seats?.detail ?? "Only 33 students get in per batch."}
+              </p>
+            </Reveal>
+          </div>
         </Container>
       </section>
 
       <section className="relative pb-28 sm:pb-36">
-        <Container className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-start lg:gap-8">
+        <Container className="grid gap-14 lg:grid-cols-[1.4fr_0.6fr] lg:items-start lg:gap-10">
           <Reveal delay={0.1}>
             <ApplyForm />
           </Reveal>
 
-          <Reveal delay={0.18} className="flex flex-col gap-4">
-            <div className="rounded-2xl border border-white/10 bg-ink-elevated p-6">
+          <Reveal delay={0.18} className="flex flex-col gap-10">
+            {/* Heavier weight: an editorial directory, not a card grid */}
+            <div>
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-soft">
                 Reach us directly
               </p>
-              <div className="mt-5 flex flex-col gap-4">
+              <div className="mt-5 flex flex-col divide-y divide-white/10 border-t border-white/10">
                 <a
                   href={`mailto:${contact.email}`}
-                  className="group flex items-center gap-4 rounded-xl border border-white/5 bg-ink px-4 py-3.5 transition-colors hover:border-violet/40"
+                  className="group flex items-center gap-4 py-4 transition-colors"
                 >
-                  <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-violet/15 text-violet-light">
-                    <Mail className="size-4.5" strokeWidth={2.25} />
-                  </span>
+                  <Mail className="size-4 shrink-0 text-violet-light" strokeWidth={2.25} />
                   <span className="flex flex-col">
-                    <span className="text-xs text-muted-soft">Email</span>
-                    <span className="text-sm font-medium text-paper transition-colors group-hover:text-violet-light">
+                    <span className="text-[0.65rem] uppercase tracking-[0.14em] text-muted-soft">Email</span>
+                    <span className="font-display text-base font-medium text-paper transition-colors group-hover:text-violet-light sm:text-lg">
                       {contact.email}
                     </span>
                   </span>
@@ -78,62 +86,48 @@ export default function ContactPage() {
 
                 <a
                   href={`tel:${contact.phone.replace(/\s+/g, "")}`}
-                  className="group flex items-center gap-4 rounded-xl border border-white/5 bg-ink px-4 py-3.5 transition-colors hover:border-coral/40"
+                  className="group flex items-center gap-4 py-4 transition-colors"
                 >
-                  <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-coral/15 text-coral-light">
-                    <Phone className="size-4.5" strokeWidth={2.25} />
-                  </span>
+                  <Phone className="size-4 shrink-0 text-coral-light" strokeWidth={2.25} />
                   <span className="flex flex-col">
-                    <span className="text-xs text-muted-soft">Phone</span>
-                    <span className="text-sm font-medium text-paper transition-colors group-hover:text-coral-light">
+                    <span className="text-[0.65rem] uppercase tracking-[0.14em] text-muted-soft">Phone</span>
+                    <span className="font-display text-base font-medium text-paper transition-colors group-hover:text-coral-light sm:text-lg">
                       {contact.phone}
                     </span>
                   </span>
                 </a>
 
-                <div className="flex items-center gap-4 rounded-xl border border-white/5 bg-ink px-4 py-3.5">
-                  <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-acid/15 text-acid">
-                    <MapPin className="size-4.5" strokeWidth={2.25} />
-                  </span>
+                <div className="flex items-center gap-4 py-4">
+                  <MapPin className="size-4 shrink-0 text-acid" strokeWidth={2.25} />
                   <span className="flex flex-col">
-                    <span className="text-xs text-muted-soft">Address</span>
-                    <span className="text-sm font-medium text-paper">{contact.address}</span>
+                    <span className="text-[0.65rem] uppercase tracking-[0.14em] text-muted-soft">Address</span>
+                    <span className="font-display text-base font-medium text-paper sm:text-lg">{contact.address}</span>
                   </span>
                 </div>
               </div>
             </div>
 
-            <div className="rounded-2xl border border-white/10 bg-ink-elevated p-6">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-soft">
-                Follow {site.parentBrand}
-              </p>
-              <div className="mt-5 flex flex-col gap-3">
+            {/* Lighter weight: socials + brand note, compact */}
+            <div className="flex flex-col gap-3 rounded-2xl border border-white/10 bg-ink-elevated/60 p-5">
+              <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+                <span className="text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-muted-soft">
+                  Follow {site.parentBrand}
+                </span>
                 {contact.socials.map((social) => (
                   <a
                     key={social.href}
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex items-center justify-between rounded-xl border border-white/5 bg-ink px-4 py-3.5 transition-colors hover:border-white/20"
+                    className="group inline-flex items-center gap-1.5 text-xs font-medium text-paper/80 transition-colors hover:text-paper"
                   >
-                    <span className="flex items-center gap-3 text-sm font-medium text-paper">
-                      <Globe className="size-4 text-muted" strokeWidth={2.25} />
-                      {social.label}
-                    </span>
-                    <span className="text-xs text-muted-soft transition-colors group-hover:text-paper">
-                      Visit ↗
-                    </span>
+                    <Globe className="size-3.5 text-muted" strokeWidth={2.25} />
+                    {social.label}
                   </a>
                 ))}
               </div>
-            </div>
-
-            <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-violet/15 to-coral/10 p-6">
-              <p className="font-display text-lg font-medium text-paper">
-                A {site.parentBrand} initiative
-              </p>
-              <p className="mt-2 text-sm leading-relaxed text-muted">
-                {site.name} runs on Student Tribe&apos;s network — {site.city} HQ, 1M+ students,
+              <p className="text-xs leading-relaxed text-muted-soft">
+                {site.name} runs on {site.parentBrand}&apos;s network — {site.city} HQ, 1M+ students,
                 a decade of campus and hiring relationships.
               </p>
             </div>

@@ -8,12 +8,38 @@ export function OutcomeList({
   outcomes,
   color,
   className,
+  variant = "list",
 }: {
   outcomes: string[];
   color: Course["color"];
   className?: string;
+  /** "list" = stacked rows with a check icon. "grid" = numbered 2-col checklist. */
+  variant?: "list" | "grid";
 }) {
   const theme = COLOR_THEME[color];
+
+  if (variant === "grid") {
+    return (
+      <ul className={cn("grid grid-cols-1 gap-4 sm:grid-cols-2", className)}>
+        {outcomes.map((outcome, i) => (
+          <Reveal key={outcome} delay={i * 0.07} className="h-full">
+            <li
+              className={cn(
+                "group flex h-full flex-col gap-4 rounded-2xl border border-white/10 bg-ink-soft/50 p-5 transition-colors duration-300 hover:bg-ink-elevated",
+                i % 2 === 1 && "sm:mt-8",
+              )}
+            >
+              <span className={cn("font-display text-2xl font-semibold", theme.text)}>
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <span className="text-sm leading-relaxed text-paper/85 sm:text-base">{outcome}</span>
+            </li>
+          </Reveal>
+        ))}
+      </ul>
+    );
+  }
+
   return (
     <ul className={cn("flex flex-col gap-3 sm:gap-4", className)}>
       {outcomes.map((outcome, i) => (

@@ -6,7 +6,7 @@ import { Footer } from "@/components/layout/footer";
 import { ScrollProgress } from "@/components/interaction/scroll-progress";
 import { CursorGlow } from "@/components/interaction/cursor-glow";
 import { site } from "@/data/content";
-import { basePath } from "@/lib/base-path";
+import { assetBasePath } from "@/lib/base-path";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -29,11 +29,11 @@ export const metadata: Metadata = {
   description: site.description,
   icons: {
     icon: [
-      { url: `${basePath}/icon.svg`, type: "image/svg+xml" },
-      { url: `${basePath}/icon-192.png`, sizes: "192x192", type: "image/png" },
-      { url: `${basePath}/favicon-32.png`, sizes: "32x32", type: "image/png" },
+      { url: `${assetBasePath}/icon.svg`, type: "image/svg+xml" },
+      { url: `${assetBasePath}/icon-192.png`, sizes: "192x192", type: "image/png" },
+      { url: `${assetBasePath}/favicon-32.png`, sizes: "32x32", type: "image/png" },
     ],
-    apple: `${basePath}/apple-icon.png`,
+    apple: `${assetBasePath}/apple-icon.png`,
   },
   openGraph: {
     title: `${site.name} — ${site.tagline}`,

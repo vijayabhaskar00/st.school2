@@ -12,9 +12,12 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 export function CurriculumTimeline({
   curriculum,
   color,
+  stagger = false,
 }: {
   curriculum: Course["curriculum"];
   color: Course["color"];
+  /** When true, alternates each phase card's indent for a zigzag reading rhythm. */
+  stagger?: boolean;
 }) {
   const theme = COLOR_THEME[color];
   const railRef = useRef<HTMLDivElement>(null);
@@ -51,7 +54,12 @@ export function CurriculumTimeline({
                 {String(i + 1).padStart(2, "0")}
               </span>
 
-              <div className="rounded-3xl border border-white/10 bg-ink-soft/60 p-6 transition-colors duration-300 hover:bg-ink-elevated sm:p-8">
+              <div
+                className={cn(
+                  "rounded-3xl border border-white/10 bg-ink-soft/60 p-6 transition-colors duration-300 hover:bg-ink-elevated sm:p-8",
+                  stagger && i % 2 === 1 && "sm:ml-10 lg:ml-20",
+                )}
+              >
                 <p className={cn("text-xs font-semibold uppercase tracking-[0.18em]", theme.text)}>
                   {phase.phase}
                 </p>
@@ -61,7 +69,12 @@ export function CurriculumTimeline({
                 <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted sm:text-base">
                   {phase.description}
                 </p>
-                <div className="mt-5 flex flex-wrap gap-2">
+                <div
+                  className={cn(
+                    "mt-5 flex flex-wrap gap-2",
+                    stagger && i % 2 === 1 && "sm:justify-end",
+                  )}
+                >
                   {phase.topics.map((topic) => (
                     <span
                       key={topic}
