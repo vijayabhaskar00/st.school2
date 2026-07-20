@@ -15,7 +15,12 @@ export function Counter({
   className?: string;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  // Vertical-only trigger offset. A single-value margin shrinks the
+  // IntersectionObserver root on all four sides, which on narrow viewports
+  // can push elements near the left/right edge outside the horizontal
+  // activation window forever (this hook is `once: true`, so a missed
+  // trigger never recovers) — see counters stuck at their initial "0".
+  const isInView = useInView(ref, { once: true, margin: "-80px 0px" });
   const motionValue = useMotionValue(0);
   const spring = useSpring(motionValue, { duration: 1600, bounce: 0 });
 

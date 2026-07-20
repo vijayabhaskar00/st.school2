@@ -6,7 +6,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
-import { navLinks, site } from "@/data/content";
+import { Logo } from "@/components/brand/logo";
+import { navLinks } from "@/data/content";
 import { cn } from "@/lib/utils";
 
 export function Navbar() {
@@ -37,14 +38,11 @@ export function Navbar() {
       )}
     >
       <Container className="flex h-18 items-center justify-between py-4">
-        <Link href="/" className="font-display flex items-center gap-2 text-xl font-semibold tracking-tight text-paper" onClick={() => setOpen(false)}>
-          <span className="flex size-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet to-coral text-sm font-bold text-ink">
-            St
-          </span>
-          {site.name}
+        <Link href="/" onClick={() => setOpen(false)}>
+          <Logo />
         </Link>
 
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav className="hidden items-center gap-8 lg:flex">
           {navLinks.map((link) => (
             <Link
               key={link.href}
@@ -56,7 +54,7 @@ export function Navbar() {
           ))}
         </nav>
 
-        <div className="hidden md:block">
+        <div className="hidden lg:block">
           <Button href="/contact" variant="primary" className="px-5 py-2.5 text-sm">
             Apply Now
           </Button>
@@ -64,7 +62,7 @@ export function Navbar() {
 
         <button
           type="button"
-          className="flex size-10 items-center justify-center rounded-full text-paper md:hidden"
+          className="flex size-10 items-center justify-center rounded-full text-paper lg:hidden"
           onClick={() => setOpen((v) => !v)}
           aria-label="Toggle menu"
           aria-expanded={open}
@@ -80,7 +78,7 @@ export function Navbar() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] as const }}
-            className="overflow-hidden border-t border-white/10 md:hidden"
+            className="overflow-hidden border-t border-white/10 lg:hidden"
           >
             <Container className="flex flex-col gap-1 py-6">
               {navLinks.map((link) => (

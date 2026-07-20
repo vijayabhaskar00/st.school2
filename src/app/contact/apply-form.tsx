@@ -24,8 +24,11 @@ const initialState: FormState = {
   message: "",
 };
 
+// text-base (16px) on mobile prevents iOS Safari from auto-zooming the
+// viewport when a field is focused (it zooms any input with font-size
+// under 16px); the size steps back down to text-sm at sm: for desktop.
 const fieldClass =
-  "w-full rounded-xl border border-white/10 bg-ink px-4 py-3 text-sm text-paper placeholder:text-muted-soft outline-none transition-all duration-200 focus:border-violet/60 focus:ring-2 focus:ring-violet/30 hover:border-white/20";
+  "w-full rounded-xl border border-white/10 bg-ink px-4 py-3 text-base sm:text-sm text-paper placeholder:text-muted-soft outline-none transition-all duration-200 focus:border-violet/60 focus:ring-2 focus:ring-violet/30 hover:border-white/20";
 
 const labelClass = "text-xs font-semibold uppercase tracking-[0.14em] text-muted-soft";
 

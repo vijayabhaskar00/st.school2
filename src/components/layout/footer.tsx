@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Container } from "@/components/ui/container";
+import { Logo } from "@/components/brand/logo";
 import { navLinks, site, contact, courses } from "@/data/content";
 
 export function Footer() {
@@ -9,11 +10,8 @@ export function Footer() {
       <Container className="relative flex flex-col gap-14 py-16 sm:py-20">
         <div className="flex flex-col justify-between gap-10 md:flex-row">
           <div className="max-w-sm">
-            <Link href="/" className="font-display flex items-center gap-2 text-xl font-semibold tracking-tight text-paper">
-              <span className="flex size-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet to-coral text-sm font-bold text-ink">
-                St
-              </span>
-              {site.name}
+            <Link href="/">
+              <Logo />
             </Link>
             <p className="mt-4 text-sm leading-relaxed text-muted">
               {site.description}

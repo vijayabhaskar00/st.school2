@@ -21,7 +21,11 @@ export function CurriculumTimeline({
 }) {
   const theme = COLOR_THEME[color];
   const railRef = useRef<HTMLDivElement>(null);
-  const railInView = useInView(railRef, { once: true, margin: "-100px" });
+  // Vertical-only trigger offset — a single-value margin shrinks the
+  // IntersectionObserver root on all sides, and this rail is only 1px wide
+  // near the left edge, so a horizontal shrink excludes it permanently
+  // (this hook is `once: true`, so a missed trigger never recovers).
+  const railInView = useInView(railRef, { once: true, margin: "-100px 0px" });
 
   return (
     <div className="relative">

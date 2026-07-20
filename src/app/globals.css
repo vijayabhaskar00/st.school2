@@ -1,25 +1,34 @@
 @import "tailwindcss";
 
 :root {
-  --background: #07060b;
-  --foreground: #f6f4fb;
+  --background: #0d0d0f;
+  --foreground: #f6f5f3;
 
-  --color-ink: #07060b;
-  --color-ink-soft: #100d1a;
-  --color-ink-elevated: #171226;
-  --color-paper: #f6f4fb;
-  --color-muted: #a89fc4;
-  --color-muted-soft: #6f6791;
+  --color-ink: #0d0d0f;
+  --color-ink-soft: #17171a;
+  --color-ink-elevated: #212124;
+  --color-paper: #f6f5f3;
+  --color-muted: #a8a7ac;
+  --color-muted-soft: #77767c;
 
-  --color-violet: #7c5cff;
-  --color-violet-light: #a794ff;
-  --color-violet-dark: #4b32b3;
-  --color-coral: #ff5b3d;
-  --color-coral-light: #ff8a6b;
-  --color-acid: #d4ff4f;
-  --color-acid-dark: #a9d61e;
+  /* Brand palette, from the official St.School crest: red + charcoal + mist gray. */
+  --color-brand-red: #e0212b;
+  --color-brand-red-dark: #8c1319;
+  --color-brand-charcoal: #2b2b2e;
+  --color-brand-mist: #e8e8ea;
 
-  --border-hairline: rgba(246, 244, 251, 0.1);
+  /* Legacy token names kept so existing utility classes (text-violet,
+     bg-coral, text-acid, ...) don't need touching site-wide — they now
+     resolve to the real brand colors instead of the placeholder palette. */
+  --color-violet: var(--color-brand-red);
+  --color-violet-light: #f2555c;
+  --color-violet-dark: var(--color-brand-red-dark);
+  --color-coral: #ff4b4b;
+  --color-coral-light: #ff8a8a;
+  --color-acid: var(--color-brand-mist);
+  --color-acid-dark: #c7c6cb;
+
+  --border-hairline: rgba(246, 245, 243, 0.1);
 }
 
 @theme inline {
@@ -32,6 +41,11 @@
   --color-paper: var(--color-paper);
   --color-muted: var(--color-muted);
   --color-muted-soft: var(--color-muted-soft);
+
+  --color-brand-red: var(--color-brand-red);
+  --color-brand-red-dark: var(--color-brand-red-dark);
+  --color-brand-charcoal: var(--color-brand-charcoal);
+  --color-brand-mist: var(--color-brand-mist);
 
   --color-violet: var(--color-violet);
   --color-violet-light: var(--color-violet-light);

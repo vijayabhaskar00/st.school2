@@ -20,7 +20,11 @@ export function Reveal({
     <motion.div
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once, margin: "-80px" }}
+      // Vertical-only trigger offset — a single-value margin shrinks the
+      // viewport root on all sides, which can push narrow or edge-aligned
+      // children entirely outside the horizontal activation window (they'd
+      // then stay at `initial` forever, since `once` never re-checks).
+      viewport={{ once, margin: "-80px 0px" }}
       transition={{ duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] as const }}
       className={cn(className)}
     >
