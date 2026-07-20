@@ -22,18 +22,19 @@ export function OutcomeList({
     return (
       <ul className={cn("grid grid-cols-1 gap-4 sm:grid-cols-2", className)}>
         {outcomes.map((outcome, i) => (
-          <Reveal key={outcome} delay={i * 0.07} className="h-full">
-            <li
-              className={cn(
-                "group flex h-full flex-col gap-4 rounded-2xl border border-white/10 bg-ink-soft/50 p-5 transition-colors duration-300 hover:bg-ink-elevated",
-                i % 2 === 1 && "sm:mt-8",
-              )}
-            >
-              <span className={cn("font-display text-2xl font-semibold", theme.text)}>
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <span className="text-sm leading-relaxed text-paper/85 sm:text-base">{outcome}</span>
-            </li>
+          <Reveal
+            key={outcome}
+            delay={i * 0.07}
+            as="li"
+            className={cn(
+              "group flex h-full flex-col gap-4 rounded-2xl border border-white/10 bg-ink-soft/50 p-5 transition-colors duration-300 hover:bg-ink-elevated",
+              i % 2 === 1 && "sm:mt-8",
+            )}
+          >
+            <span className={cn("font-display text-2xl font-semibold", theme.text)}>
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <span className="text-sm leading-relaxed text-paper/85 sm:text-base">{outcome}</span>
           </Reveal>
         ))}
       </ul>
@@ -43,13 +44,16 @@ export function OutcomeList({
   return (
     <ul className={cn("flex flex-col gap-3 sm:gap-4", className)}>
       {outcomes.map((outcome, i) => (
-        <Reveal key={outcome} delay={i * 0.07}>
-          <li className="group flex items-start gap-4 rounded-2xl border border-white/10 bg-ink-soft/50 p-4 transition-colors duration-300 hover:bg-ink-elevated sm:p-5">
-            <span className={cn("mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-full", theme.bgSoft)}>
-              <CheckCircle2 className={cn("size-4", theme.solidText)} strokeWidth={2.5} />
-            </span>
-            <span className="text-sm leading-relaxed text-paper/85 sm:text-base">{outcome}</span>
-          </li>
+        <Reveal
+          key={outcome}
+          delay={i * 0.07}
+          as="li"
+          className="group flex items-start gap-4 rounded-2xl border border-white/10 bg-ink-soft/50 p-4 transition-colors duration-300 hover:bg-ink-elevated sm:p-5"
+        >
+          <span className={cn("mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-full", theme.bgSoft)}>
+            <CheckCircle2 className={cn("size-4", theme.solidText)} strokeWidth={2.5} />
+          </span>
+          <span className="text-sm leading-relaxed text-paper/85 sm:text-base">{outcome}</span>
         </Reveal>
       ))}
     </ul>

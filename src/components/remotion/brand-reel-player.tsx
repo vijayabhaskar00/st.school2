@@ -14,7 +14,7 @@ export function BrandReelPlayer({
   initialFrame?: number;
 }) {
   return (
-    <div className={cn("aspect-[8/5] w-full", className)}>
+    <div className={cn("aspect-[8/5] w-full", className)} aria-hidden="true">
       <Player
         component={BrandReel}
         durationInFrames={240}

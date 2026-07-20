@@ -45,56 +45,54 @@ export function CurriculumTimeline({
 
       <ol className="relative flex flex-col gap-10 sm:gap-12">
         {curriculum.map((phase, i) => (
-          <Reveal key={phase.title} delay={i * 0.12}>
-            <li className="relative pl-16 sm:pl-24">
-              <span
-                className={cn(
-                  "font-display absolute left-0 top-0 flex size-14 shrink-0 items-center justify-center rounded-full border text-lg font-semibold sm:size-16 sm:text-xl",
-                  theme.border,
-                  theme.bgSoft,
-                  theme.solidText,
-                )}
-              >
-                {String(i + 1).padStart(2, "0")}
-              </span>
+          <Reveal key={phase.title} delay={i * 0.12} as="li" className="relative pl-16 sm:pl-24">
+            <span
+              className={cn(
+                "font-display absolute left-0 top-0 flex size-14 shrink-0 items-center justify-center rounded-full border text-lg font-semibold sm:size-16 sm:text-xl",
+                theme.border,
+                theme.bgSoft,
+                theme.text,
+              )}
+            >
+              {String(i + 1).padStart(2, "0")}
+            </span>
 
+            <div
+              className={cn(
+                "rounded-3xl border border-white/10 bg-ink-soft/60 p-6 transition-colors duration-300 hover:bg-ink-elevated sm:p-8",
+                stagger && i % 2 === 1 && "sm:ml-10 lg:ml-20",
+              )}
+            >
+              <p className={cn("text-xs font-semibold uppercase tracking-[0.18em]", theme.text)}>
+                {phase.phase}
+              </p>
+              <h3 className="font-display mt-2 text-2xl font-medium tracking-tight text-paper sm:text-3xl">
+                {phase.title}
+              </h3>
+              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted sm:text-base">
+                {phase.description}
+              </p>
               <div
                 className={cn(
-                  "rounded-3xl border border-white/10 bg-ink-soft/60 p-6 transition-colors duration-300 hover:bg-ink-elevated sm:p-8",
-                  stagger && i % 2 === 1 && "sm:ml-10 lg:ml-20",
+                  "mt-5 flex flex-wrap gap-2",
+                  stagger && i % 2 === 1 && "sm:justify-end",
                 )}
               >
-                <p className={cn("text-xs font-semibold uppercase tracking-[0.18em]", theme.text)}>
-                  {phase.phase}
-                </p>
-                <h3 className="font-display mt-2 text-2xl font-medium tracking-tight text-paper sm:text-3xl">
-                  {phase.title}
-                </h3>
-                <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted sm:text-base">
-                  {phase.description}
-                </p>
-                <div
-                  className={cn(
-                    "mt-5 flex flex-wrap gap-2",
-                    stagger && i % 2 === 1 && "sm:justify-end",
-                  )}
-                >
-                  {phase.topics.map((topic) => (
-                    <span
-                      key={topic}
-                      className={cn(
-                        "rounded-full border px-3.5 py-1.5 text-xs font-medium tracking-tight",
-                        theme.chipBorder,
-                        theme.chipBg,
-                        theme.chipText,
-                      )}
-                    >
-                      {topic}
-                    </span>
-                  ))}
-                </div>
+                {phase.topics.map((topic) => (
+                  <span
+                    key={topic}
+                    className={cn(
+                      "rounded-full border px-3.5 py-1.5 text-xs font-medium tracking-tight",
+                      theme.chipBorder,
+                      theme.chipBg,
+                      theme.chipText,
+                    )}
+                  >
+                    {topic}
+                  </span>
+                ))}
               </div>
-            </li>
+            </div>
           </Reveal>
         ))}
       </ol>

@@ -9,7 +9,12 @@
   --color-ink-elevated: #212124;
   --color-paper: #f6f5f3;
   --color-muted: #a8a7ac;
-  --color-muted-soft: #77767c;
+  /* Lightened from #77767c: the darker value failed WCAG AA (4.5:1) for
+     normal text against every ink surface in use (as low as 3.57:1 on
+     --color-ink-elevated), and this token is used site-wide for small
+     uppercase labels (form labels, footer headings, contact meta) that are
+     real text, not large/bold text, so the 4.5:1 threshold applies. */
+  --color-muted-soft: #8c8b92;
 
   /* Brand palette, from the official St.School crest: red + charcoal + mist gray. */
   --color-brand-red: #e0212b;

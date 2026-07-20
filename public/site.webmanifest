@@ -1,0 +1,27 @@
+{
+  "name": "St.School",
+  "short_name": "St.School",
+  "description": "St.School is Student Tribe's career-launchpad for Python Full-Stack + AI and UI/UX Design.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#0d0d0f",
+  "theme_color": "#e0212b",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
