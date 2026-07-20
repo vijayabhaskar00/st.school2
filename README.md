@@ -32,9 +32,19 @@ Open [http://localhost:3000](http://localhost:3000).
 ## Build
 
 ```bash
-npm run build
-npm start
+npm run build   # static export -> ./out
+npm start       # serve ./out locally at http://localhost:3000
 ```
+
+The site is configured as a static export (`output: "export"` in `next.config.ts`) so it can be hosted on GitHub Pages with no server.
+
+## Deploying to GitHub Pages
+
+A workflow at `.github/workflows/deploy-pages.yml` builds and deploys `./out` on every push to `main` or `claude/stschool-website-redesign-aio5tq`. One-time setup (repo admin, can't be done via git push):
+
+1. GitHub repo → **Settings → Pages → Source** → select **GitHub Actions**.
+2. Push to a tracked branch (or run the workflow manually from the **Actions** tab) — it will build and publish automatically.
+3. The site is served at `https://<owner>.github.io/st.school2/`. If you later attach a custom domain, set the repo variable/secret `GITHUB_PAGES_BASE_PATH` to `/` (or add a `CNAME` file to `public/`) so asset paths aren't prefixed with `/st.school2`.
 
 ## Notes for whoever picks this up next
 
