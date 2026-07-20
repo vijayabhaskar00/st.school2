@@ -16,6 +16,8 @@ import { CourseCrossLink } from "@/components/courses/cross-link-card";
 import { ApplyPanel } from "@/components/courses/apply-panel";
 import { StickyCtaBar } from "@/components/courses/sticky-cta-bar";
 import { CourseIllustration } from "@/components/courses/course-illustration";
+import { TiltCard } from "@/components/courses/tilt-card";
+import { LazyNeuralPulse } from "@/components/remotion/lazy-neural-pulse";
 import { COLOR_THEME } from "@/components/courses/color-theme";
 import { courses, site } from "@/data/content";
 import { cn } from "@/lib/utils";
@@ -141,7 +143,18 @@ export default async function CourseDetailPage({
             </div>
 
             <Reveal delay={0.35} className="lg:sticky lg:top-28">
-              <CourseIllustration variant={illustrationVariant} color={course.color} />
+              {illustrationVariant === "python-ai" ? (
+                <TiltCard>
+                  <LazyNeuralPulse className="overflow-hidden rounded-full" />
+                  <p className="mt-5 text-center text-xs uppercase tracking-[0.18em] text-muted-soft">
+                    Live — a model training, mid-cohort
+                  </p>
+                </TiltCard>
+              ) : (
+                <TiltCard>
+                  <CourseIllustration variant={illustrationVariant} color={course.color} />
+                </TiltCard>
+              )}
             </Reveal>
           </div>
         </Container>
