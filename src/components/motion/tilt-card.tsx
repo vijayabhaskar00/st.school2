@@ -7,9 +7,11 @@ import { cn } from "@/lib/utils";
 export function TiltCard({
   children,
   className,
+  intensity = 14,
 }: {
   children: React.ReactNode;
   className?: string;
+  intensity?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const rotateX = useMotionValue(0);
@@ -23,8 +25,8 @@ export function TiltCard({
     const rect = el.getBoundingClientRect();
     const px = (e.clientX - rect.left) / rect.width - 0.5;
     const py = (e.clientY - rect.top) / rect.height - 0.5;
-    rotateY.set(px * 14);
-    rotateX.set(-py * 14);
+    rotateY.set(px * intensity);
+    rotateX.set(-py * intensity);
   };
 
   const handleMouseLeave = () => {

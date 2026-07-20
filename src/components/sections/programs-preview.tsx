@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight, Clock, MonitorSmartphone } from "lucide-react";
+import { ArrowUpRight, Clock, MonitorSmartphone, Flame } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
@@ -81,6 +81,11 @@ export function ProgramsPreview() {
                         {course.tagline}
                       </p>
                     </div>
+
+                    <span className={cn("inline-flex w-fit items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold", c.chip)}>
+                      <Flame className="size-3.5" strokeWidth={2.5} />
+                      Only {Math.max(0, course.seatsTotal - course.seatsClaimed)} seats left this cohort
+                    </span>
 
                     <div className="flex flex-wrap items-center gap-5 text-sm text-paper/70">
                       <span className="inline-flex items-center gap-1.5">

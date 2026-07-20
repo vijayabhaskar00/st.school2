@@ -1,10 +1,10 @@
 "use client";
 
 import { Player } from "@remotion/player";
-import { BrandReel } from "@/remotion/brand-reel";
+import { SelectionField } from "@/remotion/selection-field";
 import { cn } from "@/lib/utils";
 
-export function BrandReelPlayer({
+export function SelectionFieldPlayer({
   className,
   autoPlay = true,
   initialFrame,
@@ -14,13 +14,13 @@ export function BrandReelPlayer({
   initialFrame?: number;
 }) {
   return (
-    <div className={cn("aspect-[8/5] w-full", className)} aria-hidden="true">
+    <div className={cn("aspect-square w-full", className)}>
       <Player
-        component={BrandReel}
-        durationInFrames={240}
+        component={SelectionField}
+        durationInFrames={260}
         fps={30}
-        compositionWidth={1200}
-        compositionHeight={750}
+        compositionWidth={800}
+        compositionHeight={800}
         style={{ width: "100%", height: "100%" }}
         loop
         autoPlay={autoPlay}

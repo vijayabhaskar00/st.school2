@@ -16,7 +16,7 @@ import { CourseCrossLink } from "@/components/courses/cross-link-card";
 import { ApplyPanel } from "@/components/courses/apply-panel";
 import { StickyCtaBar } from "@/components/courses/sticky-cta-bar";
 import { CourseIllustration } from "@/components/courses/course-illustration";
-import { TiltCard } from "@/components/courses/tilt-card";
+import { TiltCard } from "@/components/motion/tilt-card";
 import { LazyNeuralPulse } from "@/components/remotion/lazy-neural-pulse";
 import { COLOR_THEME } from "@/components/courses/color-theme";
 import { courses, site } from "@/data/content";
