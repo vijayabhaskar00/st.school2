@@ -76,6 +76,10 @@ export type Course = {
   outcomes: string[];
   curriculum: { phase: string; title: string; description: string; topics: string[] }[];
   highlights: { title: string; description: string }[];
+  /** ISO datetime — when this cohort's applications close. Keep this rolling/updated. */
+  applicationDeadline: string;
+  seatsTotal: number;
+  seatsClaimed: number;
 };
 
 export const courses: Course[] = [
@@ -130,6 +134,9 @@ export const courses: Course[] = [
       { title: "Hackathons", description: "Compete in timed builds that mirror real sprint pressure." },
       { title: "Interview prep", description: "Technical + HR mock rounds until you stop dreading them." },
     ],
+    applicationDeadline: "2026-08-09T23:59:59+05:30",
+    seatsTotal: 33,
+    seatsClaimed: 26,
   },
   {
     slug: "ui-ux-design",
@@ -182,6 +189,9 @@ export const courses: Course[] = [
       { title: "Guest lectures", description: "Working designers walk through how they actually make decisions." },
       { title: "Portfolio-first", description: "Every project is built to go straight into your case study deck." },
     ],
+    applicationDeadline: "2026-08-16T23:59:59+05:30",
+    seatsTotal: 33,
+    seatsClaimed: 21,
   },
 ];
 

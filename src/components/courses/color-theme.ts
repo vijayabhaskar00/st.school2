@@ -10,6 +10,7 @@ export const COLOR_THEME: Record<
   {
     text: string;
     solidText: string;
+    solidBg: string;
     bgSoft: string;
     bgGlow: string;
     border: string;
@@ -24,6 +25,7 @@ export const COLOR_THEME: Record<
   violet: {
     text: "text-violet-light",
     solidText: "text-violet",
+    solidBg: "bg-violet",
     bgSoft: "bg-violet/10",
     bgGlow: "bg-violet/25",
     border: "border-violet/30",
@@ -37,6 +39,7 @@ export const COLOR_THEME: Record<
   coral: {
     text: "text-coral-light",
     solidText: "text-coral",
+    solidBg: "bg-coral",
     bgSoft: "bg-coral/10",
     bgGlow: "bg-coral/25",
     border: "border-coral/30",

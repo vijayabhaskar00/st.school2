@@ -13,6 +13,9 @@ import { OutcomeList } from "@/components/courses/outcome-list";
 import { CurriculumTimeline } from "@/components/courses/curriculum-timeline";
 import { HighlightGrid } from "@/components/courses/highlight-grid";
 import { CourseCrossLink } from "@/components/courses/cross-link-card";
+import { ApplyPanel } from "@/components/courses/apply-panel";
+import { StickyCtaBar } from "@/components/courses/sticky-cta-bar";
+import { LazyBrandReel as BrandReelPlayer } from "@/components/remotion/lazy-brand-reel";
 import { COLOR_THEME } from "@/components/courses/color-theme";
 import { courses, site } from "@/data/content";
 import { cn } from "@/lib/utils";
@@ -86,7 +89,7 @@ export default async function CourseDetailPage({
           <div className="absolute inset-0 bg-[linear-gradient(rgba(246,244,251,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(246,244,251,0.05)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_70%_50%_at_50%_0%,black,transparent)]" />
         </div>
 
-        <Container className="flex flex-col gap-8">
+        <Container className="flex flex-col gap-10">
           <Reveal>
             <Link
               href="/courses"
@@ -97,51 +100,52 @@ export default async function CourseDetailPage({
             </Link>
           </Reveal>
 
-          <div className="flex flex-col gap-6">
-            <Reveal delay={0.04}>
-              <Badge>
-                <Sparkles className="size-3.5 text-acid" strokeWidth={2.5} />
-                {course.level} · {course.mode}
-              </Badge>
-            </Reveal>
-            <Reveal delay={0.09}>
-              <h1 className="font-display max-w-3xl text-balance text-[2.5rem] font-medium leading-[1.05] tracking-tight sm:text-6xl">
-                {course.name}
-              </h1>
-            </Reveal>
-            <Reveal delay={0.14}>
-              <p className={cn("max-w-2xl text-balance text-lg font-medium leading-snug sm:text-xl", theme.text)}>
-                {course.tagline}
-              </p>
-            </Reveal>
-            <Reveal delay={0.18}>
-              <p className="max-w-2xl text-balance text-base leading-relaxed text-muted sm:text-lg">
-                {course.summary}
+          <div className="grid items-start gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-10">
+            <div className="flex flex-col gap-8">
+              <div className="flex flex-col gap-6">
+                <Reveal delay={0.04}>
+                  <Badge>
+                    <Sparkles className="size-3.5 text-acid" strokeWidth={2.5} />
+                    {course.level} · {course.mode}
+                  </Badge>
+                </Reveal>
+                <Reveal delay={0.09}>
+                  <h1 className="font-display max-w-xl text-balance text-[2.5rem] font-medium leading-[1.05] tracking-tight sm:text-6xl">
+                    {course.name}
+                  </h1>
+                </Reveal>
+                <Reveal delay={0.14}>
+                  <p className={cn("max-w-lg text-balance text-lg font-medium leading-snug sm:text-xl", theme.text)}>
+                    {course.tagline}
+                  </p>
+                </Reveal>
+                <Reveal delay={0.18}>
+                  <p className="max-w-lg text-balance text-base leading-relaxed text-muted sm:text-lg">
+                    {course.summary}
+                  </p>
+                </Reveal>
+              </div>
+
+              <Reveal delay={0.22}>
+                <CourseStatRow course={course} />
+              </Reveal>
+
+              <Reveal delay={0.26}>
+                <StackChips stack={course.stack} color={course.color} />
+              </Reveal>
+
+              <Reveal delay={0.3}>
+                <ApplyPanel course={course} />
+              </Reveal>
+            </div>
+
+            <Reveal delay={0.35} className="lg:sticky lg:top-28">
+              <BrandReelPlayer className="w-full overflow-hidden rounded-2xl" />
+              <p className="mt-4 text-center text-xs uppercase tracking-[0.18em] text-muted-soft">
+                What a {course.shortName} cohort actually builds
               </p>
             </Reveal>
           </div>
-
-          <Reveal delay={0.22}>
-            <CourseStatRow course={course} />
-          </Reveal>
-
-          <Reveal delay={0.26}>
-            <StackChips stack={course.stack} color={course.color} />
-          </Reveal>
-
-          <Reveal delay={0.3}>
-            <div className="flex flex-col items-start gap-4 pt-2 sm:flex-row sm:items-center">
-              <Button href="/contact" variant="primary" className="px-7 py-3.5 text-base">
-                Apply for this program
-              </Button>
-              <Link
-                href="/courses"
-                className="px-2 py-3.5 text-sm font-semibold text-paper/70 transition-colors hover:text-paper"
-              >
-                Back to all programs
-              </Link>
-            </div>
-          </Reveal>
         </Container>
       </section>
 
@@ -228,6 +232,8 @@ export default async function CourseDetailPage({
           </Container>
         </section>
       )}
+
+      <StickyCtaBar course={course} />
     </>
   );
 }

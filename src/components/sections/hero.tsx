@@ -1,26 +1,13 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { motion, type Variants } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { Counter } from "@/components/motion/counter";
+import { LazyBrandReel as BrandReelPlayer } from "@/components/remotion/lazy-brand-reel";
 import { heroStats, site } from "@/data/content";
-
-const BrandReelPlayer = dynamic(
-  () => import("@/components/remotion/brand-reel-player").then((m) => m.BrandReelPlayer),
-  {
-    ssr: false,
-    loading: () => (
-      <div
-        className="aspect-[8/5] w-full animate-pulse rounded-2xl border border-white/10 bg-ink-elevated/60"
-        aria-hidden="true"
-      />
-    ),
-  },
-);
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
