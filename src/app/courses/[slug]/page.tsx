@@ -15,7 +15,7 @@ import { HighlightGrid } from "@/components/courses/highlight-grid";
 import { CourseCrossLink } from "@/components/courses/cross-link-card";
 import { ApplyPanel } from "@/components/courses/apply-panel";
 import { StickyCtaBar } from "@/components/courses/sticky-cta-bar";
-import { LazyBrandReel as BrandReelPlayer } from "@/components/remotion/lazy-brand-reel";
+import { CourseIllustration } from "@/components/courses/course-illustration";
 import { COLOR_THEME } from "@/components/courses/color-theme";
 import { courses, site } from "@/data/content";
 import { cn } from "@/lib/utils";
@@ -73,6 +73,7 @@ export default async function CourseDetailPage({
   // The two programs share this template, so give each a distinct reading
   // rhythm across outcomes / curriculum / highlights — not just a color swap.
   const isAlt = course.color === "coral";
+  const illustrationVariant = course.slug === "ui-ux-design" ? "ui-ux" : "python-ai";
 
   return (
     <>
@@ -140,10 +141,7 @@ export default async function CourseDetailPage({
             </div>
 
             <Reveal delay={0.35} className="lg:sticky lg:top-28">
-              <BrandReelPlayer className="w-full overflow-hidden rounded-2xl" />
-              <p className="mt-4 text-center text-xs uppercase tracking-[0.18em] text-muted-soft">
-                What a {course.shortName} cohort actually builds
-              </p>
+              <CourseIllustration variant={illustrationVariant} color={course.color} />
             </Reveal>
           </div>
         </Container>
