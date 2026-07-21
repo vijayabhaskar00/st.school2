@@ -4,6 +4,9 @@ import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Reveal } from "@/components/motion/reveal";
+import { OriginNetwork } from "@/components/about/origin-network";
+import { StatsThread } from "@/components/about/stats-thread";
+import { ProcessProgressLine } from "@/components/about/process-progress-line";
 import { site, parentBrand, whyUs, process, contact } from "@/data/content";
 import { cn } from "@/lib/utils";
 
@@ -45,13 +48,16 @@ export default function AboutPage() {
               </Reveal>
             </div>
 
-            <Reveal delay={0.14} className="flex flex-col items-start gap-3 border-t border-white/10 pt-6 lg:items-end lg:border-t-0 lg:border-l lg:pl-10 lg:pt-0 lg:text-right">
-              <span className="font-display text-gradient text-[5rem] font-semibold leading-none sm:text-[7rem] lg:text-[6.5rem]">
-                {parentBrand.founded}
-              </span>
-              <p className="max-w-[16rem] text-xs uppercase tracking-[0.18em] text-muted-soft">
-                Founded by {parentBrand.founder} in {parentBrand.hq}
-              </p>
+            <Reveal
+              delay={0.14}
+              className="border-t border-white/10 pt-8 lg:border-t-0 lg:border-l lg:pl-10 lg:pt-0"
+            >
+              <OriginNetwork
+                founded={parentBrand.founded}
+                founder={parentBrand.founder}
+                hq={parentBrand.hq}
+                stats={parentBrand.stats}
+              />
             </Reveal>
           </div>
         </Container>
@@ -94,28 +100,7 @@ export default function AboutPage() {
       <section className="relative overflow-hidden border-y border-white/10 bg-ink-soft py-20 sm:py-24">
         <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_60%_at_50%_50%,rgba(124,92,255,0.12),transparent)]" />
         <Container>
-          <div className="flex snap-x snap-mandatory gap-10 overflow-x-auto pb-2 sm:gap-0 sm:divide-x sm:divide-white/10 sm:overflow-visible sm:pb-0">
-            {parentBrand.stats.map((stat, i) => (
-              <Reveal
-                key={stat.label}
-                delay={i * 0.08}
-                className={cn(
-                  "flex shrink-0 snap-start flex-col gap-2 sm:flex-1 sm:px-6 sm:first:pl-0 sm:last:pr-0",
-                  i % 2 === 0 ? "sm:pb-0" : "sm:pt-8",
-                )}
-              >
-                <span
-                  className={cn(
-                    "font-display text-gradient font-semibold leading-none",
-                    i % 2 === 0 ? "text-5xl sm:text-6xl" : "text-3xl sm:text-4xl",
-                  )}
-                >
-                  {stat.value}
-                </span>
-                <span className="max-w-[12rem] text-xs text-muted sm:text-sm">{stat.label}</span>
-              </Reveal>
-            ))}
-          </div>
+          <StatsThread stats={parentBrand.stats} />
         </Container>
       </section>
 
@@ -174,6 +159,7 @@ export default function AboutPage() {
           />
 
           <div className="flex flex-col gap-3">
+            <ProcessProgressLine />
             <div className="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-6 sm:gap-6 lg:overflow-visible lg:pb-0">
               {process.map((step, i) => (
                 <Reveal

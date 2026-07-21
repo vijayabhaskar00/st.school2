@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/motion/reveal";
+import { SectionHeading } from "@/components/ui/section-heading";
 import { CourseShowcaseCard } from "@/components/courses/course-showcase-card";
+import { TrackMatcher } from "@/components/courses-listing/track-matcher";
 import { courses, site } from "@/data/content";
 
 export const metadata: Metadata = {
@@ -43,6 +45,24 @@ export default function CoursesPage() {
               cohort of 33 small enough that nobody falls through the cracks. Pick
               your path below.
             </p>
+          </Reveal>
+        </Container>
+      </section>
+
+      <section className="relative pb-20 sm:pb-28">
+        <Container className="flex flex-col gap-12">
+          <SectionHeading
+            eyebrow="Not sure which track?"
+            title={
+              <>
+                Answer 4 quick picks.{" "}
+                <span className="text-gradient">See which track fits.</span>
+              </>
+            }
+            description="Every option below is pulled straight from each program's real stack, outcomes, and curriculum — not a generic quiz."
+          />
+          <Reveal delay={0.1}>
+            <TrackMatcher courses={courses} />
           </Reveal>
         </Container>
       </section>
