@@ -17,6 +17,8 @@ import { ApplyPanel } from "@/components/courses/apply-panel";
 import { StickyCtaBar } from "@/components/courses/sticky-cta-bar";
 import { CourseIllustration } from "@/components/courses/course-illustration";
 import { DesignPlayground } from "@/components/courses/design-playground";
+import { RedesignSlider } from "@/components/courses/redesign-slider";
+import { AiTerminal } from "@/components/courses/ai-terminal";
 import { TiltCard } from "@/components/motion/tilt-card";
 import { LazyNeuralPulse } from "@/components/remotion/lazy-neural-pulse";
 import { COLOR_THEME } from "@/components/courses/color-theme";
@@ -178,9 +180,9 @@ export default async function CourseDetailPage({
         </Container>
       </section>
 
-      {/* b.5 Design playground — UI/UX only, since the craft itself is
-          hands-on manipulation, not something you can convey by reading */}
-      {illustrationVariant === "ui-ux" && (
+      {/* b.5 Hands-on moment — different per program, since "try it" means
+          something different for each craft */}
+      {illustrationVariant === "ui-ux" ? (
         <section className="relative py-20 sm:py-28">
           <Container className="flex flex-col gap-12">
             <SectionHeading
@@ -190,6 +192,19 @@ export default async function CourseDetailPage({
             />
             <Reveal delay={0.1}>
               <DesignPlayground />
+            </Reveal>
+          </Container>
+        </section>
+      ) : (
+        <section className="relative py-20 sm:py-28">
+          <Container className="flex flex-col gap-12">
+            <SectionHeading
+              eyebrow="Try it yourself"
+              title="This is the actual craft."
+              description="Pick a prompt below — it streams a real response. This is week-12 territory: wiring AI into a working backend, not just chatting with it."
+            />
+            <Reveal delay={0.1}>
+              <AiTerminal />
             </Reveal>
           </Container>
         </section>
@@ -224,6 +239,23 @@ export default async function CourseDetailPage({
           />
         </Container>
       </section>
+
+      {/* d.5 Before/after — UI/UX only, dramatizes "we ship polish", the
+          exact claim this program makes */}
+      {illustrationVariant === "ui-ux" && (
+        <section className="relative py-20 sm:py-28">
+          <Container className="flex flex-col gap-12">
+            <SectionHeading
+              eyebrow="The transformation"
+              title="Rough idea in. Shipped product out."
+              description="Drag the handle. This is the gap a cohort closes — every project starts on the left and leaves on the right."
+            />
+            <Reveal delay={0.1}>
+              <RedesignSlider />
+            </Reveal>
+          </Container>
+        </section>
+      )}
 
       {/* e. Closing CTA */}
       <section className="relative overflow-hidden py-24 sm:py-32">
