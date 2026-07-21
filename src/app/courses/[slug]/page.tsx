@@ -16,6 +16,7 @@ import { CourseCrossLink } from "@/components/courses/cross-link-card";
 import { ApplyPanel } from "@/components/courses/apply-panel";
 import { StickyCtaBar } from "@/components/courses/sticky-cta-bar";
 import { CourseIllustration } from "@/components/courses/course-illustration";
+import { DesignPlayground } from "@/components/courses/design-playground";
 import { TiltCard } from "@/components/motion/tilt-card";
 import { LazyNeuralPulse } from "@/components/remotion/lazy-neural-pulse";
 import { COLOR_THEME } from "@/components/courses/color-theme";
@@ -176,6 +177,23 @@ export default async function CourseDetailPage({
           />
         </Container>
       </section>
+
+      {/* b.5 Design playground — UI/UX only, since the craft itself is
+          hands-on manipulation, not something you can convey by reading */}
+      {illustrationVariant === "ui-ux" && (
+        <section className="relative py-20 sm:py-28">
+          <Container className="flex flex-col gap-12">
+            <SectionHeading
+              eyebrow="Try it yourself"
+              title="This is the actual craft."
+              description="Every element on this page is designed. Rearrange a few — moving pixels until something clicks is most of the job."
+            />
+            <Reveal delay={0.1}>
+              <DesignPlayground />
+            </Reveal>
+          </Container>
+        </section>
+      )}
 
       {/* c. Curriculum timeline */}
       <section className="relative overflow-hidden bg-ink-soft/40 py-20 sm:py-28">
