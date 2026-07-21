@@ -11,11 +11,11 @@ export function Logo({
   textClassName?: string;
 }) {
   return (
-    <span className={cn("inline-flex items-center gap-2.5", className)}>
-      <LogoMark className={cn("h-9 w-auto shrink-0", markClassName)} />
-      <span className={cn("font-display text-xl font-bold tracking-tight", textClassName)}>
-        <span className="text-brand-red">st.</span>{" "}
-        <span className="text-paper">School</span>
+    <span className={cn("inline-flex items-center gap-3", className)}>
+      <LogoMark className={cn("h-11 w-auto shrink-0", markClassName)} />
+      <span className={cn("font-display flex flex-col leading-[0.95]", textClassName)}>
+        <span className="text-lg font-bold tracking-tight text-brand-red">st.</span>
+        <span className="text-lg font-bold tracking-tight text-paper">School</span>
       </span>
     </span>
   );

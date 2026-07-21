@@ -5,38 +5,50 @@
     </clipPath>
   </defs>
   <g clip-path="url(#shieldClip)">
-    <path d="M0 0H100V96C70 100 35 106 0 96V0Z" fill="#e0212b" />
-    <path d="M100 0H200V96C165 106 130 100 100 96V0Z" fill="#e8e8ea" />
-    <path d="M0 96C35 106 70 100 100 96V232H0V96Z" fill="#e8e8ea" />
-    <path d="M100 96C130 100 165 106 200 96V232H100V96Z" fill="#2b2b2e" />
+    <path d="M0 0H100V86C70 90 35 96 0 86V0Z" fill="#e0212b" />
+    <path d="M100 0H200V86C165 96 130 90 100 86V0Z" fill="#e8e8ea" />
+    <path d="M0 86C35 96 70 90 100 86V150C70 150 35 150 0 150V86Z" fill="#e8e8ea" />
+    <path d="M100 86C130 90 165 96 200 86V150C165 150 130 150 100 150V86Z" fill="#2b2b2e" />
+    <path d="M0 150Q100 182 200 150V232H0V150Z" fill="#e0212b" />
     <g fill="#e8e8ea">
       <path d="M50 26 L92 42 L50 58 L8 42 Z" />
       <path d="M28 49 V66 C28 71 38 76 50 76 C62 76 72 71 72 66 V49 L50 57.5 Z" />
       <rect x="90" y="42" width="3" height="24" rx="1.5" />
     </g>
     <g fill="none" stroke="#2b2b2e" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="128" y="24" width="44" height="52" rx="10" />
-      <path d="M150 24V76" />
-      <path d="M136 36h6M136 48h6M136 60h6M158 36h6M158 48h6M158 60h6" />
-      <circle cx="128" cy="36" r="3" fill="#2b2b2e" stroke="none" />
-      <circle cx="172" cy="36" r="3" fill="#2b2b2e" stroke="none" />
-      <circle cx="128" cy="64" r="3" fill="#2b2b2e" stroke="none" />
-      <circle cx="172" cy="64" r="3" fill="#2b2b2e" stroke="none" />
+      <rect x="128" y="20" width="44" height="52" rx="10" />
+      <path d="M150 20V72" />
+      <path d="M136 32h6M136 44h6M136 56h6M158 32h6M158 44h6M158 56h6" />
+      <circle cx="128" cy="32" r="3" fill="#2b2b2e" stroke="none" />
+      <circle cx="172" cy="32" r="3" fill="#2b2b2e" stroke="none" />
+      <circle cx="128" cy="60" r="3" fill="#2b2b2e" stroke="none" />
+      <circle cx="172" cy="60" r="3" fill="#2b2b2e" stroke="none" />
     </g>
     <g fill="#2b2b2e">
-      <rect x="22" y="150" width="42" height="30" rx="4" />
-      <rect x="30" y="182" width="26" height="4" rx="2" />
-      <circle cx="43" cy="164" r="8" fill="#e8e8ea" />
-      <path d="M43 160v8M39 168h8" stroke="#2b2b2e" stroke-width="2" stroke-linecap="round" fill="none" />
-      <path d="M70 152c6 4 6 22 0 26" stroke="#2b2b2e" stroke-width="4" stroke-linecap="round" fill="none" />
-      <path d="M78 146c10 7 10 33 0 40" stroke="#2b2b2e" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.6" />
+      <rect x="20" y="100" width="42" height="30" rx="4" />
+      <rect x="28" y="132" width="26" height="4" rx="2" />
+      <circle cx="41" cy="115" r="8" fill="#e8e8ea" />
+      <path d="M41 111v8M37 119h8" stroke="#2b2b2e" stroke-width="2" stroke-linecap="round" fill="none" />
+      <path d="M14 102c-6 4-6 22 0 26" stroke="#2b2b2e" stroke-width="4" stroke-linecap="round" fill="none" />
+      <path d="M6 96c-10 7-10 33 0 40" stroke="#2b2b2e" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.6" />
     </g>
     <g fill="#e8e8ea">
-      <path d="M150 150c-9 0-16 6-16 15c0 7 4 11 8 14v6h16v-6c4-3 8-7 8-14c0-9-7-15-16-15Z" />
-      <rect x="142" y="188" width="16" height="6" rx="2" />
-      <path d="M133 148l-6-6M167 148l6-6M150 138v-8" stroke="#e8e8ea" stroke-width="3" stroke-linecap="round" />
+      <path d="M150 100c-9 0-16 6-16 15c0 7 4 11 8 14v6h16v-6c4-3 8-7 8-14c0-9-7-15-16-15Z" />
+      <rect x="142" y="138" width="16" height="6" rx="2" />
+      <path d="M133 98l-6-6M167 98l6-6M150 88v-8" stroke="#e8e8ea" stroke-width="3" stroke-linecap="round" />
+    </g>
+    <g>
+      <path d="M64 198 L86 178 L100 190 L134 158" fill="none" stroke="#e8e8ea" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M120 156 L137 154 L136 171Z" fill="#e8e8ea" />
+      <g stroke="#e8e8ea" stroke-width="2.5" stroke-linecap="round" fill="none">
+        <circle cx="46" cy="196" r="6" />
+        <circle cx="46" cy="196" r="1.8" fill="#e8e8ea" stroke="none" />
+        <path d="M46 187v3M46 202v3M37 196h3M52 196h3M39.4 189.4l2.1 2.1M51.5 200.5l2.1 2.1M39.4 202.6l2.1-2.1M51.5 191.5l2.1-2.1" />
+        <circle cx="152" cy="196" r="6" />
+        <circle cx="152" cy="196" r="1.8" fill="#e8e8ea" stroke="none" />
+        <path d="M152 187v3M152 202v3M143 196h3M158 196h3M145.4 189.4l2.1 2.1M157.5 200.5l2.1 2.1M145.4 202.6l2.1-2.1M157.5 191.5l2.1-2.1" />
+      </g>
     </g>
   </g>
-  <circle cx="100" cy="98" r="21" fill="#e0212b" stroke="#f6f5f3" stroke-width="3" />
-  <text x="100" y="105" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="18" fill="#f6f5f3">st.</text>
+  <text x="76" y="66" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-style="italic" font-size="13" fill="#f6f5f3">st.</text>
 </svg>
