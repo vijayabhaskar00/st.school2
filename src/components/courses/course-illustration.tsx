@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 type Variant = "python-ai" | "ui-ux";
@@ -10,16 +11,57 @@ const GRADIENTS: Record<"violet" | "coral", { from: string; to: string; glow: st
   coral: { from: "var(--color-coral-light)", to: "var(--color-brand-red-dark)", glow: "bg-coral/25" },
 };
 
+const BLINK = {
+  scaleY: [1, 1, 0.08, 1, 1, 1, 0.08, 1],
+  transition: {
+    duration: 4.6,
+    repeat: Infinity,
+    times: [0, 0.32, 0.34, 0.36, 0.6, 0.62, 0.64, 1],
+    ease: "easeInOut" as const,
+  },
+};
+
 function Mascot({ color, variant }: { color: "violet" | "coral"; variant: Variant }) {
   const g = GRADIENTS[color];
   const gradId = `mascotGrad-${variant}`;
+  const svgRef = useRef<SVGSVGElement>(null);
+  const [hovered, setHovered] = useState(false);
+
+  // Pupils track the real cursor anywhere on the page — clamped so the
+  // effect stays subtle instead of the eyes snapping to extremes.
+  const eyeX = useMotionValue(0);
+  const eyeY = useMotionValue(0);
+  const springX = useSpring(eyeX, { stiffness: 260, damping: 22 });
+  const springY = useSpring(eyeY, { stiffness: 260, damping: 22 });
+
+  useEffect(() => {
+    const handleMove = (e: PointerEvent) => {
+      const el = svgRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = e.clientX - cx;
+      const dy = e.clientY - cy;
+      const dist = Math.min(1, Math.hypot(dx, dy) / 500);
+      const angle = Math.atan2(dy, dx);
+      eyeX.set(Math.cos(angle) * dist * 4.5);
+      eyeY.set(Math.sin(angle) * dist * 3.5);
+    };
+    window.addEventListener("pointermove", handleMove, { passive: true });
+    return () => window.removeEventListener("pointermove", handleMove);
+  }, [eyeX, eyeY]);
 
   return (
     <motion.svg
+      ref={svgRef}
       viewBox="0 0 200 200"
-      className="relative z-10 h-full w-full drop-shadow-[0_30px_40px_rgba(0,0,0,0.45)]"
+      className="relative z-10 h-full w-full cursor-pointer drop-shadow-[0_30px_40px_rgba(0,0,0,0.45)]"
       animate={{ y: [0, -10, 0], rotate: [0, 1.5, 0, -1.5, 0] }}
       transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+      whileHover={{ scale: 1.06 }}
+      onHoverStart={() => setHovered(true)}
+      onHoverEnd={() => setHovered(false)}
     >
       <defs>
         <linearGradient id={gradId} x1="0" y1="0" x2="1" y2="1">
@@ -32,9 +74,12 @@ function Mascot({ color, variant }: { color: "violet" | "coral"; variant: Varian
       <ellipse cx="100" cy="182" rx="55" ry="9" fill="black" opacity="0.25" />
 
       {/* body */}
-      <path
+      <motion.path
         d="M100,22 C132,22 166,38 176,72 C186,106 178,146 146,168 C114,190 76,190 44,168 C12,146 4,106 14,72 C24,38 68,22 100,22 Z"
         fill={`url(#${gradId})`}
+        animate={{ scale: hovered ? 1.015 : 1 }}
+        style={{ transformOrigin: "100px 105px" }}
+        transition={{ duration: 0.3 }}
       />
       <path
         d="M100,22 C132,22 166,38 176,72 C186,106 178,146 146,168 C114,190 76,190 44,168 C12,146 4,106 14,72 C24,38 68,22 100,22 Z"
@@ -42,20 +87,54 @@ function Mascot({ color, variant }: { color: "violet" | "coral"; variant: Varian
         opacity="0.06"
       />
 
+      {/* eyebrows — only appear on hover, for extra expression */}
+      <motion.g
+        animate={{ opacity: hovered ? 1 : 0, y: hovered ? 0 : 4 }}
+        transition={{ duration: 0.25 }}
+      >
+        <path d="M64,74 Q76,64 90,72" stroke="var(--color-ink)" strokeWidth="3.5" fill="none" strokeLinecap="round" />
+        <path d="M110,72 Q124,64 136,74" stroke="var(--color-ink)" strokeWidth="3.5" fill="none" strokeLinecap="round" />
+      </motion.g>
+
       {/* cheeks */}
-      <circle cx="66" cy="112" r="9" fill="white" opacity="0.18" />
-      <circle cx="134" cy="112" r="9" fill="white" opacity="0.18" />
+      <motion.circle
+        cx="66"
+        cy="112"
+        r="9"
+        fill="white"
+        animate={{ opacity: hovered ? 0.32 : 0.18 }}
+        transition={{ duration: 0.3 }}
+      />
+      <motion.circle
+        cx="134"
+        cy="112"
+        r="9"
+        fill="white"
+        animate={{ opacity: hovered ? 0.32 : 0.18 }}
+        transition={{ duration: 0.3 }}
+      />
 
-      {/* eyes */}
-      <g>
-        <circle cx="76" cy="96" r="10" fill="var(--color-ink)" />
-        <circle cx="124" cy="96" r="10" fill="var(--color-ink)" />
-        <circle cx="79" cy="92" r="3" fill="white" />
-        <circle cx="127" cy="92" r="3" fill="white" />
-      </g>
+      {/* eyes — white sclera fixed, pupil tracks the cursor, whole group blinks */}
+      <motion.g animate={BLINK} style={{ transformOrigin: "100px 96px" }}>
+        <circle cx="76" cy="96" r="10" fill="white" />
+        <circle cx="124" cy="96" r="10" fill="white" />
+        <motion.g style={{ x: springX, y: springY }}>
+          <circle cx="76" cy="96" r="6" fill="var(--color-ink)" />
+          <circle cx="124" cy="96" r="6" fill="var(--color-ink)" />
+          <circle cx="78" cy="93.5" r="2" fill="white" />
+          <circle cx="126" cy="93.5" r="2" fill="white" />
+        </motion.g>
+      </motion.g>
 
-      {/* smile */}
-      <path d="M82,120 Q100,136 118,120" stroke="var(--color-ink)" strokeWidth="4" fill="none" strokeLinecap="round" />
+      {/* smile — widens on hover */}
+      <motion.path
+        stroke="var(--color-ink)"
+        strokeWidth="4"
+        fill="none"
+        strokeLinecap="round"
+        animate={{ d: hovered ? "M76,118 Q100,142 124,118" : "M82,120 Q100,136 118,120" }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
+      />
     </motion.svg>
   );
 }
