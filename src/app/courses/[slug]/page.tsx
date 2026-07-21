@@ -16,8 +16,8 @@ import { CourseCrossLink } from "@/components/courses/cross-link-card";
 import { ApplyPanel } from "@/components/courses/apply-panel";
 import { StickyCtaBar } from "@/components/courses/sticky-cta-bar";
 import { CourseIllustration } from "@/components/courses/course-illustration";
-import { DesignPlayground } from "@/components/courses/design-playground";
-import { RedesignSlider } from "@/components/courses/redesign-slider";
+import { DesignAudit } from "@/components/courses/design-audit";
+import { CurriculumBuildStepper } from "@/components/courses/curriculum-build-stepper";
 import { AiTerminal } from "@/components/courses/ai-terminal";
 import { TiltCard } from "@/components/motion/tilt-card";
 import { LazyNeuralPulse } from "@/components/remotion/lazy-neural-pulse";
@@ -187,11 +187,11 @@ export default async function CourseDetailPage({
           <Container className="flex flex-col gap-12">
             <SectionHeading
               eyebrow="Try it yourself"
-              title="This is the actual craft."
-              description="Every element on this page is designed. Rearrange a few — moving pixels until something clicks is most of the job."
+              title="Find what's broken. Fix it."
+              description="This card has 4 real UX problems — the kind a heuristic review catches. Click the flagged spots to fix each one."
             />
             <Reveal delay={0.1}>
-              <DesignPlayground />
+              <DesignAudit />
             </Reveal>
           </Container>
         </section>
@@ -240,18 +240,20 @@ export default async function CourseDetailPage({
         </Container>
       </section>
 
-      {/* d.5 Before/after — UI/UX only, dramatizes "we ship polish", the
-          exact claim this program makes */}
+      {/* d.5 The actual build, phase by phase — UI/UX only, replaces a
+          generic before/after with the real curriculum driving a mockup
+          through the same 4 stages a student's project actually goes
+          through, so it's specific to this course, not stock content */}
       {illustrationVariant === "ui-ux" && (
         <section className="relative py-20 sm:py-28">
           <Container className="flex flex-col gap-12">
             <SectionHeading
               eyebrow="The transformation"
-              title="Rough idea in. Shipped product out."
-              description="Drag the handle. This is the gap a cohort closes — every project starts on the left and leaves on the right."
+              title="Same card. Four weeks apart."
+              description="Click through the phases — this is the same project, staged exactly the way your cohort will actually build it."
             />
             <Reveal delay={0.1}>
-              <RedesignSlider />
+              <CurriculumBuildStepper curriculum={course.curriculum} />
             </Reveal>
           </Container>
         </section>
