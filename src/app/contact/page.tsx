@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
-import { Mail, Phone, MapPin, Globe } from "lucide-react";
+import { Globe } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/motion/reveal";
-import { site, contact, stats } from "@/data/content";
+import { site, contact, stats, courses } from "@/data/content";
 import { ApplyForm } from "./apply-form";
+import { SeatsGauge } from "@/components/contact/seats-gauge";
+import { ContactMethodRow } from "@/components/contact/contact-method-row";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -12,6 +14,14 @@ export const metadata: Metadata = {
 };
 
 const seats = stats.find((s) => s.value === 33);
+
+// Real, already-live cohort figures (from content.ts) — not invented copy.
+const openCohorts = courses.map((course) => ({
+  label: course.shortName,
+  claimed: course.seatsClaimed,
+  total: course.seatsTotal,
+  color: course.color,
+}));
 
 export default function ContactPage() {
   return (
@@ -47,12 +57,12 @@ export default function ContactPage() {
             </div>
 
             <Reveal delay={0.14} className="rounded-2xl border border-white/10 bg-ink-elevated/60 p-6 lg:mb-1">
-              <span className="font-display text-gradient text-4xl font-semibold sm:text-5xl">
-                {seats?.value ?? 33}
-              </span>
-              <p className="mt-2 text-sm leading-relaxed text-muted">
-                {seats?.detail ?? "Only 33 students get in per batch."}
-              </p>
+              <SeatsGauge
+                headline={seats?.value ?? 33}
+                headlineSuffix={seats?.suffix ?? ""}
+                detail={seats?.detail ?? "Only 33 students get in per batch."}
+                cohorts={openCohorts}
+              />
             </Reveal>
           </div>
         </Container>
@@ -71,39 +81,28 @@ export default function ContactPage() {
                 Reach us directly
               </p>
               <div className="mt-5 flex flex-col divide-y divide-white/10 border-t border-white/10">
-                <a
+                <ContactMethodRow
                   href={`mailto:${contact.email}`}
-                  className="group flex items-center gap-4 py-4 transition-colors"
-                >
-                  <Mail className="size-4 shrink-0 text-violet-light" strokeWidth={2.25} />
-                  <span className="flex flex-col">
-                    <span className="text-[0.65rem] uppercase tracking-[0.14em] text-muted-soft">Email</span>
-                    <span className="font-display text-base font-medium text-paper transition-colors group-hover:text-violet-light sm:text-lg">
-                      {contact.email}
-                    </span>
-                  </span>
-                </a>
-
-                <a
+                  icon="mail"
+                  iconClassName="text-violet-light"
+                  label="Email"
+                  value={contact.email}
+                  valueHoverClassName="group-hover:text-violet-light"
+                />
+                <ContactMethodRow
                   href={`tel:${contact.phone.replace(/\s+/g, "")}`}
-                  className="group flex items-center gap-4 py-4 transition-colors"
-                >
-                  <Phone className="size-4 shrink-0 text-coral-light" strokeWidth={2.25} />
-                  <span className="flex flex-col">
-                    <span className="text-[0.65rem] uppercase tracking-[0.14em] text-muted-soft">Phone</span>
-                    <span className="font-display text-base font-medium text-paper transition-colors group-hover:text-coral-light sm:text-lg">
-                      {contact.phone}
-                    </span>
-                  </span>
-                </a>
-
-                <div className="flex items-center gap-4 py-4">
-                  <MapPin className="size-4 shrink-0 text-acid" strokeWidth={2.25} />
-                  <span className="flex flex-col">
-                    <span className="text-[0.65rem] uppercase tracking-[0.14em] text-muted-soft">Address</span>
-                    <span className="font-display text-base font-medium text-paper sm:text-lg">{contact.address}</span>
-                  </span>
-                </div>
+                  icon="phone"
+                  iconClassName="text-coral-light"
+                  label="Phone"
+                  value={contact.phone}
+                  valueHoverClassName="group-hover:text-coral-light"
+                />
+                <ContactMethodRow
+                  icon="map-pin"
+                  iconClassName="text-acid"
+                  label="Address"
+                  value={contact.address}
+                />
               </div>
             </div>
 

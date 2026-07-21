@@ -16,6 +16,8 @@ type FormState = {
   message: string;
 };
 
+type FieldKey = keyof FormState;
+
 const initialState: FormState = {
   name: "",
   email: "",
@@ -24,25 +26,65 @@ const initialState: FormState = {
   message: "",
 };
 
+// Parent stagger for the fields' initial reveal — each field wrapper below
+// carries its own `fieldVariants` and inherits "hidden"/"show" from this
+// via React context, without needing its own initial/animate props.
+const formVariants = {
+  hidden: { opacity: 0, y: 12 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: EASE, staggerChildren: 0.06, delayChildren: 0.1 },
+  },
+};
+
+const fieldVariants = {
+  hidden: { opacity: 0, y: 10 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: EASE } },
+};
+
 // text-base (16px) on mobile prevents iOS Safari from auto-zooming the
 // viewport when a field is focused (it zooms any input with font-size
 // under 16px); the size steps back down to text-sm at sm: for desktop.
 const fieldClass =
   "w-full rounded-xl border border-white/10 bg-ink px-4 py-3 text-base sm:text-sm text-paper placeholder:text-muted-soft outline-none transition-all duration-200 focus:border-violet/60 focus:ring-2 focus:ring-violet/30 hover:border-white/20";
 
-const labelClass = "text-xs font-semibold uppercase tracking-[0.14em] text-muted-soft";
+const labelClass = "text-xs font-semibold uppercase tracking-[0.14em]";
 
 export function ApplyForm() {
   const [form, setForm] = useState<FormState>(initialState);
   const [submitted, setSubmitted] = useState(false);
+  const [focusedField, setFocusedField] = useState<FieldKey | null>(null);
+  const [shakeField, setShakeField] = useState<FieldKey | null>(null);
 
-  function update<K extends keyof FormState>(key: K, value: FormState[K]) {
+  function update<K extends FieldKey>(key: K, value: FormState[K]) {
     setForm((prev) => ({ ...prev, [key]: value }));
+    // Clear any pending shake once the learner starts fixing the field.
+    setShakeField((prev) => (prev === key ? null : prev));
   }
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setSubmitted(true);
+  }
+
+  // Literal hex values matching the --color-violet-light / --color-muted-soft
+  // tokens in globals.css — Framer Motion interpolates "color" by parsing
+  // the string as an actual color, so a raw var(...) reference won't tween.
+  function labelColor(key: FieldKey) {
+    return focusedField === key ? "#f2555c" : "#8c8b92";
+  }
+
+  function shakeProps(key: FieldKey) {
+    return {
+      animate: { x: shakeField === key ? [0, -6, 6, -4, 4, 0] : 0 },
+      transition: { duration: 0.4 },
+      onAnimationComplete: () => setShakeField((prev) => (prev === key ? null : prev)),
+      onFocus: () => setFocusedField(key),
+      onBlur: () => setFocusedField((prev) => (prev === key ? null : prev)),
+      onInvalid: () => setShakeField(key),
+      whileFocus: { scale: 1.01 },
+    };
   }
 
   return (
@@ -59,9 +101,14 @@ export function ApplyForm() {
             transition={{ duration: 0.5, ease: EASE }}
             className="flex min-h-[420px] flex-col items-center justify-center gap-5 text-center"
           >
-            <span className="flex size-16 items-center justify-center rounded-full bg-acid/15 text-acid">
+            <motion.span
+              initial={{ scale: 0, rotate: -45 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ type: "spring", stiffness: 320, damping: 16, delay: 0.1 }}
+              className="flex size-16 items-center justify-center rounded-full bg-acid/15 text-acid"
+            >
               <CheckCircle2 className="size-8" strokeWidth={2} />
-            </span>
+            </motion.span>
             <h3 className="font-display text-2xl font-medium text-paper">
               Thanks, {form.name.split(" ")[0] || "there"} — we&apos;ll be in touch.
             </h3>
@@ -84,19 +131,24 @@ export function ApplyForm() {
         ) : (
           <motion.form
             key="form"
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.5, ease: EASE }}
+            variants={formVariants}
+            initial="hidden"
+            animate="show"
+            exit={{ opacity: 0, y: -12, transition: { duration: 0.3, ease: EASE } }}
             onSubmit={handleSubmit}
             className="relative flex flex-col gap-5"
           >
             <div className="grid gap-5 sm:grid-cols-2">
-              <div className="flex flex-col gap-2">
-                <label htmlFor="name" className={labelClass}>
+              <motion.div variants={fieldVariants} className="flex flex-col gap-2">
+                <motion.label
+                  htmlFor="name"
+                  animate={{ color: labelColor("name") }}
+                  transition={{ duration: 0.2 }}
+                  className={labelClass}
+                >
                   Full name
-                </label>
-                <input
+                </motion.label>
+                <motion.input
                   id="name"
                   required
                   type="text"
@@ -104,13 +156,19 @@ export function ApplyForm() {
                   onChange={(e) => update("name", e.target.value)}
                   placeholder="Ananya Reddy"
                   className={fieldClass}
+                  {...shakeProps("name")}
                 />
-              </div>
-              <div className="flex flex-col gap-2">
-                <label htmlFor="phone" className={labelClass}>
+              </motion.div>
+              <motion.div variants={fieldVariants} className="flex flex-col gap-2">
+                <motion.label
+                  htmlFor="phone"
+                  animate={{ color: labelColor("phone") }}
+                  transition={{ duration: 0.2 }}
+                  className={labelClass}
+                >
                   Phone
-                </label>
-                <input
+                </motion.label>
+                <motion.input
                   id="phone"
                   required
                   type="tel"
@@ -118,15 +176,21 @@ export function ApplyForm() {
                   onChange={(e) => update("phone", e.target.value)}
                   placeholder="+91 90000 00000"
                   className={fieldClass}
+                  {...shakeProps("phone")}
                 />
-              </div>
+              </motion.div>
             </div>
 
-            <div className="flex flex-col gap-2">
-              <label htmlFor="email" className={labelClass}>
+            <motion.div variants={fieldVariants} className="flex flex-col gap-2">
+              <motion.label
+                htmlFor="email"
+                animate={{ color: labelColor("email") }}
+                transition={{ duration: 0.2 }}
+                className={labelClass}
+              >
                 Email
-              </label>
-              <input
+              </motion.label>
+              <motion.input
                 id="email"
                 required
                 type="email"
@@ -134,53 +198,70 @@ export function ApplyForm() {
                 onChange={(e) => update("email", e.target.value)}
                 placeholder="you@example.com"
                 className={fieldClass}
+                {...shakeProps("email")}
               />
-            </div>
+            </motion.div>
 
-            <div className="flex flex-col gap-2">
-              <label htmlFor="program" className={labelClass}>
+            <motion.div variants={fieldVariants} className="flex flex-col gap-2">
+              <motion.label
+                htmlFor="program"
+                animate={{ color: labelColor("program") }}
+                transition={{ duration: 0.2 }}
+                className={labelClass}
+              >
                 Program interest
-              </label>
-              <select
+              </motion.label>
+              <motion.select
                 id="program"
                 required
                 value={form.program}
                 onChange={(e) => update("program", e.target.value)}
                 className={cn(fieldClass, "appearance-none bg-ink")}
+                {...shakeProps("program")}
               >
                 {courses.map((course) => (
                   <option key={course.slug} value={course.slug} className="bg-ink-elevated text-paper">
                     {course.shortName}
                   </option>
                 ))}
-              </select>
-            </div>
+              </motion.select>
+            </motion.div>
 
-            <div className="flex flex-col gap-2">
-              <label htmlFor="message" className={labelClass}>
+            <motion.div variants={fieldVariants} className="flex flex-col gap-2">
+              <motion.label
+                htmlFor="message"
+                animate={{ color: labelColor("message") }}
+                transition={{ duration: 0.2 }}
+                className={labelClass}
+              >
                 Tell us a bit about yourself
-              </label>
-              <textarea
+              </motion.label>
+              <motion.textarea
                 id="message"
                 rows={4}
                 value={form.message}
                 onChange={(e) => update("message", e.target.value)}
                 placeholder="What are you working toward, and why now?"
                 className={cn(fieldClass, "resize-none")}
+                {...shakeProps("message")}
               />
-            </div>
+            </motion.div>
 
-            <button
+            <motion.button
+              variants={fieldVariants}
               type="submit"
-              className="group relative mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-paper px-6 py-3.5 text-sm font-semibold tracking-tight text-ink transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_0_1px_rgba(246,244,251,0.2),0_12px_30px_-8px_rgba(124,92,255,0.55)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet"
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.96 }}
+              transition={{ type: "spring", stiffness: 420, damping: 22 }}
+              className="group relative mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-paper px-6 py-3.5 text-sm font-semibold tracking-tight text-ink transition-shadow duration-300 hover:shadow-[0_0_0_1px_rgba(246,244,251,0.2),0_12px_30px_-8px_rgba(124,92,255,0.55)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet"
             >
               Submit application
               <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" strokeWidth={2.5} />
-            </button>
+            </motion.button>
 
-            <p className="text-center text-xs text-muted-soft">
+            <motion.p variants={fieldVariants} className="text-center text-xs text-muted-soft">
               33 seats per cohort. We reply to every serious applicant.
-            </p>
+            </motion.p>
           </motion.form>
         )}
       </AnimatePresence>
