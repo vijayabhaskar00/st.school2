@@ -20,7 +20,10 @@ function getTimeLeft(deadline: string): TimeLeft | null {
 function Digit({ value, textClassName }: { value: number; textClassName: string }) {
   const padded = String(value).padStart(2, "0");
   return (
-    <span className="relative inline-flex h-[1.1em] w-[1.5ch] overflow-hidden text-center">
+    // A tight `em`-based height clips the glyph's ascenders/descenders once
+    // you factor in the font's natural line-height — this needs real
+    // headroom, not just enough to fit the digit's cap-height.
+    <span className="relative inline-flex h-[1.5em] w-[1.5ch] overflow-hidden text-center leading-none">
       <AnimatePresence mode="popLayout" initial={false}>
         <motion.span
           key={padded}
@@ -28,7 +31,10 @@ function Digit({ value, textClassName }: { value: number; textClassName: string 
           animate={{ y: "0%", opacity: 1 }}
           exit={{ y: "-60%", opacity: 0 }}
           transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-          className={cn("absolute inset-0 tabular-nums", textClassName)}
+          className={cn(
+            "absolute inset-0 flex items-center justify-center leading-none tabular-nums",
+            textClassName,
+          )}
         >
           {padded}
         </motion.span>
