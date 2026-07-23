@@ -10,7 +10,7 @@ export function Marquee({
   reverse?: boolean;
 }) {
   return (
-    <div className={cn("group relative flex overflow-hidden", className)}>
+    <div className={cn("group relative flex gap-12 overflow-hidden", className)}>
       <div
         className={cn(
           "flex shrink-0 items-center gap-12 animate-marquee group-hover:[animation-play-state:paused]",

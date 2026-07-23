@@ -63,7 +63,7 @@
   --font-sans: var(--font-inter);
   --font-display: var(--font-space-grotesk);
 
-  --animate-marquee: marquee 32s linear infinite;
+  --animate-marquee: marquee 20s linear infinite;
   --animate-float: float 7s ease-in-out infinite;
   --animate-spin-slow: spin 14s linear infinite;
 
