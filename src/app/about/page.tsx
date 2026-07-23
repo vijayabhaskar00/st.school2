@@ -4,9 +4,14 @@ import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Reveal } from "@/components/motion/reveal";
+import { TiltCard } from "@/components/motion/tilt-card";
 import { OriginNetwork } from "@/components/about/origin-network";
 import { StatsThread } from "@/components/about/stats-thread";
 import { ProcessProgressLine } from "@/components/about/process-progress-line";
+import { StaggerHeadline } from "@/components/about/stagger-headline";
+import { HeroParallaxGlow } from "@/components/about/hero-parallax-glow";
+import { WhyUsRow } from "@/components/about/why-us-row";
+import { GlowBorderPanel } from "@/components/about/glow-border-panel";
 import { site, parentBrand, whyUs, process, contact } from "@/data/content";
 import { cn } from "@/lib/utils";
 
@@ -15,17 +20,19 @@ export const metadata: Metadata = {
   description: parentBrand.description,
 };
 
+const headlineWords = [
+  ...`“A ${site.parentBrand} initiative, built to`.split(" ").map((text) => ({ text })),
+  ...`launch careers, not just courses.”`
+    .split(" ")
+    .map((text) => ({ text, highlight: true })),
+];
+
 export default function AboutPage() {
   return (
     <>
       {/* Intro — asymmetric: pull-quote headline against an oversized founding year */}
       <section className="relative overflow-hidden pt-40 pb-24 sm:pt-48 sm:pb-32">
-        <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_100%_50%_at_50%_0%,rgba(255,91,61,0.22),transparent)]" />
-          <div className="absolute left-[10%] top-[10%] size-72 rounded-full bg-coral/20 blur-[110px] animate-float" aria-hidden />
-          <div className="absolute right-[8%] top-[28%] size-80 rounded-full bg-violet/25 blur-[120px] animate-float [animation-delay:-4s]" aria-hidden />
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(246,244,251,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(246,244,251,0.05)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_70%_50%_at_50%_0%,black,transparent)]" />
-        </div>
+        <HeroParallaxGlow />
 
         <Container>
           <div className="grid gap-12 lg:grid-cols-[1.35fr_0.65fr] lg:items-end lg:gap-10">
@@ -35,12 +42,10 @@ export default function AboutPage() {
                   About {site.name}
                 </span>
               </Reveal>
-              <Reveal delay={0.08}>
-                <h1 className="font-display mt-6 max-w-2xl text-balance text-4xl font-medium leading-[1.12] tracking-tight sm:text-6xl lg:text-[3.6rem]">
-                  &ldquo;A {site.parentBrand} initiative, built to{" "}
-                  <span className="text-gradient">launch careers, not just courses.</span>&rdquo;
-                </h1>
-              </Reveal>
+              <StaggerHeadline
+                words={headlineWords}
+                className="font-display mt-6 max-w-2xl text-balance text-4xl font-medium leading-[1.12] tracking-tight sm:text-6xl lg:text-[3.6rem]"
+              />
               <Reveal delay={0.16}>
                 <p className="mt-8 max-w-xl text-balance text-base leading-relaxed text-muted sm:text-lg">
                   {site.description}
@@ -119,27 +124,15 @@ export default function AboutPage() {
           />
 
           <div className="flex flex-col divide-y divide-white/10 border-t border-white/10">
-            {whyUs.map((item, i) => {
-              const alt = i % 2 === 1;
-              return (
-                <Reveal key={item.title} delay={i * 0.07}>
-                  <div
-                    className={cn(
-                      "group flex flex-col gap-4 py-8 transition-colors sm:flex-row sm:items-center sm:gap-10",
-                      alt && "sm:flex-row-reverse",
-                    )}
-                  >
-                    <span className="font-display shrink-0 text-3xl font-semibold text-muted-soft transition-colors group-hover:text-violet-light sm:w-24 sm:text-4xl">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <div className="flex flex-col gap-2">
-                      <h3 className="font-display text-xl font-medium text-paper sm:text-2xl">{item.title}</h3>
-                      <p className="max-w-xl text-sm leading-relaxed text-muted sm:text-base">{item.description}</p>
-                    </div>
-                  </div>
-                </Reveal>
-              );
-            })}
+            {whyUs.map((item, i) => (
+              <WhyUsRow
+                key={item.title}
+                index={i}
+                title={item.title}
+                description={item.description}
+                reverse={i % 2 === 1}
+              />
+            ))}
           </div>
         </Container>
       </section>
@@ -170,11 +163,13 @@ export default function AboutPage() {
                     i % 2 === 1 && "lg:mt-10",
                   )}
                 >
-                  <div className="flex h-full flex-col gap-4 rounded-2xl border border-white/10 bg-ink-elevated p-6">
-                    <span className="font-display text-3xl font-semibold text-muted-soft">{step.step}</span>
-                    <h3 className="font-display text-lg font-medium text-paper">{step.title}</h3>
-                    <p className="text-sm leading-relaxed text-muted">{step.description}</p>
-                  </div>
+                  <TiltCard intensity={8} className="h-full">
+                    <div className="flex h-full flex-col gap-4 rounded-2xl border border-white/10 bg-ink-elevated p-6 transition-colors duration-300 hover:border-white/20">
+                      <span className="font-display text-3xl font-semibold text-muted-soft">{step.step}</span>
+                      <h3 className="font-display text-lg font-medium text-paper">{step.title}</h3>
+                      <p className="text-sm leading-relaxed text-muted">{step.description}</p>
+                    </div>
+                  </TiltCard>
                 </Reveal>
               ))}
             </div>
@@ -187,7 +182,7 @@ export default function AboutPage() {
       <section className="relative pb-28 sm:pb-36">
         <Container>
           <Reveal>
-            <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-ink-elevated px-8 py-16 text-center sm:px-16 sm:py-20">
+            <GlowBorderPanel className="bg-ink-elevated px-8 py-16 text-center sm:px-16 sm:py-20">
               <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_100%_80%_at_50%_0%,rgba(124,92,255,0.3),transparent)]" />
               <div className="pointer-events-none absolute -bottom-24 left-1/2 h-64 w-[40rem] -translate-x-1/2 rounded-full bg-coral/20 blur-[110px]" aria-hidden />
 
@@ -206,7 +201,7 @@ export default function AboutPage() {
                   Apply for a seat
                 </Button>
               </div>
-            </div>
+            </GlowBorderPanel>
           </Reveal>
         </Container>
       </section>
