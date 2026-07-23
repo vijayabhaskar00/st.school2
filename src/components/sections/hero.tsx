@@ -130,7 +130,7 @@ export function Hero() {
             <SelectionFieldPlayer className="overflow-hidden rounded-full" />
           </TiltCard>
           <p className="mt-5 text-center text-xs uppercase tracking-[0.18em] text-muted-soft">
-            1,000+ apply. 33 make the cohort.
+            1,000+ apply. 33 selected. 95% placed.
           </p>
         </motion.div>
       </Container>

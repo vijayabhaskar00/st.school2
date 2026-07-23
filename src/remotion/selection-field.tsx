@@ -6,20 +6,45 @@ import {
   useCurrentFrame,
 } from "remotion";
 
-// The homepage-exclusive hero piece — dramatizes the brand's actual hook
-// (1,000+ applications, 33 seats) instead of a generic demo reel. A field
-// of dim "applicant" particles surrounds a slowly rotating ring of 33
-// bright, connected nodes — the selected cohort — swept periodically by an
-// expanding radar-style pulse. Built once, deterministically (remotion's
-// seeded `random`) so it's identical on every render.
+// The homepage-exclusive hero piece — dramatizes the brand's actual funnel
+// (1,000+ applications -> 33 seats -> 95% placed) instead of a generic demo
+// reel or a network graphic that stops at "selected". A field of dim
+// "applicant" particles surrounds a slowly rotating ring of 33 bright,
+// connected nodes — the selected cohort — which then launches outward in a
+// third act representing real placement outcomes, before resetting. Built
+// once, deterministically (remotion's seeded `random`) so it's identical on
+// every render.
 
 const OUTER_COUNT = 70;
 const RING_COUNT = 33;
 const CENTER = { x: 400, y: 400 };
 const RING_RADIUS = 190;
 
+// Three acts, one shared clock — every component below reads the same
+// weights off `useCurrentFrame()` so the center-text swap and the ring's
+// color/motion state can never drift out of sync with each other.
+const CYCLE_LENGTH = 195;
+
+function getPhaseWeights(frame: number) {
+  const local = frame % CYCLE_LENGTH;
+  const apply = interpolate(local, [0, 15, 55, 70], [0, 1, 1, 0], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const select = interpolate(local, [70, 85, 125, 140], [0, 1, 1, 0], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const place = interpolate(local, [140, 155, 180, 195], [0, 1, 1, 0], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  return { apply, select, place };
+}
+
 function OuterField() {
   const frame = useCurrentFrame();
+  const { place } = getPhaseWeights(frame);
 
   return (
     <>
@@ -34,6 +59,8 @@ function OuterField() {
           fps: 30,
           config: { damping: 14 },
         });
+        // The outer field recedes during the placement act — attention
+        // belongs entirely on the launch happening in the ring.
         return (
           <circle
             key={seed}
@@ -41,7 +68,7 @@ function OuterField() {
             cy={y}
             r={size}
             fill="var(--color-muted)"
-            opacity={Math.max(0, breathe) * entrance}
+            opacity={Math.max(0, breathe) * entrance * (1 - place * 0.6)}
           />
         );
       })}
@@ -69,6 +96,11 @@ const TRAIL_STEPS = [0, 0.05, 0.1, 0.15];
 
 function Comets({ rotation }: { rotation: number }) {
   const frame = useCurrentFrame();
+  const { place } = getPhaseWeights(frame);
+  // Applicants stop streaming in once the cohort has launched — a moment
+  // of stillness while the ring itself carries the placement act.
+  const streamOpacity = 1 - place;
+  if (streamOpacity <= 0) return null;
 
   return (
     <>
@@ -105,7 +137,7 @@ function Comets({ rotation }: { rotation: number }) {
         });
 
         return (
-          <g key={seed}>
+          <g key={seed} opacity={streamOpacity}>
             {TRAIL_STEPS.map((back, si) => {
               const p = posAt(travelT - back);
               const fade = (1 - si / TRAIL_STEPS.length) * interpolate(travelT, [0, 0.08], [0, 1], {
@@ -145,11 +177,16 @@ function Comets({ rotation }: { rotation: number }) {
 function SelectionRing() {
   const frame = useCurrentFrame();
   const rotation = frame * 0.25;
+  const { place } = getPhaseWeights(frame);
+  // Eased so the launch reads as a snap-out-then-settle rather than a
+  // linear crawl — matches the spring-driven motion used everywhere else
+  // in this composition.
+  const launch = easeOutCubic(place);
 
-  const ringPositions = Array.from({ length: RING_COUNT }, (_, i) => ({
-    ...ringPosition(i, rotation),
-    i,
-  }));
+  const ringPositions = Array.from({ length: RING_COUNT }, (_, i) => {
+    const angle = (i / RING_COUNT) * Math.PI * 2 + (rotation * Math.PI) / 180;
+    return { ...ringPosition(i, rotation), angle, i };
+  });
 
   // Expanding radar pulse, repeating every 90 frames.
   const pulseT = (frame % 90) / 90;
@@ -191,7 +228,7 @@ function SelectionRing() {
             x2={next.x}
             y2={next.y}
             stroke={p.i % 2 === 0 ? "var(--color-violet-light)" : "var(--color-coral-light)"}
-            strokeOpacity={0.2}
+            strokeOpacity={0.2 * (1 - launch * 0.9)}
             strokeWidth={1}
           />
         );
@@ -206,15 +243,53 @@ function SelectionRing() {
           config: { damping: 10, mass: 0.5 },
         });
         const breathe = 1 + Math.sin((frame + p.i * 14) / 22) * 0.18;
+
+        // Act three: the cohort launches outward along its own radial
+        // spoke and each node's color hands off from "selected" coral to
+        // a bright placement white — two overlaid dots crossfading by
+        // opacity, the same idiom KineticStat uses for its text swap,
+        // rather than trying to tween a CSS color string frame by frame.
+        const dx = Math.cos(p.angle) * launch * 34;
+        const dy = Math.sin(p.angle) * launch * 34;
+        const rayLength = 10 + launch * 24;
+        const rayX = p.x + Math.cos(p.angle) * rayLength;
+        const rayY = p.y + Math.sin(p.angle) * rayLength;
+
         return (
           <g key={`node-${p.i}`}>
-            <circle cx={p.x} cy={p.y} r={11 * breathe} fill="var(--color-brand-red)" opacity={0.18 * entrance} />
+            {launch > 0.02 && (
+              <line
+                x1={p.x + dx}
+                y1={p.y + dy}
+                x2={rayX + dx}
+                y2={rayY + dy}
+                stroke="var(--color-paper)"
+                strokeWidth={1.5}
+                strokeLinecap="round"
+                opacity={launch * 0.7}
+              />
+            )}
             <circle
-              cx={p.x}
-              cy={p.y}
+              cx={p.x + dx}
+              cy={p.y + dy}
+              r={11 * breathe}
+              fill="var(--color-brand-red)"
+              opacity={0.18 * entrance * (1 - launch * 0.5)}
+            />
+            <circle
+              cx={p.x + dx}
+              cy={p.y + dy}
               r={4.5}
               fill="var(--color-coral-light)"
-              opacity={entrance}
+              opacity={entrance * (1 - launch)}
+              filter="url(#nodeGlow)"
+            />
+            <circle
+              cx={p.x + dx}
+              cy={p.y + dy}
+              r={4.5}
+              fill="var(--color-paper)"
+              opacity={entrance * launch}
               filter="url(#nodeGlow)"
             />
           </g>
@@ -236,17 +311,7 @@ function SelectionRing() {
 
 function KineticStat() {
   const frame = useCurrentFrame();
-  const cycleLength = 130;
-  const local = frame % cycleLength;
-
-  const phaseOneOpacity = interpolate(local, [0, 15, 55, 70], [0, 1, 1, 0], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-  const phaseTwoOpacity = interpolate(local, [70, 85, 120, cycleLength], [0, 1, 1, 0], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
+  const { apply, select, place } = getPhaseWeights(frame);
 
   // Anchored at the composition's dead center (inside the empty dashed
   // ring), the one point where the circular crop applied by the CSS wrapper
@@ -256,15 +321,21 @@ function KineticStat() {
     <div className="relative flex h-10 items-center justify-center">
       <div
         className="font-display absolute text-lg font-semibold text-paper sm:text-xl"
-        style={{ opacity: phaseOneOpacity }}
+        style={{ opacity: apply }}
       >
         1,000+ applicants
       </div>
       <div
         className="font-display absolute text-lg font-semibold text-coral-light sm:text-xl"
-        style={{ opacity: phaseTwoOpacity }}
+        style={{ opacity: select }}
       >
         33 selected
+      </div>
+      <div
+        className="font-display absolute text-lg font-semibold text-paper sm:text-xl"
+        style={{ opacity: place }}
+      >
+        95% placed
       </div>
     </div>
   );

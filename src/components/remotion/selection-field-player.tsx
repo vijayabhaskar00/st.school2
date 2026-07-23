@@ -17,7 +17,7 @@ export function SelectionFieldPlayer({
     <div className={cn("aspect-square w-full", className)}>
       <Player
         component={SelectionField}
-        durationInFrames={260}
+        durationInFrames={195}
         fps={30}
         compositionWidth={800}
         compositionHeight={800}
