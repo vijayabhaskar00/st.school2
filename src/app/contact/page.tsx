@@ -2,15 +2,14 @@ import type { Metadata } from "next";
 import { Globe } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/motion/reveal";
-import { site, contact, stats, courses } from "@/data/content";
+import { site, contact, stats, courses, contactPage } from "@/data/content";
 import { ApplyForm } from "./apply-form";
 import { SeatsGauge } from "@/components/contact/seats-gauge";
 import { ContactMethodRow } from "@/components/contact/contact-method-row";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description:
-    "Apply for a St.School seat — 33 spots per cohort. Reach us directly or fill out the application form.",
+  description: contactPage.metaDescription,
 };
 
 const seats = stats.find((s) => s.value === 33);
@@ -39,19 +38,18 @@ export default function ContactPage() {
             <div>
               <Reveal>
                 <span className="text-xs font-semibold uppercase tracking-[0.24em] text-muted-soft">
-                  Get in touch
+                  {contactPage.heroEyebrow}
                 </span>
               </Reveal>
               <Reveal delay={0.08}>
                 <h1 className="font-display mt-6 max-w-2xl text-balance text-5xl font-medium leading-[1.02] tracking-tight sm:text-7xl lg:text-[5.5rem]">
-                  Apply for a{" "}
-                  <span className="text-gradient">seat.</span>
+                  {contactPage.heroHeadingPrefix}{" "}
+                  <span className="text-gradient">{contactPage.heroHeadingHighlight}</span>
                 </h1>
               </Reveal>
               <Reveal delay={0.16}>
                 <p className="mt-7 max-w-xl text-balance text-base leading-relaxed text-muted sm:text-lg">
-                  Tell us who you are and where you want to go — admissions reviews every
-                  application personally.
+                  {contactPage.heroSubhead}
                 </p>
               </Reveal>
             </div>

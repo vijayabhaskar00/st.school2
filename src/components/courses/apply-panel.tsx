@@ -1,4 +1,5 @@
 import type { Course } from "@/data/content";
+import { site } from "@/data/content";
 import { Button } from "@/components/ui/button";
 import { CountdownTimer } from "@/components/courses/countdown-timer";
 import { SeatsProgress } from "@/components/courses/seats-progress";
@@ -28,7 +29,7 @@ export function ApplyPanel({ course }: { course: Course }) {
 
         <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
           <Button href="/contact" variant="primary" className="justify-center px-7 py-3.5 text-base">
-            Apply / Register Now
+            {site.ctaLabel}
           </Button>
           <BrochureButton course={course} className="justify-center" />
         </div>

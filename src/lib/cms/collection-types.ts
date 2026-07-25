@@ -1,7 +1,7 @@
 import type { ComponentType } from "react";
 import type { ZodType } from "zod";
 
-export const CMS_GROUPS = ["Homepage", "Programs", "Company & Navigation"] as const;
+export const CMS_GROUPS = ["Homepage", "Programs", "Pages", "Company & Navigation"] as const;
 export type CmsGroup = (typeof CMS_GROUPS)[number];
 
 export type CollectionConfig<T> = {

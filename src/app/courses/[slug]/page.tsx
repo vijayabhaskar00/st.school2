@@ -23,7 +23,7 @@ import { TiltCard } from "@/components/motion/tilt-card";
 import { LazyNeuralPulse } from "@/components/remotion/lazy-neural-pulse";
 import { LazyDesignSystemBuild } from "@/components/remotion/lazy-design-system-build";
 import { COLOR_THEME } from "@/components/courses/color-theme";
-import { courses, site } from "@/data/content";
+import { courses, site, courseTemplate } from "@/data/content";
 import { cn } from "@/lib/utils";
 
 type CourseParams = { slug: string };
@@ -85,6 +85,16 @@ export default async function CourseDetailPage({
   // on-brand hero (ProgramEmblem) without being force-fit into either the
   // Python or UI/UX template.
   const template = course.template;
+  // The closing CTA heading and body are shared, CMS-editable copy (see
+  // content/course-template.json) that render on every course's page —
+  // each contains a literal "{shortName}" token marking where this
+  // course's short name gets substituted in. The heading additionally
+  // renders that substituted portion (and anything after it, like the
+  // trailing "?") in the accent gradient, matching how this heading was
+  // originally hardcoded.
+  const [closingCtaHeadingPrefix, closingCtaHeadingSuffix] =
+    courseTemplate.closingCtaHeading.split("{shortName}");
+  const closingCtaBody = courseTemplate.closingCtaBody.replace("{shortName}", course.shortName);
 
   return (
     <>
@@ -181,7 +191,7 @@ export default async function CourseDetailPage({
         <Container className="flex flex-col gap-12">
           <SectionHeading
             eyebrow="Outcomes"
-            title="What you'll walk away able to do"
+            title={courseTemplate.outcomesHeading}
             description={`Every ${course.shortName} cohort is built around outcomes you can put on a resume, not a syllabus.`}
             align={isAlt ? "center" : "left"}
           />
@@ -234,7 +244,7 @@ export default async function CourseDetailPage({
         <Container className="flex flex-col gap-14">
           <SectionHeading
             eyebrow="Curriculum"
-            title="The roadmap, phase by phase"
+            title={courseTemplate.roadmapHeading}
             description={`A ${course.duration} path from first principles to a portfolio you can defend in an interview.`}
           />
           <CurriculumTimeline curriculum={course.curriculum} color={course.color} stagger={isAlt} />
@@ -246,7 +256,7 @@ export default async function CourseDetailPage({
         <Container className="flex flex-col gap-12">
           <SectionHeading
             eyebrow="Why this program"
-            title="Built different, on purpose"
+            title={courseTemplate.highlightsHeading}
           />
           <HighlightGrid
             highlights={course.highlights}
@@ -284,15 +294,18 @@ export default async function CourseDetailPage({
         <Container className="flex flex-col items-center gap-6 text-center">
           <Reveal>
             <h2 className="font-display max-w-2xl text-balance text-3xl font-medium leading-[1.1] tracking-tight sm:text-5xl">
-              Ready to apply for{" "}
-              <span className="text-gradient">{course.shortName}?</span>
+              {closingCtaHeadingPrefix}
+              {closingCtaHeadingSuffix !== undefined ? (
+                <span className="text-gradient">
+                  {course.shortName}
+                  {closingCtaHeadingSuffix}
+                </span>
+              ) : null}
             </h2>
           </Reveal>
           <Reveal delay={0.08}>
             <p className="max-w-xl text-balance text-base leading-relaxed text-muted sm:text-lg">
-              Seats are hand-picked, not first-come-first-served. Tell us where
-              you&apos;re starting from — the {course.shortName} team will take it
-              from there.
+              {closingCtaBody}
             </p>
           </Reveal>
           <Reveal delay={0.14}>

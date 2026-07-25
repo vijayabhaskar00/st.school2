@@ -9,6 +9,7 @@ export function FaqsEditor({ value, onChange }: { value: FaqsContent; onChange: 
       label="FAQs"
       items={value}
       onChange={onChange}
+      collapsible
       createItem={() => ({ question: "", answer: "" })}
       itemLabel={(item) => item.question || "New FAQ"}
       renderItem={(item, update) => (

@@ -20,6 +20,10 @@ import {
   FaqsSchema,
   ParentBrandSchema,
   CoursesSchema,
+  AboutPageSchema,
+  ContactPageSchema,
+  CoursesPageSchema,
+  CourseTemplateSchema,
   type CourseContent,
 } from "@/lib/cms/schema";
 
@@ -35,6 +39,10 @@ import testimonialsJson from "@content/testimonials.json";
 import faqsJson from "@content/faqs.json";
 import parentBrandJson from "@content/parent-brand.json";
 import coursesJson from "@content/courses.json";
+import aboutPageJson from "@content/about-page.json";
+import contactPageJson from "@content/contact-page.json";
+import coursesPageJson from "@content/courses-page.json";
+import courseTemplateJson from "@content/course-template.json";
 
 function loadContent<T>(schema: { parse: (v: unknown) => T }, data: unknown, source: string): T {
   try {
@@ -58,5 +66,9 @@ export const testimonials = loadContent(TestimonialsSchema, testimonialsJson, "t
 export const faqs = loadContent(FaqsSchema, faqsJson, "faqs.json");
 export const parentBrand = loadContent(ParentBrandSchema, parentBrandJson, "parent-brand.json");
 export const courses = loadContent(CoursesSchema, coursesJson, "courses.json");
+export const aboutPage = loadContent(AboutPageSchema, aboutPageJson, "about-page.json");
+export const contactPage = loadContent(ContactPageSchema, contactPageJson, "contact-page.json");
+export const coursesPage = loadContent(CoursesPageSchema, coursesPageJson, "courses-page.json");
+export const courseTemplate = loadContent(CourseTemplateSchema, courseTemplateJson, "course-template.json");
 
 export type Course = CourseContent;

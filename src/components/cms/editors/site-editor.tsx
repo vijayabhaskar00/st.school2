@@ -31,6 +31,18 @@ export function SiteEditor({ value, onChange }: { value: SiteContent; onChange: 
         onChange={(v) => onChange({ ...value, url: v })}
         hint="Include the protocol, e.g. https://st.school"
       />
+      <TextField
+        label="Apply CTA label"
+        value={value.ctaLabel}
+        onChange={(v) => onChange({ ...value, ctaLabel: v })}
+        hint='Used on every "apply" button across the site — navbar, footer, sticky course bar, and course apply panel.'
+      />
+      <TextField
+        label="Footer tagline"
+        value={value.footerTagline}
+        onChange={(v) => onChange({ ...value, footerTagline: v })}
+        hint="The short line under the footer's brand column."
+      />
     </div>
   );
 }

@@ -7,7 +7,7 @@ import { Menu, X } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/brand/logo";
-import { navLinks } from "@/data/content";
+import { navLinks, site } from "@/data/content";
 import { cn } from "@/lib/utils";
 
 export function Navbar() {
@@ -56,7 +56,7 @@ export function Navbar() {
 
         <div className="hidden lg:block">
           <Button href="/contact" variant="primary" className="px-5 py-2.5 text-sm">
-            Apply Now
+            {site.ctaLabel}
           </Button>
         </div>
 
@@ -92,7 +92,7 @@ export function Navbar() {
                 </Link>
               ))}
               <Button href="/contact" variant="primary" className="mt-4 justify-center">
-                Apply Now
+                {site.ctaLabel}
               </Button>
             </Container>
           </motion.div>

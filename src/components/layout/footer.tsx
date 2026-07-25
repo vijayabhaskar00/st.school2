@@ -69,7 +69,7 @@ export function Footer() {
 
         <div className="flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-8 text-xs text-muted-soft sm:flex-row sm:items-center">
           <p>© {new Date().getFullYear()} {site.name}. Part of the {site.parentBrand} network.</p>
-          <p>Built to be next-level, on purpose.</p>
+          <p>{site.footerTagline}</p>
         </div>
       </Container>
     </footer>

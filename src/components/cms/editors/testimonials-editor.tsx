@@ -15,6 +15,7 @@ export function TestimonialsEditor({
       label="Testimonials"
       items={value}
       onChange={onChange}
+      collapsible
       createItem={() => ({ quote: "", name: "", role: "" })}
       itemLabel={(item) => item.name || "New testimonial"}
       renderItem={(item, update) => (

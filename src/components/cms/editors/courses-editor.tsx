@@ -51,6 +51,7 @@ export function CoursesEditor({ value, onChange }: { value: Course[]; onChange: 
       items={value}
       onChange={onChange}
       minItems={1}
+      collapsible
       createItem={createCourse}
       itemLabel={(course) => course.shortName || "New program"}
       renderItem={(course, update) => {
@@ -116,6 +117,7 @@ export function CoursesEditor({ value, onChange }: { value: Course[]; onChange: 
             items={course.curriculum}
             onChange={(curriculum) => update({ ...course, curriculum })}
             minItems={1}
+            collapsible
             createItem={() => ({ phase: "", title: "", description: "", topics: [""] })}
             itemLabel={(item) => (item.phase || item.title ? `${item.phase} — ${item.title}` : "New phase")}
             renderItem={(item, updateItem) => (
@@ -141,6 +143,7 @@ export function CoursesEditor({ value, onChange }: { value: Course[]; onChange: 
             items={course.highlights}
             onChange={(highlights) => update({ ...course, highlights })}
             minItems={1}
+            collapsible
             createItem={() => ({ title: "", description: "" })}
             itemLabel={(item) => item.title || "New highlight"}
             renderItem={(item, updateItem) => (

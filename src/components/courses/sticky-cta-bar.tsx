@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import type { Course } from "@/data/content";
+import { site } from "@/data/content";
 import { Button } from "@/components/ui/button";
 import { BrochureButton } from "@/components/courses/brochure-button";
 import { COLOR_THEME } from "@/components/courses/color-theme";
@@ -50,7 +51,7 @@ export function StickyCtaBar({ course }: { course: Course }) {
                 className="px-4 py-2.5 text-xs sm:text-sm"
               />
               <Button href="/contact" variant="primary" className="px-5 py-2.5 text-xs sm:text-sm">
-                Apply Now
+                {site.ctaLabel}
               </Button>
             </div>
           </div>

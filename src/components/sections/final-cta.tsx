@@ -38,7 +38,7 @@ export function FinalCTA() {
           <Reveal delay={0.2}>
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Button href="/contact" variant="primary" className="px-8 py-3.5 text-base">
-                Apply Now
+                {site.ctaLabel}
               </Button>
               <Button href="/courses" variant="secondary" className="px-8 py-3.5 text-base">
                 View Programs

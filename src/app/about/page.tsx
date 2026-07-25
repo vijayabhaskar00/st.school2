@@ -12,7 +12,7 @@ import { StaggerHeadline } from "@/components/about/stagger-headline";
 import { HeroParallaxGlow } from "@/components/about/hero-parallax-glow";
 import { WhyUsRow } from "@/components/about/why-us-row";
 import { GlowBorderPanel } from "@/components/about/glow-border-panel";
-import { site, parentBrand, whyUs, process, contact } from "@/data/content";
+import { site, parentBrand, whyUs, process, contact, aboutPage } from "@/data/content";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -21,10 +21,11 @@ export const metadata: Metadata = {
 };
 
 const headlineWords = [
-  ...`“A ${site.parentBrand} initiative, built to`.split(" ").map((text) => ({ text })),
-  ...`launch careers, not just courses.”`
+  ...aboutPage.heroQuotePrefix
+    .replace("{parentBrand}", site.parentBrand)
     .split(" ")
-    .map((text) => ({ text, highlight: true })),
+    .map((text) => ({ text })),
+  ...aboutPage.heroQuoteHighlight.split(" ").map((text) => ({ text, highlight: true })),
 ];
 
 export default function AboutPage() {
@@ -39,7 +40,7 @@ export default function AboutPage() {
             <div>
               <Reveal>
                 <span className="text-xs font-semibold uppercase tracking-[0.24em] text-muted-soft">
-                  About {site.name}
+                  {aboutPage.heroEyebrowPrefix} {site.name}
                 </span>
               </Reveal>
               <StaggerHeadline
@@ -72,11 +73,11 @@ export default function AboutPage() {
       <section className="relative py-24 sm:py-32">
         <Container className="flex flex-col gap-10">
           <SectionHeading
-            eyebrow="The story"
+            eyebrow={aboutPage.storyEyebrow}
             title={
               <>
-                Everything St.School runs on{" "}
-                <span className="text-gradient">Student Tribe&apos;s decade of work.</span>
+                {aboutPage.storyHeadingPrefix}{" "}
+                <span className="text-gradient">{aboutPage.storyHeadingHighlight}</span>
               </>
             }
             description={parentBrand.description}
@@ -113,14 +114,14 @@ export default function AboutPage() {
       <section className="relative py-24 sm:py-32">
         <Container className="flex flex-col gap-14">
           <SectionHeading
-            eyebrow="Why we exist"
+            eyebrow={aboutPage.whyEyebrow}
             title={
               <>
-                We turn away more students than{" "}
-                <span className="text-gradient">we accept. On purpose.</span>
+                {aboutPage.whyHeadingPrefix}{" "}
+                <span className="text-gradient">{aboutPage.whyHeadingHighlight}</span>
               </>
             }
-            description="Student Tribe built the network — 1M+ students, 500+ campuses, a decade of hiring relationships. St.School exists to funnel that network into a small, mentor-dense cohort instead of a mass-market course."
+            description={aboutPage.whyDescription}
           />
 
           <div className="flex flex-col divide-y divide-white/10 border-t border-white/10">
@@ -141,14 +142,14 @@ export default function AboutPage() {
       <section className="relative py-24 sm:py-32">
         <Container className="flex flex-col gap-14">
           <SectionHeading
-            eyebrow="How we operate"
+            eyebrow={aboutPage.processEyebrow}
             title={
               <>
-                From application to offer letter —{" "}
-                <span className="text-gradient">five deliberate steps.</span>
+                {aboutPage.processHeadingPrefix}{" "}
+                <span className="text-gradient">{aboutPage.processHeadingHighlight}</span>
               </>
             }
-            description="The same process runs for every cohort, every program. It's designed to keep the bar high and the attention per student even higher."
+            description={aboutPage.processDescription}
           />
 
           <div className="flex flex-col gap-3">
@@ -187,7 +188,7 @@ export default function AboutPage() {
               <div className="pointer-events-none absolute -bottom-24 left-1/2 h-64 w-[40rem] -translate-x-1/2 rounded-full bg-coral/20 blur-[110px]" aria-hidden />
 
               <h2 className="font-display mx-auto max-w-2xl text-balance text-3xl font-medium leading-[1.1] tracking-tight text-paper sm:text-4xl">
-                Ready to see if you&apos;re one of the 33?
+                {aboutPage.ctaHeading}
               </h2>
               <p className="mx-auto mt-5 max-w-xl text-balance text-base leading-relaxed text-muted sm:text-lg">
                 Explore the programs, or go straight to the application — {contact.email} is
@@ -195,10 +196,10 @@ export default function AboutPage() {
               </p>
               <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
                 <Button href="/courses" variant="primary" className="px-7 py-3.5 text-base">
-                  Explore Programs
+                  {aboutPage.ctaExploreLabel}
                 </Button>
                 <Button href="/contact" variant="secondary" className="px-7 py-3.5 text-base">
-                  Apply for a seat
+                  {aboutPage.ctaApplyLabel}
                 </Button>
               </div>
             </GlowBorderPanel>

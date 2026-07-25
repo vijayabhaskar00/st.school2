@@ -14,6 +14,12 @@ export const SiteSchema = z.object({
   description: z.string().min(1),
   city: z.string().min(1),
   url: z.string().url(),
+  // The default "apply" CTA label, reused across the navbar, footer CTA,
+  // sticky course CTA bar, and course apply panel — was previously
+  // hardcoded independently in each of those (and had drifted out of sync
+  // in one of them), so an admin editing it had to hunt down every copy.
+  ctaLabel: z.string().min(1),
+  footerTagline: z.string().min(1),
 });
 export type SiteContent = z.infer<typeof SiteSchema>;
 
@@ -154,6 +160,65 @@ export const CourseSchema = z.object({
 });
 export type CourseContent = z.infer<typeof CourseSchema>;
 
+// About page — hero pull-quote (which interpolates the parent brand name,
+// so it's split into the two halves either side of the interpolation),
+// section eyebrows/headings/descriptions, and the closing CTA copy. All
+// previously hardcoded directly in src/app/about/page.tsx.
+export const AboutPageSchema = z.object({
+  heroEyebrowPrefix: z.string().min(1),
+  // The pull-quote headline. `heroQuotePrefix` contains a literal
+  // "{parentBrand}" token that's swapped for site.parentBrand at render
+  // time; `heroQuoteHighlight` is the second, gradient-highlighted half of
+  // the sentence.
+  heroQuotePrefix: z.string().min(1),
+  heroQuoteHighlight: z.string().min(1),
+  storyEyebrow: z.string().min(1),
+  storyHeadingPrefix: z.string().min(1),
+  storyHeadingHighlight: z.string().min(1),
+  whyEyebrow: z.string().min(1),
+  whyHeadingPrefix: z.string().min(1),
+  whyHeadingHighlight: z.string().min(1),
+  whyDescription: z.string().min(1),
+  processEyebrow: z.string().min(1),
+  processHeadingPrefix: z.string().min(1),
+  processHeadingHighlight: z.string().min(1),
+  processDescription: z.string().min(1),
+  ctaHeading: z.string().min(1),
+  ctaExploreLabel: z.string().min(1),
+  ctaApplyLabel: z.string().min(1),
+});
+export type AboutPageContent = z.infer<typeof AboutPageSchema>;
+
+// Contact page — hero eyebrow/H1/subhead and meta description. Previously
+// hardcoded directly in src/app/contact/page.tsx.
+export const ContactPageSchema = z.object({
+  metaDescription: z.string().min(1),
+  heroEyebrow: z.string().min(1),
+  // The H1, split around the gradient-highlighted last word:
+  // `${heroHeadingPrefix} ${heroHeadingHighlight}`.
+  heroHeadingPrefix: z.string().min(1),
+  heroHeadingHighlight: z.string().min(1),
+  heroSubhead: z.string().min(1),
+});
+export type ContactPageContent = z.infer<typeof ContactPageSchema>;
+
+// Courses (listing) page — masthead H1, eyebrow, intro paragraph, and the
+// track-matcher section heading. Previously hardcoded directly in
+// src/app/courses/page.tsx.
+export const CoursesPageSchema = z.object({
+  eyebrow: z.string().min(1),
+  // The H1, word-staggered by <StaggerHeadline>; the last word renders
+  // highlighted.
+  headingPrefix: z.string().min(1),
+  headingHighlight: z.string().min(1),
+  intro: z.string().min(1),
+  matcherEyebrow: z.string().min(1),
+  matcherHeadingPrefix: z.string().min(1),
+  matcherHeadingHighlight: z.string().min(1),
+  matcherDescription: z.string().min(1),
+});
+export type CoursesPageContent = z.infer<typeof CoursesPageSchema>;
+
 export const CoursesSchema = z
   .array(CourseSchema)
   .min(1)
@@ -161,3 +226,29 @@ export const CoursesSchema = z
     (list) => new Set(list.map((c) => c.slug)).size === list.length,
     { message: "Course slugs must be unique — two courses share the same slug." },
   );
+
+// Every course's detail page (src/app/courses/[slug]/page.tsx) is one
+// shared template rendered for every program — these section headings and
+// closing CTA copy used to be hardcoded directly in that component's JSX,
+// which made them sitewide copy hidden in a file only a developer could
+// edit. They're pulled out here so editing them changes every course page
+// at once.
+export const CourseTemplateSchema = z.object({
+  // Heading above the outcomes list ("What you'll walk away able to do").
+  outcomesHeading: z.string().min(1),
+  // Heading above the curriculum timeline ("The roadmap, phase by phase").
+  roadmapHeading: z.string().min(1),
+  // Heading above the highlights grid ("Built different, on purpose").
+  highlightsHeading: z.string().min(1),
+  // The closing CTA's heading, e.g. "Ready to apply for {shortName}?". Use
+  // the literal token "{shortName}" where the course's short name should be
+  // substituted — the page splits on it and renders that portion (and
+  // anything after it, like the trailing "?") in the accent gradient, the
+  // same way the original hardcoded JSX styled it.
+  closingCtaHeading: z.string().min(1),
+  // The closing CTA's body paragraph. Use the literal token "{shortName}"
+  // anywhere in the sentence where the course's short name should be
+  // substituted.
+  closingCtaBody: z.string().min(1),
+});
+export type CourseTemplateContent = z.infer<typeof CourseTemplateSchema>;

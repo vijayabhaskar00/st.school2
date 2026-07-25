@@ -6,17 +6,13 @@ import { CourseShowcaseCard } from "@/components/courses/course-showcase-card";
 import { StaggerHeadline } from "@/components/about/stagger-headline";
 import { TrackFork } from "@/components/courses-listing/track-fork";
 import { TrackMatcher } from "@/components/courses-listing/track-matcher";
-import { courses, site } from "@/data/content";
+import { courses, site, coursesPage } from "@/data/content";
 
 // The page's opening line, word-staggered by the same <StaggerHeadline> the
 // About hero uses (it renders the <h1> itself, so it drops straight in).
 const headlineWords = [
-  { text: "Programs" },
-  { text: "built" },
-  { text: "to" },
-  { text: "get" },
-  { text: "you" },
-  { text: "hired.", highlight: true },
+  ...coursesPage.headingPrefix.split(" ").map((text) => ({ text })),
+  ...coursesPage.headingHighlight.split(" ").map((text) => ({ text, highlight: true })),
 ];
 
 export const metadata: Metadata = {
@@ -40,7 +36,7 @@ export default function CoursesPage() {
             <Reveal>
               <div className="flex flex-wrap items-baseline justify-between gap-4 border-b border-white/10 pb-6">
                 <span className="text-xs font-semibold uppercase tracking-[0.24em] text-muted-soft">
-                  St.School Programs
+                  {coursesPage.eyebrow}
                 </span>
                 <span className="text-xs font-semibold uppercase tracking-[0.24em] text-muted-soft">
                   {site.city} · {courses.length} tracks
@@ -65,9 +61,7 @@ export default function CoursesPage() {
             />
             <Reveal delay={0.14}>
               <p className="max-w-xl text-balance text-base leading-relaxed text-muted sm:text-lg">
-                Two hand-built tracks, one standard: real projects, live mentors, and a
-                cohort of 33 small enough that nobody falls through the cracks. Pick
-                your path below.
+                {coursesPage.intro}
               </p>
             </Reveal>
           </div>
@@ -86,14 +80,14 @@ export default function CoursesPage() {
       <section className="relative pb-20 sm:pb-28">
         <Container className="flex flex-col gap-12">
           <SectionHeading
-            eyebrow="Not sure which track?"
+            eyebrow={coursesPage.matcherEyebrow}
             title={
               <>
-                Answer 4 quick picks.{" "}
-                <span className="text-gradient">See which track fits.</span>
+                {coursesPage.matcherHeadingPrefix}{" "}
+                <span className="text-gradient">{coursesPage.matcherHeadingHighlight}</span>
               </>
             }
-            description="Every option below is pulled straight from each program's real stack, outcomes, and curriculum — not a generic quiz."
+            description={coursesPage.matcherDescription}
           />
           <Reveal delay={0.1}>
             <TrackMatcher courses={courses} />

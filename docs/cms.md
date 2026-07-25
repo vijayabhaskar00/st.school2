@@ -58,6 +58,7 @@ else about the CMS needs to change.
 | Site settings | `content/site.json` | Brand name, tagline, meta description, city, canonical URL |
 | Hero stats | `content/hero-stats.json` | The 3-number stat row in the homepage hero |
 | Courses | `content/courses.json` | Any number of course programs — curriculum, outcomes, highlights, stack, seats, deadline |
+| Course page template | `content/course-template.json` | Shared section headings and closing CTA copy on every course's detail page (outcomes/roadmap/highlights headings, closing CTA heading + body) |
 | Stats | `content/stats.json` | The applications/selection/placement/scholarship stats section |
 | Process steps | `content/process.json` | The 5-step "how it works" sequence |
 | Why Us | `content/why-us.json` | The "why choose us" reasons |
@@ -67,6 +68,9 @@ else about the CMS needs to change.
 | Parent brand | `content/parent-brand.json` | Student Tribe founding info + About page stat row |
 | Contact info | `content/contact.json` | Email, phone, address, socials |
 | Navigation | `content/nav-links.json` | Header nav + footer links |
+| About page copy | `content/about-page.json` | The `/about` hero pull-quote, story/why/process section eyebrows + headings, and closing CTA heading + button labels |
+| Contact page copy | `content/contact-page.json` | The `/contact` meta description, hero eyebrow, H1, and subhead |
+| Courses page copy | `content/courses-page.json` | The `/courses` masthead eyebrow, H1, intro paragraph, and track-matcher section heading |
 
 ## Adding a new course
 
