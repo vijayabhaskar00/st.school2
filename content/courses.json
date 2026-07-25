@@ -186,5 +186,42 @@
     "applicationDeadline": "2026-08-16T23:59:59+05:30",
     "seatsTotal": 33,
     "seatsClaimed": 21
+  },
+  {
+    "slug": "test",
+    "name": "test",
+    "shortName": "test",
+    "tagline": " test test test test test test test test ",
+    "duration": "4",
+    "mode": "offline",
+    "level": "5",
+    "summary": "test test test test test test test test test test ",
+    "color": "violet",
+    "template": "generic",
+    "stack": [
+      "test test "
+    ],
+    "outcomes": [
+      "test test "
+    ],
+    "curriculum": [
+      {
+        "phase": "test test ",
+        "title": "test test ",
+        "description": "test test test test ",
+        "topics": [
+          "test test "
+        ]
+      }
+    ],
+    "highlights": [
+      {
+        "title": "test test  test test ",
+        "description": "test test test test "
+      }
+    ],
+    "applicationDeadline": "2026-09-09",
+    "seatsTotal": 33,
+    "seatsClaimed": 0
   }
 ]
