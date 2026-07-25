@@ -51,6 +51,26 @@ this admin build currently treats as "live." Point it at `main` once this
 work merges there, or at any other branch you want to publish to — nothing
 else about the CMS needs to change.
 
+### "GitHub API request failed (403) — Resource not accessible by personal access token"
+
+This means the sign-in step succeeded — GitHub confirmed your *account* has
+push access to the repo — but the *token* itself wasn't actually granted
+permission to write files. Those are two different checks: a fine-grained
+token can belong to an account with full admin access to the repo and still
+be issued read-only (or no access at all), because GitHub defaults every
+permission on a new fine-grained token to "No access" until you explicitly
+set it. A read-only token lets you sign in and load/edit content just fine —
+it only fails once you actually try to publish.
+
+Fix: open the token at
+[github.com/settings/personal-access-tokens](https://github.com/settings/personal-access-tokens),
+confirm **Repository permissions → Contents** is set to **Read and write**
+(not "Read-only" or "No access"), save, then sign out of `/admin` and back in.
+If you can't edit an existing token's permissions, generate a new one with
+step 3 above followed exactly, and use that instead. Your unsaved edits stay
+in the browser tab while you fix this — no need to redo them, just retry
+**Save & publish** once you're signed in with a token that has write access.
+
 ## What's editable
 
 | Collection | File | Controls |

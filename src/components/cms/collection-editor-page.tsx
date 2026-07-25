@@ -88,6 +88,16 @@ export function CollectionEditorPage({
           "This file changed on GitHub since you loaded it (someone else saved, or it was edited " +
             "directly). Reload to get the latest version before saving your changes again.",
         );
+      } else if (e instanceof GithubApiError && e.status === 403) {
+        setError(
+          "GitHub rejected the write — this token isn't allowed to change repo contents. This is " +
+            "different from your GitHub account's own access (which the sign-in check confirmed) — a " +
+            "token can be valid and belong to an account with full push access, yet still have been " +
+            'issued without permission to write files. Go to the token\'s settings and set "Contents" ' +
+            'to "Read and write" for this repository (fine-grained tokens default new permissions to ' +
+            '"No access" until you set them), or generate a new token with that permission — then sign ' +
+            "out and back in here with it. Your edits above are still in this browser tab, unsaved.",
+        );
       } else {
         setError(e instanceof Error ? e.message : "Save failed.");
       }
