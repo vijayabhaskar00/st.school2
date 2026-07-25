@@ -1,0 +1,27 @@
+[
+  {
+    "value": 1000,
+    "suffix": "+",
+    "label": "Applications every batch",
+    "detail": "Demand for a St.School seat outstrips supply nearly 30 to 1."
+  },
+  {
+    "value": 33,
+    "suffix": "",
+    "label": "Students selected, per cohort",
+    "detail": "Small by design — mentors know every learner by name."
+  },
+  {
+    "value": 95,
+    "suffix": "%",
+    "label": "Placement track record",
+    "detail": "Across partner companies hiring for real, five-figure roles."
+  },
+  {
+    "value": 10,
+    "prefix": "₹",
+    "suffix": "K",
+    "label": "Merit scholarships available",
+    "detail": "For learners who show up serious about the craft."
+  }
+]

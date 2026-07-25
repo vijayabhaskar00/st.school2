@@ -1,0 +1,110 @@
+[
+  {
+    "slug": "python-fullstack-ai",
+    "name": "Python Full-Stack + AI Program",
+    "shortName": "Python Full-Stack + AI",
+    "tagline": "Ship production software with FastAPI, React, and AI in the loop.",
+    "duration": "14 weeks",
+    "mode": "Online & offline cohorts",
+    "level": "Beginner to job-ready",
+    "summary": "Go from Python fundamentals to shipping full-stack, AI-integrated products — FastAPI on the backend, React on the front, and real deployment on real infra, guided by mentors who work in the industry.",
+    "color": "violet",
+    "stack": ["Python", "FastAPI", "React", "PostgreSQL", "AI / LLM APIs", "Git & CI/CD"],
+    "outcomes": [
+      "Ship 3+ full-stack products to a public portfolio",
+      "Design and consume REST APIs with FastAPI",
+      "Build production React interfaces with modern tooling",
+      "Integrate AI/LLM features into real applications",
+      "Clear technical interviews with a rehearsed DSA + system design base"
+    ],
+    "curriculum": [
+      {
+        "phase": "Weeks 1–3",
+        "title": "Foundations",
+        "description": "Python core, data structures, and the developer workflow.",
+        "topics": ["Python syntax & OOP", "Data structures & algorithms", "Git, terminal, and tooling", "Problem-solving sprints"]
+      },
+      {
+        "phase": "Weeks 4–7",
+        "title": "Backend with FastAPI",
+        "description": "Build and ship real APIs backed by a real database.",
+        "topics": ["FastAPI routing & validation", "PostgreSQL & ORM design", "Authentication & authorization", "Testing & deployment"]
+      },
+      {
+        "phase": "Weeks 8–11",
+        "title": "Frontend with React",
+        "description": "Turn APIs into interfaces people actually want to use.",
+        "topics": ["React components & state", "API integration", "Responsive, accessible UI", "Performance basics"]
+      },
+      {
+        "phase": "Weeks 12–14",
+        "title": "AI Integration & Capstone",
+        "description": "Wire AI into your stack, then ship a capstone under mentor review.",
+        "topics": ["LLM APIs & prompt design", "AI-assisted product features", "Capstone build week", "Demo day & portfolio polish"]
+      }
+    ],
+    "highlights": [
+      { "title": "Live, mentor-led sessions", "description": "Not pre-recorded. Real instructors, real Q&A, every week." },
+      { "title": "Industry case studies", "description": "Work the same problems product teams ship this quarter." },
+      { "title": "Hackathons", "description": "Compete in timed builds that mirror real sprint pressure." },
+      { "title": "Interview prep", "description": "Technical + HR mock rounds until you stop dreading them." }
+    ],
+    "applicationDeadline": "2026-08-09T23:59:59+05:30",
+    "seatsTotal": 33,
+    "seatsClaimed": 26
+  },
+  {
+    "slug": "ui-ux-design",
+    "name": "UI/UX Design Program",
+    "shortName": "UI/UX Design",
+    "tagline": "Design real products, defend real decisions, ship a real portfolio.",
+    "duration": "12 weeks",
+    "mode": "Online & offline cohorts",
+    "level": "Beginner-friendly",
+    "summary": "A hands-on design program built around real projects, not theory decks — research, wireframes, high-fidelity UI, and prototypes, with continuous feedback from mentors who review your work like a manager would.",
+    "color": "coral",
+    "stack": ["Figma", "User Research", "Wireframing", "Design Systems", "Prototyping", "Portfolio Craft"],
+    "outcomes": [
+      "Ship a portfolio of 4+ end-to-end case studies",
+      "Run user research and translate insight into design decisions",
+      "Build and maintain a component-based design system",
+      "Prototype and test high-fidelity interfaces in Figma",
+      "Present and defend design decisions like a working designer"
+    ],
+    "curriculum": [
+      {
+        "phase": "Weeks 1–3",
+        "title": "Design Foundations",
+        "description": "Visual, interaction, and UX fundamentals from the ground up.",
+        "topics": ["Design principles & theory", "Typography, color, layout", "Figma fluency", "UX research basics"]
+      },
+      {
+        "phase": "Weeks 4–6",
+        "title": "Research & UX",
+        "description": "Learn to design from evidence, not assumption.",
+        "topics": ["User interviews & personas", "Information architecture", "Wireframing & user flows", "Usability testing"]
+      },
+      {
+        "phase": "Weeks 7–9",
+        "title": "UI & Design Systems",
+        "description": "Turn wireframes into polished, consistent interfaces.",
+        "topics": ["High-fidelity UI design", "Component & design systems", "Responsive & accessible design", "Micro-interactions"]
+      },
+      {
+        "phase": "Weeks 10–12",
+        "title": "Capstone & Portfolio",
+        "description": "Ship a case study strong enough to lead an interview with.",
+        "topics": ["End-to-end capstone project", "Prototyping & handoff", "Portfolio storytelling", "Demo day & mentor review"]
+      }
+    ],
+    "highlights": [
+      { "title": "Real client-style briefs", "description": "Ambiguous problems, not tutorials — the way real design work arrives." },
+      { "title": "1:1 mentor critique", "description": "Continuous feedback loops instead of a single end-of-course review." },
+      { "title": "Guest lectures", "description": "Working designers walk through how they actually make decisions." },
+      { "title": "Portfolio-first", "description": "Every project is built to go straight into your case study deck." }
+    ],
+    "applicationDeadline": "2026-08-16T23:59:59+05:30",
+    "seatsTotal": 33,
+    "seatsClaimed": 21
+  }
+]

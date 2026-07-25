@@ -1,0 +1,9 @@
+{
+  "email": "hello@st.school",
+  "phone": "+91 90000 00000",
+  "address": "Hyderabad, Telangana, India",
+  "socials": [
+    { "label": "Instagram", "href": "https://www.instagram.com/studenttribe.st/" },
+    { "label": "YouTube", "href": "https://www.youtube.com/channel/UCLMHUneYEQYxLSU4_rmT_pA" }
+  ]
+}

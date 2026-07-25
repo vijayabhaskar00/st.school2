@@ -1,0 +1,27 @@
+[
+  {
+    "step": "01",
+    "title": "Apply",
+    "description": "Tell us where you're starting from and where you want to go. Takes minutes, no fluff."
+  },
+  {
+    "step": "02",
+    "title": "Get selected",
+    "description": "We review 1000+ applications and hand-pick 33 — chosen for seriousness, not pedigree."
+  },
+  {
+    "step": "03",
+    "title": "Build, live",
+    "description": "Weekly live sessions, real projects, and mentors who review your work like a manager would."
+  },
+  {
+    "step": "04",
+    "title": "Interview-ready",
+    "description": "Mock technical rounds, case-study defenses, and HR prep until it's second nature."
+  },
+  {
+    "step": "05",
+    "title": "Get placed",
+    "description": "Warm intros into our hiring network — a 95% track record of landing real, paying roles."
+  }
+]

@@ -3,8 +3,7 @@ import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
-import { ScrollProgress } from "@/components/interaction/scroll-progress";
-import { CursorGlow } from "@/components/interaction/cursor-glow";
+import { SiteChrome } from "@/components/layout/site-chrome";
 import { site } from "@/data/content";
 import { assetBasePath } from "@/lib/base-path";
 
@@ -86,11 +85,9 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} h-full`}>
       <body className="flex min-h-full flex-col bg-ink text-paper antialiased">
         <div className="grain-overlay" />
-        <CursorGlow />
-        <ScrollProgress />
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <SiteChrome navbar={<Navbar />} footer={<Footer />}>
+          {children}
+        </SiteChrome>
       </body>
     </html>
   );
