@@ -15,12 +15,12 @@ import { HighlightGrid } from "@/components/courses/highlight-grid";
 import { CourseCrossLink } from "@/components/courses/cross-link-card";
 import { ApplyPanel } from "@/components/courses/apply-panel";
 import { StickyCtaBar } from "@/components/courses/sticky-cta-bar";
-import { CourseIllustration } from "@/components/courses/course-illustration";
 import { DesignAudit } from "@/components/courses/design-audit";
 import { CurriculumBuildStepper } from "@/components/courses/curriculum-build-stepper";
 import { AiTerminal } from "@/components/courses/ai-terminal";
 import { TiltCard } from "@/components/motion/tilt-card";
 import { LazyNeuralPulse } from "@/components/remotion/lazy-neural-pulse";
+import { LazyDesignSystemBuild } from "@/components/remotion/lazy-design-system-build";
 import { COLOR_THEME } from "@/components/courses/color-theme";
 import { courses, site } from "@/data/content";
 import { cn } from "@/lib/utils";
@@ -155,7 +155,10 @@ export default async function CourseDetailPage({
                 </TiltCard>
               ) : (
                 <TiltCard>
-                  <CourseIllustration variant={illustrationVariant} color={course.color} />
+                  <LazyDesignSystemBuild className="overflow-hidden rounded-full" />
+                  <p className="mt-5 text-center text-xs uppercase tracking-[0.18em] text-muted-soft">
+                    Live — a design system assembling itself, redlines and all
+                  </p>
                 </TiltCard>
               )}
             </Reveal>

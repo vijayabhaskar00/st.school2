@@ -3,8 +3,20 @@ import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/motion/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { CourseShowcaseCard } from "@/components/courses/course-showcase-card";
+import { StaggerHeadline } from "@/components/about/stagger-headline";
 import { TrackMatcher } from "@/components/courses-listing/track-matcher";
 import { courses, site } from "@/data/content";
+
+// The page's opening line, word-staggered by the same <StaggerHeadline> the
+// About hero uses (it renders the <h1> itself, so it drops straight in).
+const headlineWords = [
+  { text: "Programs" },
+  { text: "built" },
+  { text: "to" },
+  { text: "get" },
+  { text: "you" },
+  { text: "hired.", highlight: true },
+];
 
 export const metadata: Metadata = {
   title: "Programs",
@@ -33,12 +45,18 @@ export default function CoursesPage() {
               </span>
             </div>
           </Reveal>
-          <Reveal delay={0.08}>
-            <h1 className="font-display max-w-4xl text-balance text-5xl font-medium leading-[0.98] tracking-tight sm:text-7xl lg:text-8xl">
-              Programs built to get you{" "}
-              <span className="text-gradient">hired.</span>
-            </h1>
-          </Reveal>
+          {/* leading-[0.98] + the per-word overflow-hidden masks would clip the
+              descenders in "Programs"/"get"/"you" at these sizes (the mask box
+              is exactly one line-height tall), so the line-height is nudged to
+              1.02 and the masks get extra bottom padding — cancelled again with
+              a matching negative margin so the taller paint area doesn't loosen
+              the line spacing. Both are set from here rather than in the shared
+              component so the About hero, which runs at a smaller size and a
+              roomier line-height, is untouched. */}
+          <StaggerHeadline
+            words={headlineWords}
+            className="font-display max-w-4xl text-balance text-5xl font-medium leading-[1.02] tracking-tight [&>span]:-mb-3 [&>span]:pb-3 sm:text-7xl lg:text-8xl"
+          />
           <Reveal delay={0.14}>
             <p className="max-w-xl text-balance text-base leading-relaxed text-muted sm:text-lg">
               Two hand-built tracks, one standard: real projects, live mentors, and a
