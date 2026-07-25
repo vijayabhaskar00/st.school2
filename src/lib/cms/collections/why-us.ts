@@ -6,6 +6,7 @@ export const whyUsCollection = defineCollection({
   key: "why-us",
   label: "Why Us",
   description: "The reasons-to-choose-us cards shown in the Why Us section on the homepage.",
+  group: "Homepage",
   filePath: "content/why-us.json",
   schema: WhyUsSchema,
   Editor: WhyUsEditor,

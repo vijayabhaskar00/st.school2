@@ -18,6 +18,7 @@ import { StickyCtaBar } from "@/components/courses/sticky-cta-bar";
 import { DesignAudit } from "@/components/courses/design-audit";
 import { CurriculumBuildStepper } from "@/components/courses/curriculum-build-stepper";
 import { AiTerminal } from "@/components/courses/ai-terminal";
+import { ProgramEmblem } from "@/components/courses/program-emblem";
 import { TiltCard } from "@/components/motion/tilt-card";
 import { LazyNeuralPulse } from "@/components/remotion/lazy-neural-pulse";
 import { LazyDesignSystemBuild } from "@/components/remotion/lazy-design-system-build";
@@ -75,10 +76,15 @@ export default async function CourseDetailPage({
 
   const otherCourse = courses.find((c) => c.slug !== course.slug) ?? null;
   const theme = COLOR_THEME[course.color];
-  // The two programs share this template, so give each a distinct reading
+  // Every program shares this page shell, so give each a distinct reading
   // rhythm across outcomes / curriculum / highlights — not just a color swap.
   const isAlt = course.color === "coral";
-  const illustrationVariant = course.slug === "ui-ux-design" ? "ui-ux" : "python-ai";
+  // Which bespoke hero + bonus interactive section this course gets — set
+  // explicitly per course in the CMS (Course.template), not guessed from
+  // the slug. A course beyond the two bespoke ones gets "generic": a real,
+  // on-brand hero (ProgramEmblem) without being force-fit into either the
+  // Python or UI/UX template.
+  const template = course.template;
 
   return (
     <>
@@ -146,19 +152,23 @@ export default async function CourseDetailPage({
             </div>
 
             <Reveal delay={0.35} className="lg:sticky lg:top-28">
-              {illustrationVariant === "python-ai" ? (
+              {template === "python-ai" ? (
                 <TiltCard>
                   <LazyNeuralPulse className="overflow-hidden rounded-full" />
                   <p className="mt-5 text-center text-xs uppercase tracking-[0.18em] text-muted-soft">
                     Live — a model training, mid-cohort
                   </p>
                 </TiltCard>
-              ) : (
+              ) : template === "ui-ux" ? (
                 <TiltCard>
                   <LazyDesignSystemBuild className="overflow-hidden rounded-full" />
                   <p className="mt-5 text-center text-xs uppercase tracking-[0.18em] text-muted-soft">
                     Live — a design system assembling itself, redlines and all
                   </p>
+                </TiltCard>
+              ) : (
+                <TiltCard>
+                  <ProgramEmblem course={course} />
                 </TiltCard>
               )}
             </Reveal>
@@ -184,8 +194,11 @@ export default async function CourseDetailPage({
       </section>
 
       {/* b.5 Hands-on moment — different per program, since "try it" means
-          something different for each craft */}
-      {illustrationVariant === "ui-ux" ? (
+          something different for each craft. Not every course needs a
+          bespoke mini-game though: "generic" skips this section entirely
+          rather than being force-fit into the Python or UI/UX version of
+          "try it yourself". */}
+      {template === "ui-ux" ? (
         <section className="relative py-20 sm:py-28">
           <Container className="flex flex-col gap-12">
             <SectionHeading
@@ -198,7 +211,7 @@ export default async function CourseDetailPage({
             </Reveal>
           </Container>
         </section>
-      ) : (
+      ) : template === "python-ai" ? (
         <section className="relative py-20 sm:py-28">
           <Container className="flex flex-col gap-12">
             <SectionHeading
@@ -211,7 +224,7 @@ export default async function CourseDetailPage({
             </Reveal>
           </Container>
         </section>
-      )}
+      ) : null}
 
       {/* c. Curriculum timeline */}
       <section className="relative overflow-hidden bg-ink-soft/40 py-20 sm:py-28">
@@ -247,7 +260,7 @@ export default async function CourseDetailPage({
           generic before/after with the real curriculum driving a mockup
           through the same 4 stages a student's project actually goes
           through, so it's specific to this course, not stock content */}
-      {illustrationVariant === "ui-ux" && (
+      {template === "ui-ux" && (
         <section className="relative py-20 sm:py-28">
           <Container className="flex flex-col gap-12">
             <SectionHeading

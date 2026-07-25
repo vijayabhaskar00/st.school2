@@ -5,7 +5,8 @@ import { CoursesEditor } from "@/components/cms/editors/courses-editor";
 export const coursesCollection = defineCollection({
   key: "courses",
   label: "Courses",
-  description: "The two course programs — curriculum, highlights, seats, and application deadlines.",
+  description: "Every course program — curriculum, highlights, seats, and application deadlines.",
+  group: "Programs",
   filePath: "content/courses.json",
   schema: CoursesSchema,
   Editor: CoursesEditor,

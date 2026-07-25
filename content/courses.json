@@ -9,6 +9,7 @@
     "level": "Beginner to job-ready",
     "summary": "Go from Python fundamentals to shipping full-stack, AI-integrated products — FastAPI on the backend, React on the front, and real deployment on real infra, guided by mentors who work in the industry.",
     "color": "violet",
+    "template": "python-ai",
     "stack": ["Python", "FastAPI", "React", "PostgreSQL", "AI / LLM APIs", "Git & CI/CD"],
     "outcomes": [
       "Ship 3+ full-stack products to a public portfolio",
@@ -63,6 +64,7 @@
     "level": "Beginner-friendly",
     "summary": "A hands-on design program built around real projects, not theory decks — research, wireframes, high-fidelity UI, and prototypes, with continuous feedback from mentors who review your work like a manager would.",
     "color": "coral",
+    "template": "ui-ux",
     "stack": ["Figma", "User Research", "Wireframing", "Design Systems", "Prototyping", "Portfolio Craft"],
     "outcomes": [
       "Ship a portfolio of 4+ end-to-end case studies",

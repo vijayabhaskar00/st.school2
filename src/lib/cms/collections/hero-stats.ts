@@ -6,6 +6,7 @@ export const heroStatsCollection = defineCollection({
   key: "hero-stats",
   label: "Hero stats",
   description: "The small stat row shown in the homepage hero section.",
+  group: "Homepage",
   filePath: "content/hero-stats.json",
   schema: HeroStatsSchema,
   Editor: HeroStatsEditor,

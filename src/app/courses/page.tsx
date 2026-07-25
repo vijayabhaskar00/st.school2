@@ -78,7 +78,7 @@ export default function CoursesPage() {
               bespoke Remotion piece per course detail page). This fills that
               gap with a real, data-driven diagram instead of decoration. */}
           <Reveal delay={0.18}>
-            <TrackFork courses={[courses[0], courses[1]]} />
+            <TrackFork courses={courses} />
           </Reveal>
         </Container>
       </section>

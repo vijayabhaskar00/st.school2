@@ -6,6 +6,7 @@ export const processCollection = defineCollection({
   key: "process",
   label: "Process steps",
   description: "The 5-step application process shown on the homepage and About page.",
+  group: "Homepage",
   filePath: "content/process.json",
   schema: ProcessSchema,
   Editor: ProcessEditor,

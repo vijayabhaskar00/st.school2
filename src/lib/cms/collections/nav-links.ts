@@ -6,6 +6,7 @@ export const navLinksCollection = defineCollection({
   key: "nav-links",
   label: "Navigation",
   description: "The links shown in the header nav and footer.",
+  group: "Company & Navigation",
   filePath: "content/nav-links.json",
   schema: NavLinksSchema,
   Editor: NavLinksEditor,

@@ -119,6 +119,14 @@ export const CourseSchema = z.object({
   level: z.string().min(1),
   summary: z.string().min(1),
   color: z.enum(["violet", "coral"]),
+  // Which bespoke hero visual + "try it yourself" interactive section this
+  // course's detail page gets. Used to be guessed from the slug
+  // (`slug === "ui-ux-design" ? ... : ...`) — a third course would have
+  // silently fallen into the Python-flavored template. Explicit and
+  // CMS-editable instead: "generic" gets a template-agnostic hero and
+  // skips the bonus interactive section rather than being force-fit into
+  // either bespoke template.
+  template: z.enum(["python-ai", "ui-ux", "generic"]).default("generic"),
   stack: z.array(z.string().min(1)).min(1),
   outcomes: z.array(z.string().min(1)).min(1),
   curriculum: z
@@ -146,4 +154,10 @@ export const CourseSchema = z.object({
 });
 export type CourseContent = z.infer<typeof CourseSchema>;
 
-export const CoursesSchema = z.array(CourseSchema).min(1);
+export const CoursesSchema = z
+  .array(CourseSchema)
+  .min(1)
+  .refine(
+    (list) => new Set(list.map((c) => c.slug)).size === list.length,
+    { message: "Course slugs must be unique — two courses share the same slug." },
+  );

@@ -57,7 +57,7 @@ else about the CMS needs to change.
 | --- | --- | --- |
 | Site settings | `content/site.json` | Brand name, tagline, meta description, city, canonical URL |
 | Hero stats | `content/hero-stats.json` | The 3-number stat row in the homepage hero |
-| Courses | `content/courses.json` | Both program pages — curriculum, outcomes, highlights, stack, seats, deadline |
+| Courses | `content/courses.json` | Any number of course programs — curriculum, outcomes, highlights, stack, seats, deadline |
 | Stats | `content/stats.json` | The applications/selection/placement/scholarship stats section |
 | Process steps | `content/process.json` | The 5-step "how it works" sequence |
 | Why Us | `content/why-us.json` | The "why choose us" reasons |
@@ -68,10 +68,40 @@ else about the CMS needs to change.
 | Contact info | `content/contact.json` | Email, phone, address, socials |
 | Navigation | `content/nav-links.json` | Header nav + footer links |
 
-One deliberate limit: the **Courses** editor lets you fully edit both
-existing programs but won't add or remove a program. A few components
-(`track-fork.tsx`, `track-matcher.tsx`) hardcode a two-program layout, so
-adding a third needs a small code change first, not just a content edit.
+## Adding a new course
+
+The **Courses** collection (in the dashboard's "Programs" group) supports
+any number of course programs — you can add, remove, and reorder them
+entirely from `/admin`, with no code change required. To add one:
+
+1. Sign in at `/admin` and open the **Courses** collection under the
+   **Programs** group.
+2. Click **Add course** at the bottom of the list. This creates a new,
+   blank program entry with sensible defaults (e.g. seats total 33, seats
+   claimed 0) that you fill in.
+3. Fill in every field. One worth calling out specifically is **Template**,
+   which controls which hero visual and bonus interactive section the
+   program's detail page gets:
+   - **Python/AI hero** and **Design hero** are bespoke, hand-built hero
+     treatments made for those two specific existing programs.
+   - **Generic** is a complete, real hero that works for any program — not
+     a placeholder. Pick **Generic** for essentially every new course you
+     add; only reach for one of the bespoke options if you're specifically
+     replacing the program it was built for.
+4. Pay attention to **Slug** — it becomes the live URL at
+   `/courses/<slug>`. Once the page is live, avoid changing the slug:
+   anything that already links to that URL (marketing, search results,
+   bookmarks) will break.
+5. `Stack`, `Outcomes`, `Curriculum`, and `Highlights` are all list fields
+   that each need at least one real (non-blank) entry — the form won't let
+   you save while any of those required text fields are empty.
+6. When everything looks right, hit **Save & publish**. This follows the
+   same auto-deploy flow as any other collection — the change is committed
+   straight to the branch you're publishing to, and the site rebuilds and
+   goes live automatically within a minute or two.
+
+Removing a program works the same way, in reverse: open Courses, use the
+remove control on the program you want to take down, and Save & publish.
 
 ## Adding a new collection
 

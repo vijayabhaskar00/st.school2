@@ -17,22 +17,37 @@ import { cn } from "@/lib/utils";
 // make, rather than just decorating the top of the page.
 const placementStat = heroStats.find((s) => s.suffix === "%");
 
-// Two adjacent rounded-corner boxes read as a single branching bar: the
-// classic CSS org-chart connector, no SVG or absolute positioning needed.
-function BranchOut() {
+// A horizontal bar spanning the center of every card below, with a short
+// vertical tick dropping onto each one — a "comb" connector, generalizing
+// the two-adjacent-rounded-corner-box trick (which only ever worked for
+// exactly two branches) to any number of tracks. Each tick's horizontal
+// position is computed from the real track count, not assumed to be two.
+function Comb({ count, direction }: { count: number; direction: "out" | "in" }) {
+  if (count <= 1) {
+    // Nothing to fork into/out of — a single track is just a straight line,
+    // which the Stub above/below this already draws.
+    return <div className="h-6" />;
+  }
+  const barInset = 50 / count;
   return (
-    <div className="flex w-full max-w-xs justify-between">
-      <div className="h-6 w-1/2 rounded-tr-2xl border-r border-t border-white/15" />
-      <div className="h-6 w-1/2 rounded-tl-2xl border-l border-t border-white/15" />
-    </div>
-  );
-}
-
-function BranchIn() {
-  return (
-    <div className="flex w-full max-w-xs justify-between">
-      <div className="h-6 w-1/2 rounded-br-2xl border-b border-r border-white/15" />
-      <div className="h-6 w-1/2 rounded-bl-2xl border-b border-l border-white/15" />
+    <div className="relative h-6 w-full">
+      <div
+        className={cn("absolute h-px bg-white/15", direction === "out" ? "top-0" : "bottom-0")}
+        style={{ left: `${barInset}%`, right: `${barInset}%` }}
+      />
+      {Array.from({ length: count }, (_, i) => {
+        const x = ((i + 0.5) / count) * 100;
+        return (
+          <div
+            key={i}
+            className={cn(
+              "absolute h-6 w-px bg-white/15",
+              direction === "out" ? "top-0" : "bottom-0",
+            )}
+            style={{ left: `${x}%` }}
+          />
+        );
+      })}
     </div>
   );
 }
@@ -73,10 +88,9 @@ function TrackCard({ course, isInView, delay }: { course: Course; isInView: bool
   );
 }
 
-export function TrackFork({ courses }: { courses: [Course, Course] }) {
+export function TrackFork({ courses }: { courses: Course[] }) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-60px 0px" });
-  const [first, second] = courses;
 
   return (
     <div
@@ -93,14 +107,20 @@ export function TrackFork({ courses }: { courses: [Course, Course] }) {
       </motion.div>
 
       <Stub isInView={isInView} delay={0.15} />
-      <BranchOut />
+      <Comb count={courses.length} direction="out" />
 
       <div className="flex w-full gap-3 sm:gap-4">
-        <TrackCard course={first} isInView={isInView} delay={0.3} />
-        <TrackCard course={second} isInView={isInView} delay={0.38} />
+        {courses.map((course, i) => (
+          <TrackCard
+            key={course.slug}
+            course={course}
+            isInView={isInView}
+            delay={0.3 + i * 0.08}
+          />
+        ))}
       </div>
 
-      <BranchIn />
+      <Comb count={courses.length} direction="in" />
       <Stub isInView={isInView} delay={0.55} />
 
       <motion.div

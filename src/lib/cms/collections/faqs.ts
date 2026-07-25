@@ -6,6 +6,7 @@ export const faqsCollection = defineCollection({
   key: "faqs",
   label: "FAQs",
   description: "The frequently-asked-questions accordion shown on the homepage.",
+  group: "Homepage",
   filePath: "content/faqs.json",
   schema: FaqsSchema,
   Editor: FaqsEditor,

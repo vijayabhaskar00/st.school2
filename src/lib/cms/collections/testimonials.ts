@@ -6,6 +6,7 @@ export const testimonialsCollection = defineCollection({
   key: "testimonials",
   label: "Testimonials",
   description: "Student quotes shown in the testimonials section on the homepage.",
+  group: "Homepage",
   filePath: "content/testimonials.json",
   schema: TestimonialsSchema,
   Editor: TestimonialsEditor,

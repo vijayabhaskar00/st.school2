@@ -1,11 +1,16 @@
 import type { ComponentType } from "react";
 import type { ZodType } from "zod";
 
+export const CMS_GROUPS = ["Homepage", "Programs", "Company & Navigation"] as const;
+export type CmsGroup = (typeof CMS_GROUPS)[number];
+
 export type CollectionConfig<T> = {
   /** Stable slug used in the admin's URL hash and as a React key — must be unique. */
   key: string;
   label: string;
   description: string;
+  /** Which section of the dashboard this collection is grouped under. */
+  group: CmsGroup;
   /** Repo-relative path, e.g. "content/site.json". */
   filePath: string;
   schema: ZodType<T>;

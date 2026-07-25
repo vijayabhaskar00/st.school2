@@ -6,6 +6,7 @@ export const siteCollection = defineCollection({
   key: "site",
   label: "Site settings",
   description: "Brand name, tagline, SEO description, city, and canonical URL.",
+  group: "Company & Navigation",
   filePath: "content/site.json",
   schema: SiteSchema,
   Editor: SiteEditor,
