@@ -77,7 +77,7 @@ in the browser tab while you fix this — no need to redo them, just retry
 | --- | --- | --- |
 | Site settings | `content/site.json` | Brand name, tagline, meta description, city, canonical URL |
 | Hero stats | `content/hero-stats.json` | The 3-number stat row in the homepage hero |
-| Courses | `content/courses.json` | Any number of course programs — curriculum, outcomes, highlights, stack, seats, deadline |
+| Courses | `content/courses.json` | Any number of course programs — curriculum, outcomes, highlights, stack, seats, deadline, and the gated program fee (see below) |
 | Course page template | `content/course-template.json` | Shared section headings and closing CTA copy on every course's detail page (outcomes/roadmap/highlights headings, closing CTA heading + body) |
 | Stats | `content/stats.json` | The applications/selection/placement/scholarship stats section |
 | Process steps | `content/process.json` | The 5-step "how it works" sequence |
@@ -116,7 +116,14 @@ entirely from `/admin`, with no code change required. To add one:
    `/courses/<slug>`. Once the page is live, avoid changing the slug:
    anything that already links to that URL (marketing, search results,
    bookmarks) will break.
-5. `Stack`, `Outcomes`, `Curriculum`, and `Highlights` are all list fields
+5. **Pricing** is gated on the live page: visitors see a blurred price and
+   must submit their name, email, and phone before the real fee (and the
+   brochure download) unlock — a standard lead-capture pattern, entirely
+   client-side since this site has no backend. Set **Price** to the real
+   fee, optionally set **Compare-at price** higher to show a struck-through
+   "was" price for a discount effect (0 hides it), and **Price note** for a
+   short line like financing terms.
+6. `Stack`, `Outcomes`, `Curriculum`, and `Highlights` are all list fields
    that each need at least one real (non-blank) entry — the form won't let
    you save while any of those required text fields are empty.
 6. When everything looks right, hit **Save & publish**. This follows the

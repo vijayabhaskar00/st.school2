@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { Download, Loader2, Check } from "lucide-react";
+import { Download, Loader2, Check, Lock } from "lucide-react";
 import type { Course } from "@/data/content";
 import { downloadBrochure } from "@/lib/generate-brochure";
 import { cn } from "@/lib/utils";
+import { PRICING_GATE_ELEMENT_ID, requestPricingGateOpen, usePricingUnlock } from "@/lib/pricing-unlock";
 
 export function BrochureButton({
   course,
@@ -13,9 +14,18 @@ export function BrochureButton({
   course: Course;
   className?: string;
 }) {
+  const unlocked = usePricingUnlock();
   const [status, setStatus] = useState<"idle" | "loading" | "done">("idle");
 
   const handleClick = async () => {
+    // Brochure download shares the same lead-capture gate as pricing — if
+    // it hasn't been unlocked yet, nudge the visitor to the pricing card's
+    // form instead of downloading straight away.
+    if (!unlocked) {
+      requestPricingGateOpen();
+      document.getElementById(PRICING_GATE_ELEMENT_ID)?.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
     if (status === "loading") return;
     setStatus("loading");
     try {
@@ -37,14 +47,22 @@ export function BrochureButton({
         className,
       )}
     >
-      {status === "loading" ? (
+      {!unlocked ? (
+        <Lock className="size-4" strokeWidth={2.5} />
+      ) : status === "loading" ? (
         <Loader2 className="size-4 animate-spin" strokeWidth={2.5} />
       ) : status === "done" ? (
         <Check className="size-4 text-acid" strokeWidth={2.5} />
       ) : (
         <Download className="size-4 transition-transform duration-300 group-hover:translate-y-0.5" strokeWidth={2.5} />
       )}
-      {status === "loading" ? "Preparing PDF…" : status === "done" ? "Downloaded" : "Download Brochure"}
+      {!unlocked
+        ? "Unlock to Download"
+        : status === "loading"
+          ? "Preparing PDF…"
+          : status === "done"
+            ? "Downloaded"
+            : "Download Brochure"}
     </button>
   );
 }

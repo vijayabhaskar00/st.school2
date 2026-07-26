@@ -152,6 +152,22 @@ export async function downloadBrochure(course: Course) {
   doc.line(MARGIN, y, PAGE_W - MARGIN, y);
   y += 24;
   doc.setFont("helvetica", "bold");
+  doc.setFontSize(16);
+  doc.setTextColor(...CHARCOAL);
+  const priceText =
+    course.priceOriginalAmount > course.priceAmount
+      ? `${course.priceCurrency}${course.priceAmount.toLocaleString("en-IN")}  (was ${course.priceCurrency}${course.priceOriginalAmount.toLocaleString("en-IN")})`
+      : `${course.priceCurrency}${course.priceAmount.toLocaleString("en-IN")}`;
+  doc.text(`Program fee: ${priceText}`, MARGIN, y);
+  y += 16;
+  if (course.priceNote) {
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(9.5);
+    doc.setTextColor(...MUTED);
+    doc.text(course.priceNote, MARGIN, y);
+    y += 16;
+  }
+  doc.setFont("helvetica", "bold");
   doc.setFontSize(13);
   doc.setTextColor(...RED);
   doc.text(`Only ${course.seatsTotal} seats per cohort — apply early.`, MARGIN, y);

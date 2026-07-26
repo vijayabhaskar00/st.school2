@@ -133,6 +133,16 @@ export const CourseSchema = z.object({
   // skips the bonus interactive section rather than being force-fit into
   // either bespoke template.
   template: z.enum(["python-ai", "ui-ux", "generic"]).default("generic"),
+  // The program fee, shown on the course page behind a small lead-capture
+  // gate (see PricingGate) instead of plainly up front — a standard
+  // ed-tech marketing pattern that turns "what does it cost" into a lead
+  // instead of a silent bounce. `priceOriginalAmount` is an optional
+  // "compare at" price for a strikethrough discount effect; 0 means don't
+  // show one.
+  priceAmount: z.number().positive(),
+  priceOriginalAmount: z.number().min(0).default(0),
+  priceCurrency: z.string().min(1).default("₹"),
+  priceNote: z.string().default(""),
   stack: z.array(z.string().min(1)).min(1),
   outcomes: z.array(z.string().min(1)).min(1),
   curriculum: z

@@ -26,6 +26,10 @@ function createCourse(): Course {
     summary: "",
     color: "violet",
     template: "generic",
+    priceAmount: 0,
+    priceOriginalAmount: 0,
+    priceCurrency: "₹",
+    priceNote: "",
     stack: [""],
     outcomes: [""],
     curriculum: [{ phase: "", title: "", description: "", topics: [""] }],
@@ -98,6 +102,38 @@ export function CoursesEditor({ value, onChange }: { value: Course[]; onChange: 
             onChange={(v) => update({ ...course, template: v })}
             options={TEMPLATE_OPTIONS}
             hint="Which hero visual and bonus interactive section this program's page gets. The bespoke Python/AI and Design heroes are hand-built for those two specific programs — pick Generic for anything else, it's a real, complete hero, not a placeholder."
+          />
+
+          <div className="mt-1 border-t border-white/10 pt-4">
+            <span className="text-xs font-semibold uppercase tracking-[0.1em] text-muted-soft">Pricing</span>
+          </div>
+          <p className="-mt-2 text-xs leading-relaxed text-muted-soft">
+            Shown on the course page behind a small &quot;unlock pricing&quot; lead-capture form — visitors
+            see a blurred price until they submit their name, email, and phone.
+          </p>
+          <NumberField
+            label="Price"
+            value={course.priceAmount}
+            onChange={(v) => update({ ...course, priceAmount: v })}
+            hint="The real program fee shown once a visitor unlocks pricing."
+          />
+          <NumberField
+            label="Compare-at price (optional)"
+            value={course.priceOriginalAmount}
+            onChange={(v) => update({ ...course, priceOriginalAmount: v })}
+            hint="Shown struck through next to the price for a discount effect, e.g. a higher 'was' price. Set to 0 to hide it."
+          />
+          <TextField
+            label="Currency symbol"
+            value={course.priceCurrency}
+            onChange={(v) => update({ ...course, priceCurrency: v })}
+            hint='e.g. "₹" or "$"'
+          />
+          <TextField
+            label="Price note"
+            value={course.priceNote}
+            onChange={(v) => update({ ...course, priceNote: v })}
+            hint='Optional short line under the price, e.g. "One-time program fee · No-cost EMI available".'
           />
 
           <StringListField

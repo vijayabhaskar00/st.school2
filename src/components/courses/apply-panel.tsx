@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { CountdownTimer } from "@/components/courses/countdown-timer";
 import { SeatsProgress } from "@/components/courses/seats-progress";
 import { BrochureButton } from "@/components/courses/brochure-button";
+import { PricingGate } from "@/components/courses/pricing-gate";
 import { COLOR_THEME } from "@/components/courses/color-theme";
 import { cn } from "@/lib/utils";
 
@@ -26,6 +27,8 @@ export function ApplyPanel({ course }: { course: Course }) {
             <SeatsProgress claimed={course.seatsClaimed} total={course.seatsTotal} color={course.color} />
           </div>
         </div>
+
+        <PricingGate course={course} />
 
         <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
           <Button href="/contact" variant="primary" className="justify-center px-7 py-3.5 text-base">
