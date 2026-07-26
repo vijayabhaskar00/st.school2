@@ -27,7 +27,7 @@ export function HeroParallaxGlow({ color }: { color: Course["color"] }) {
 
   return (
     <div ref={ref} className="pointer-events-none absolute inset-0 -z-10">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_60%_at_50%_-10%,rgba(124,92,255,0.28),transparent)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_60%_at_50%_-10%,rgba(224,33,43,0.28),transparent)]" />
       <motion.div
         style={reduceMotion ? undefined : { y: blobY, x: blobX }}
         className={cn("absolute right-[8%] top-[24%] size-96 rounded-full blur-[130px]", theme.bgGlow)}

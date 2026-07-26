@@ -27,7 +27,7 @@ export default function ContactPage() {
     <>
       <section className="relative overflow-hidden pt-40 pb-16 sm:pt-48 sm:pb-20">
         <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_60%_at_50%_-10%,rgba(124,92,255,0.32),transparent)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_60%_at_50%_-10%,rgba(224,33,43,0.32),transparent)]" />
           <div className="absolute left-[12%] top-[14%] size-72 rounded-full bg-violet/25 blur-[110px] animate-float" aria-hidden />
           <div className="absolute right-[10%] top-[30%] size-72 rounded-full bg-coral/20 blur-[110px] animate-float [animation-delay:-3.5s]" aria-hidden />
           <div className="absolute inset-0 bg-[linear-gradient(rgba(246,244,251,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(246,244,251,0.05)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_70%_50%_at_50%_0%,black,transparent)]" />

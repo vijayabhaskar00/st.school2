@@ -180,7 +180,7 @@ export function NeuralPulse() {
       <AbsoluteFill
         style={{
           backgroundImage:
-            "radial-gradient(ellipse 90% 70% at 50% 40%, rgba(124,92,255,0.28), transparent)",
+            "radial-gradient(ellipse 90% 70% at 50% 40%, rgba(224,33,43,0.28), transparent)",
         }}
       />
       <AbsoluteFill

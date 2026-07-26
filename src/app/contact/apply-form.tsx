@@ -253,7 +253,7 @@ export function ApplyForm() {
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.96 }}
               transition={{ type: "spring", stiffness: 420, damping: 22 }}
-              className="group relative mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-paper px-6 py-3.5 text-sm font-semibold tracking-tight text-ink transition-shadow duration-300 hover:shadow-[0_0_0_1px_rgba(246,244,251,0.2),0_12px_30px_-8px_rgba(124,92,255,0.55)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet"
+              className="group relative mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-paper px-6 py-3.5 text-sm font-semibold tracking-tight text-ink transition-shadow duration-300 hover:shadow-[0_0_0_1px_rgba(246,244,251,0.2),0_12px_30px_-8px_rgba(224,33,43,0.55)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet"
             >
               Submit application
               <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" strokeWidth={2.5} />

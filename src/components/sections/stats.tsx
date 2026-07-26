@@ -26,7 +26,7 @@ export function Stats() {
                   className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
                   style={{
                     background:
-                      "radial-gradient(120px 120px at 20% 0%, rgba(124,92,255,0.18), transparent)",
+                      "radial-gradient(120px 120px at 20% 0%, rgba(224,33,43,0.18), transparent)",
                   }}
                   aria-hidden
                 />

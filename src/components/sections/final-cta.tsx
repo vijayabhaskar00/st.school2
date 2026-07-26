@@ -21,7 +21,7 @@ export function FinalCTA() {
         <div className="relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-ink-soft px-6 py-20 text-center sm:px-16 sm:py-28">
           <div className="pointer-events-none absolute inset-0 -z-10">
             <motion.div
-              className="absolute inset-0 bg-[radial-gradient(ellipse_90%_60%_at_50%_-10%,rgba(124,92,255,0.35),transparent)]"
+              className="absolute inset-0 bg-[radial-gradient(ellipse_90%_60%_at_50%_-10%,rgba(224,33,43,0.35),transparent)]"
               initial={false}
               animate={
                 reduceMotion ? staticBreath : { scale: [1, 1.08, 1], opacity: [0.7, 1, 0.7] }

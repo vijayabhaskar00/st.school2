@@ -104,7 +104,7 @@ export default function AboutPage() {
 
       {/* Stats band — horizontal strip, alternating scale for rhythm instead of a uniform grid */}
       <section className="relative overflow-hidden border-y border-white/10 bg-ink-soft py-20 sm:py-24">
-        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_60%_at_50%_50%,rgba(124,92,255,0.12),transparent)]" />
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_60%_at_50%_50%,rgba(224,33,43,0.12),transparent)]" />
         <Container>
           <StatsThread stats={parentBrand.stats} />
         </Container>
@@ -184,7 +184,7 @@ export default function AboutPage() {
         <Container>
           <Reveal>
             <GlowBorderPanel className="bg-ink-elevated px-8 py-16 text-center sm:px-16 sm:py-20">
-              <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_100%_80%_at_50%_0%,rgba(124,92,255,0.3),transparent)]" />
+              <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_100%_80%_at_50%_0%,rgba(224,33,43,0.3),transparent)]" />
               <div className="pointer-events-none absolute -bottom-24 left-1/2 h-64 w-[40rem] -translate-x-1/2 rounded-full bg-coral/20 blur-[110px]" aria-hidden />
 
               <h2 className="font-display mx-auto max-w-2xl text-balance text-3xl font-medium leading-[1.1] tracking-tight text-paper sm:text-4xl">

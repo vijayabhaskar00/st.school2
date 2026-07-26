@@ -49,7 +49,7 @@ export function Button({
 
   const variants = {
     primary:
-      "bg-paper text-ink shadow-[0_0_0_1px_rgba(246,244,251,0.08)] hover:shadow-[0_0_0_1px_rgba(246,244,251,0.2),0_12px_30px_-8px_rgba(124,92,255,0.55)]",
+      "bg-paper text-ink shadow-[0_0_0_1px_rgba(246,244,251,0.08)] hover:shadow-[0_0_0_1px_rgba(246,244,251,0.2),0_12px_30px_-8px_rgba(224,33,43,0.55)]",
     secondary: "bg-transparent text-paper ring-1 ring-inset ring-white/20 hover:ring-white/40",
     ghost: "bg-transparent text-paper/80 hover:text-paper px-2 py-1",
   };
