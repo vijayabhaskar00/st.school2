@@ -1,12 +1,24 @@
 {
-  "founded": 2015,
-  "founder": "Sri Lakkaraju",
+  "founded": 2020,
+  "founder": "Sri Charan Lakkaraju",
   "hq": "Hyderabad, India",
   "stats": [
-    { "value": "1M+", "label": "students in the network" },
-    { "value": "500+", "label": "partner campuses" },
-    { "value": "10+", "label": "years building for Gen Z" },
-    { "value": "Forbes", "label": "30 Under 30 Asia" }
+    {
+      "value": "1M+",
+      "label": "students in the network"
+    },
+    {
+      "value": "500+",
+      "label": "partner campuses"
+    },
+    {
+      "value": "10+",
+      "label": "years building for Gen Z"
+    },
+    {
+      "value": "Forbes",
+      "label": "30 Under 30 Asia"
+    }
   ],
   "description": "St.School is built on top of Student Tribe — India's largest Gen Z student community, founded in Hyderabad in 2015 to close the gap between tier 2/3 college students and real career opportunity. Backed by T-Hub and Hamzek, and recognized on Forbes' 30 Under 30 Asia list, Student Tribe has spent a decade building the campus network, mentor relationships, and hiring pipeline that St.School students walk straight into."
 }
