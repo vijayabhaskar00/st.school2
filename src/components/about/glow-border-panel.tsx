@@ -11,18 +11,25 @@ import { cn } from "@/lib/utils";
 export function GlowBorderPanel({
   children,
   className,
+  intensity = "full",
 }: {
   children: React.ReactNode;
   className?: string;
+  // "subtle" is for secondary-but-still-important moments (e.g. the pricing
+  // gate) that deserve the "living border" signal without competing with
+  // the one true full-strength treatment on the About page's closing CTA.
+  intensity?: "full" | "subtle";
 }) {
+  const isSubtle = intensity === "subtle";
   return (
     <div className="relative overflow-hidden rounded-3xl p-px">
       <div
         aria-hidden
-        className="animate-spin-slow absolute inset-[-60%]"
+        className={cn("animate-spin-slow absolute inset-[-60%]", isSubtle && "opacity-40")}
         style={{
           background:
             "conic-gradient(from 0deg, transparent 0%, var(--color-coral) 12%, transparent 28%, transparent 60%, var(--color-violet-light) 74%, transparent 88%)",
+          animationDuration: isSubtle ? "20s" : undefined,
         }}
       />
       <div className={cn("relative overflow-hidden rounded-[calc(1.5rem-1px)]", className)}>

@@ -1,7 +1,8 @@
 "use client";
 
+import { useRef } from "react";
 import dynamic from "next/dynamic";
-import { motion, type Variants } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform, type Variants } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { Container } from "@/components/ui/container";
@@ -35,12 +36,26 @@ const fadeUp: Variants = {
 };
 
 export function Hero() {
+  const reduceMotion = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+
+  // Only the one blob here (the other side of the hero already carries the
+  // SelectionField visual), so it just needs a single drift path — tied to
+  // scroll instead of the old `animate-float` loop-in-place.
+  const blobY = useTransform(scrollYProgress, [0, 1], [0, -120]);
+  const blobX = useTransform(scrollYProgress, [0, 1], [0, 45]);
+
   return (
-    <section className="relative overflow-hidden pt-32 pb-20 lg:pt-40">
+    <section ref={sectionRef} className="relative overflow-hidden pt-32 pb-20 lg:pt-40">
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_60%_at_50%_-10%,rgba(124,92,255,0.28),transparent)]" />
         <motion.div
-          className="absolute right-[4%] top-[8%] size-80 rounded-full bg-coral/15 blur-[130px] animate-float"
+          style={reduceMotion ? undefined : { y: blobY, x: blobX }}
+          className="absolute right-[4%] top-[8%] size-80 rounded-full bg-coral/15 blur-[130px]"
           aria-hidden
         />
         <div className="absolute inset-0 bg-[linear-gradient(rgba(246,244,251,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(246,244,251,0.05)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_70%_50%_at_50%_0%,black,transparent)]" />

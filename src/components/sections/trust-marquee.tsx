@@ -3,6 +3,7 @@ import { Container } from "@/components/ui/container";
 import { Marquee } from "@/components/motion/marquee";
 import { Reveal } from "@/components/motion/reveal";
 import { trustLogos } from "@/data/content";
+import { cn } from "@/lib/utils";
 
 export function TrustMarquee() {
   return (
@@ -21,10 +22,16 @@ export function TrustMarquee() {
         <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-ink-soft to-transparent sm:w-32" />
 
         <Marquee>
-          {trustLogos.map((logo) => (
+          {trustLogos.map((logo, i) => (
             <div
               key={logo}
-              className="flex shrink-0 items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-6 py-3 text-sm font-semibold tracking-tight text-paper/70 transition-colors hover:border-white/20 hover:text-paper"
+              className={cn(
+                "flex shrink-0 items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-6 py-3 text-sm font-semibold tracking-tight text-paper/70 transition-colors hover:border-white/20 hover:text-paper hover:opacity-100 hover:scale-100",
+                // Alternate chips sit very slightly smaller/dimmer than their
+                // neighbors — a cheap CSS-only depth cue so the belt reads as
+                // a shallow multi-row strip rather than one flat plane.
+                i % 2 === 0 ? "scale-100 opacity-100" : "scale-[0.94] opacity-70",
+              )}
             >
               <Sparkle className="size-3.5 text-acid" strokeWidth={2.5} />
               <span className="font-display whitespace-nowrap">{logo}</span>

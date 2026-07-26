@@ -6,6 +6,7 @@ import { CourseShowcaseCard } from "@/components/courses/course-showcase-card";
 import { StaggerHeadline } from "@/components/about/stagger-headline";
 import { TrackFork } from "@/components/courses-listing/track-fork";
 import { TrackMatcher } from "@/components/courses-listing/track-matcher";
+import { HeroParallaxGlow } from "@/components/courses-listing/hero-parallax-glow";
 import { courses, site, coursesPage } from "@/data/content";
 
 // The page's opening line, word-staggered by the same <StaggerHeadline> the
@@ -25,11 +26,7 @@ export default function CoursesPage() {
     <>
       {/* Editorial masthead — left-aligned, no badge pill, rule-framed meta row */}
       <section className="relative overflow-hidden pt-36 pb-16 sm:pt-44 sm:pb-24">
-        <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_60%_at_50%_-10%,rgba(124,92,255,0.3),transparent)]" />
-          <div className="absolute right-[10%] top-[30%] size-80 rounded-full bg-coral/20 blur-[120px] animate-float [animation-delay:-2s]" />
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(246,244,251,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(246,244,251,0.05)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_70%_50%_at_50%_0%,black,transparent)]" />
-        </div>
+        <HeroParallaxGlow />
 
         <Container className="grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10">
           <div className="flex flex-col gap-8">

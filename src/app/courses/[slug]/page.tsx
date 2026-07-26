@@ -20,6 +20,7 @@ import { CurriculumBuildStepper } from "@/components/courses/curriculum-build-st
 import { AiTerminal } from "@/components/courses/ai-terminal";
 import { ProgramEmblem } from "@/components/courses/program-emblem";
 import { ClaimCursorAccent } from "@/components/courses/cursor-accent-claim";
+import { HeroParallaxGlow } from "@/components/courses/hero-parallax-glow";
 import { TiltCard } from "@/components/motion/tilt-card";
 import { LazyNeuralPulse } from "@/components/remotion/lazy-neural-pulse";
 import { LazyDesignSystemBuild } from "@/components/remotion/lazy-design-system-build";
@@ -102,16 +103,7 @@ export default async function CourseDetailPage({
       <ClaimCursorAccent accent={course.color} />
       {/* a. Detail hero */}
       <section className="relative overflow-hidden pt-32 pb-20 sm:pt-40 sm:pb-24">
-        <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_60%_at_50%_-10%,rgba(124,92,255,0.28),transparent)]" />
-          <div
-            className={cn(
-              "absolute right-[8%] top-[24%] size-96 rounded-full blur-[130px] animate-float [animation-delay:-2s]",
-              theme.bgGlow,
-            )}
-          />
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(246,244,251,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(246,244,251,0.05)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_70%_50%_at_50%_0%,black,transparent)]" />
-        </div>
+        <HeroParallaxGlow color={course.color} />
 
         <Container className="flex flex-col gap-10">
           <Reveal>

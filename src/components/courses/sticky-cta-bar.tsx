@@ -7,11 +7,20 @@ import { site } from "@/data/content";
 import { Button } from "@/components/ui/button";
 import { BrochureButton } from "@/components/courses/brochure-button";
 import { COLOR_THEME } from "@/components/courses/color-theme";
+import { usePricingUnlock } from "@/lib/pricing-unlock";
 import { cn } from "@/lib/utils";
+
+// Mirrors PricingGate's formatting convention (`${currency}${amount}`,
+// en-IN grouping) so the price reads identically wherever it appears.
+function formatAmount(amount: number, currency: string) {
+  return `${currency}${amount.toLocaleString("en-IN")}`;
+}
 
 export function StickyCtaBar({ course }: { course: Course }) {
   const [visible, setVisible] = useState(false);
   const theme = COLOR_THEME[course.color];
+  const unlocked = usePricingUnlock();
+  const hasDiscount = course.priceOriginalAmount > course.priceAmount;
 
   useEffect(() => {
     const onScroll = () => {
@@ -43,6 +52,18 @@ export function StickyCtaBar({ course }: { course: Course }) {
                 <span className="ml-2 font-normal text-muted">
                   · {Math.max(0, course.seatsTotal - course.seatsClaimed)} seats left
                 </span>
+                {unlocked && (
+                  <span className="ml-2 inline-flex items-baseline gap-1.5 font-normal">
+                    <span className={cn("font-semibold", theme.text)}>
+                      {formatAmount(course.priceAmount, course.priceCurrency)}
+                    </span>
+                    {hasDiscount && (
+                      <span className="text-xs text-muted-soft line-through">
+                        {formatAmount(course.priceOriginalAmount, course.priceCurrency)}
+                      </span>
+                    )}
+                  </span>
+                )}
               </p>
             </div>
             <div className="flex items-center gap-2.5">

@@ -1,12 +1,67 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useScroll, useSpring } from "framer-motion";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+  type MotionValue,
+} from "framer-motion";
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Reveal } from "@/components/motion/reveal";
 import { process } from "@/data/content";
 import { cn } from "@/lib/utils";
+
+// The number badge next to each step "activates" (muted -> brand color +
+// glow) as the scroll-drawn timeline line reaches it, so the line reads as
+// powering each step rather than just sitting next to an independently
+// revealed card. `progress` is the same spring-driven motion value that
+// drives the line's scaleY — step i activates as it crosses (i+1)/total.
+function ProcessStepMarker({
+  stepNumber,
+  index,
+  total,
+  progress,
+  reduceMotion,
+}: {
+  stepNumber: number | string;
+  index: number;
+  total: number;
+  progress: MotionValue<number>;
+  reduceMotion: boolean | null;
+}) {
+  const start = Math.max(0, index / total - 0.08);
+  const end = (index + 1) / total;
+  const activation = useTransform(progress, [start, end], [0, 1]);
+  const background = useTransform(activation, [0, 1], ["#212124", "#ff4b4b"]);
+  const borderColor = useTransform(activation, [0, 1], ["rgba(255,255,255,0.15)", "rgba(255,75,75,0.9)"]);
+  const glowOpacity = useTransform(activation, [0, 1], [0, 1]);
+
+  if (reduceMotion) {
+    return (
+      <span className="font-display absolute left-0 z-10 flex size-12 shrink-0 items-center justify-center rounded-full border border-coral bg-coral text-sm font-semibold text-paper shadow-[0_0_0_6px_var(--color-ink)] md:left-1/2 md:-translate-x-1/2">
+        {stepNumber}
+      </span>
+    );
+  }
+
+  return (
+    <motion.span
+      style={{ background, borderColor }}
+      className="font-display absolute left-0 z-10 flex size-12 shrink-0 items-center justify-center rounded-full border text-sm font-semibold text-paper shadow-[0_0_0_6px_var(--color-ink)] md:left-1/2 md:-translate-x-1/2"
+    >
+      <motion.span
+        aria-hidden
+        style={{ opacity: glowOpacity }}
+        className="pointer-events-none absolute inset-[-6px] rounded-full bg-coral/50 blur-md"
+      />
+      <span className="relative">{stepNumber}</span>
+    </motion.span>
+  );
+}
 
 export function Process() {
   const trackRef = useRef<HTMLDivElement>(null);
@@ -19,6 +74,7 @@ export function Process() {
     damping: 30,
     mass: 0.4,
   });
+  const reduceMotion = useReducedMotion();
 
   return (
     <section id="process" className="relative overflow-hidden bg-ink py-24 sm:py-32">
@@ -58,13 +114,13 @@ export function Process() {
                     "relative grid grid-cols-1 md:grid-cols-2 md:items-center md:gap-x-14",
                   )}
                 >
-                  <span
-                    className={cn(
-                      "font-display absolute left-0 z-10 flex size-12 shrink-0 items-center justify-center rounded-full border border-white/15 bg-ink-elevated text-sm font-semibold text-paper shadow-[0_0_0_6px_var(--color-ink)] md:left-1/2 md:-translate-x-1/2",
-                    )}
-                  >
-                    {step.step}
-                  </span>
+                  <ProcessStepMarker
+                    stepNumber={step.step}
+                    index={i}
+                    total={process.length}
+                    progress={progress}
+                    reduceMotion={reduceMotion}
+                  />
 
                   <Reveal
                     delay={i * 0.05}
