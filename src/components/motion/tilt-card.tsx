@@ -1,7 +1,7 @@
 "use client";
 
 import { type MouseEvent, useRef } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 export function TiltCard({
@@ -13,6 +13,7 @@ export function TiltCard({
   className?: string;
   intensity?: number;
 }) {
+  const reduceMotion = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
   const rotateX = useMotionValue(0);
   const rotateY = useMotionValue(0);
@@ -20,6 +21,7 @@ export function TiltCard({
   const springY = useSpring(rotateY, { stiffness: 200, damping: 20 });
 
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+    if (reduceMotion) return;
     const el = ref.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();

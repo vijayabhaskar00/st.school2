@@ -61,6 +61,10 @@ export function Button({
       className={cn(base, variants[variant], className)}
       target={external ? "_blank" : undefined}
       rel={external ? "noopener noreferrer" : undefined}
+      // Primary CTAs get a brighter cursor glow (see CursorGlow) — every
+      // "main ask" on the site picks this up for free without individually
+      // opting in.
+      data-cursor-glow={variant === "primary" ? "" : undefined}
       style={{ x: springX, y: springY }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}

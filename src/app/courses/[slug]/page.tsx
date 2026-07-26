@@ -19,6 +19,7 @@ import { DesignAudit } from "@/components/courses/design-audit";
 import { CurriculumBuildStepper } from "@/components/courses/curriculum-build-stepper";
 import { AiTerminal } from "@/components/courses/ai-terminal";
 import { ProgramEmblem } from "@/components/courses/program-emblem";
+import { ClaimCursorAccent } from "@/components/courses/cursor-accent-claim";
 import { TiltCard } from "@/components/motion/tilt-card";
 import { LazyNeuralPulse } from "@/components/remotion/lazy-neural-pulse";
 import { LazyDesignSystemBuild } from "@/components/remotion/lazy-design-system-build";
@@ -98,6 +99,7 @@ export default async function CourseDetailPage({
 
   return (
     <>
+      <ClaimCursorAccent accent={course.color} />
       {/* a. Detail hero */}
       <section className="relative overflow-hidden pt-32 pb-20 sm:pt-40 sm:pb-24">
         <div className="pointer-events-none absolute inset-0 -z-10">

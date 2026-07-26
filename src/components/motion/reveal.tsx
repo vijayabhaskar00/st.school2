@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 // Only `div` and `li` are needed today — Reveal defaults to `div`, but a
@@ -25,17 +25,22 @@ export function Reveal({
   once?: boolean;
   as?: keyof typeof tags;
 }) {
+  const reduceMotion = useReducedMotion();
   const MotionTag = tags[as];
   return (
     <MotionTag
-      initial={{ opacity: 0, y }}
+      initial={{ opacity: 0, y: reduceMotion ? 0 : y }}
       whileInView={{ opacity: 1, y: 0 }}
       // Vertical-only trigger offset — a single-value margin shrinks the
       // viewport root on all sides, which can push narrow or edge-aligned
       // children entirely outside the horizontal activation window (they'd
       // then stay at `initial` forever, since `once` never re-checks).
       viewport={{ once, margin: "-80px 0px" }}
-      transition={{ duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] as const }}
+      transition={{
+        duration: reduceMotion ? 0.15 : 0.7,
+        delay: reduceMotion ? 0 : delay,
+        ease: [0.16, 1, 0.3, 1] as const,
+      }}
       className={cn(className)}
     >
       {children}
