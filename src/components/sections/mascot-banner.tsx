@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/motion/reveal";
+import { MascotVideo } from "@/components/mascot/mascot-video";
 import { assetBasePath } from "@/lib/base-path";
 
 export function MascotBanner() {
@@ -25,13 +25,13 @@ export function MascotBanner() {
 
         <Reveal delay={0.12} className="relative order-1 mx-auto w-full max-w-sm lg:order-2">
           <div className="pointer-events-none absolute -inset-10 -z-10 rounded-full bg-gradient-to-br from-coral/25 via-transparent to-violet/20 blur-3xl" />
-          <Image
-            src={`${assetBasePath}/images/mascot/homepage.webp`}
+          <MascotVideo
+            videoSrc={`${assetBasePath}/images/mascot/homepage.mp4`}
+            posterSrc={`${assetBasePath}/images/mascot/homepage.webp`}
             alt="A St.School student, confident and ready to build"
             width={928}
             height={1152}
             className="mx-auto h-auto w-full max-w-[22rem]"
-            priority={false}
           />
         </Reveal>
       </Container>
