@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Sparkles } from "lucide-react";
@@ -27,6 +28,7 @@ import { LazyNeuralPulse } from "@/components/remotion/lazy-neural-pulse";
 import { LazyDesignSystemBuild } from "@/components/remotion/lazy-design-system-build";
 import { COLOR_THEME } from "@/components/courses/color-theme";
 import { courses, site, courseTemplate } from "@/data/content";
+import { assetBasePath } from "@/lib/base-path";
 import { cn } from "@/lib/utils";
 
 type CourseParams = { slug: string };
@@ -88,6 +90,14 @@ export default async function CourseDetailPage({
   // on-brand hero (ProgramEmblem) without being force-fit into either the
   // Python or UI/UX template.
   const template = course.template;
+  // Only the two bespoke templates have a matching mascot scene — "generic"
+  // has no asset to show and keeps today's centered closing CTA layout.
+  const mascotSrc =
+    template === "python-ai"
+      ? `${assetBasePath}/images/mascot/course-python.webp`
+      : template === "ui-ux"
+        ? `${assetBasePath}/images/mascot/course-uiux.webp`
+        : null;
   // The closing CTA heading and body are shared, CMS-editable copy (see
   // content/course-template.json) that render on every course's page —
   // each contains a literal "{shortName}" token marking where this
@@ -301,28 +311,67 @@ export default async function CourseDetailPage({
           <div className="absolute left-1/2 top-0 h-px w-full -translate-x-1/2 bg-gradient-to-r from-transparent via-white/15 to-transparent" />
           <div className={cn("absolute left-1/2 top-1/2 size-[32rem] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[140px] opacity-30", theme.bgGlow)} />
         </div>
-        <Container className="flex flex-col items-center gap-6 text-center">
-          <Reveal>
-            <h2 className="font-display max-w-2xl text-balance text-3xl font-medium leading-[1.1] tracking-tight sm:text-5xl">
-              {closingCtaHeadingPrefix}
-              {closingCtaHeadingSuffix !== undefined ? (
-                <span className="text-gradient">
-                  {course.shortName}
-                  {closingCtaHeadingSuffix}
-                </span>
-              ) : null}
-            </h2>
-          </Reveal>
-          <Reveal delay={0.08}>
-            <p className="max-w-xl text-balance text-base leading-relaxed text-muted sm:text-lg">
-              {closingCtaBody}
-            </p>
-          </Reveal>
-          <Reveal delay={0.14}>
-            <Button href="/contact" variant="primary" className="px-7 py-3.5 text-base">
-              Apply for this program
-            </Button>
-          </Reveal>
+        <Container>
+          {mascotSrc ? (
+            <div className="grid items-center gap-10 lg:grid-cols-[0.8fr_1fr] lg:gap-16">
+              <Reveal className="relative mx-auto w-full max-w-xs lg:order-1">
+                <Image
+                  src={mascotSrc}
+                  alt=""
+                  width={928}
+                  height={1152}
+                  className="mx-auto h-auto w-full max-w-[18rem]"
+                />
+              </Reveal>
+              <div className="flex flex-col items-center gap-6 text-center lg:order-2 lg:items-start lg:text-left">
+                <Reveal>
+                  <h2 className="font-display max-w-2xl text-balance text-3xl font-medium leading-[1.1] tracking-tight sm:text-5xl">
+                    {closingCtaHeadingPrefix}
+                    {closingCtaHeadingSuffix !== undefined ? (
+                      <span className="text-gradient">
+                        {course.shortName}
+                        {closingCtaHeadingSuffix}
+                      </span>
+                    ) : null}
+                  </h2>
+                </Reveal>
+                <Reveal delay={0.08}>
+                  <p className="max-w-xl text-balance text-base leading-relaxed text-muted sm:text-lg">
+                    {closingCtaBody}
+                  </p>
+                </Reveal>
+                <Reveal delay={0.14}>
+                  <Button href="/contact" variant="primary" className="px-7 py-3.5 text-base">
+                    Apply for this program
+                  </Button>
+                </Reveal>
+              </div>
+            </div>
+          ) : (
+            <div className="flex flex-col items-center gap-6 text-center">
+              <Reveal>
+                <h2 className="font-display max-w-2xl text-balance text-3xl font-medium leading-[1.1] tracking-tight sm:text-5xl">
+                  {closingCtaHeadingPrefix}
+                  {closingCtaHeadingSuffix !== undefined ? (
+                    <span className="text-gradient">
+                      {course.shortName}
+                      {closingCtaHeadingSuffix}
+                    </span>
+                  ) : null}
+                </h2>
+              </Reveal>
+              <Reveal delay={0.08}>
+                <p className="max-w-xl text-balance text-base leading-relaxed text-muted sm:text-lg">
+                  {closingCtaBody}
+                </p>
+              </Reveal>
+              <Reveal delay={0.14}>
+                <Button href="/contact" variant="primary" className="px-7 py-3.5 text-base">
+                  Apply for this program
+                </Button>
+              </Reveal>
+            </div>
+          )}
         </Container>
       </section>
 
