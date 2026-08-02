@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Sparkles } from "lucide-react";
@@ -27,6 +26,7 @@ import { TiltCard } from "@/components/motion/tilt-card";
 import { LazyNeuralPulse } from "@/components/remotion/lazy-neural-pulse";
 import { LazyDesignSystemBuild } from "@/components/remotion/lazy-design-system-build";
 import { COLOR_THEME } from "@/components/courses/color-theme";
+import { MascotVideo } from "@/components/mascot/mascot-video";
 import { courses, site, courseTemplate } from "@/data/content";
 import { assetBasePath } from "@/lib/base-path";
 import { cn } from "@/lib/utils";
@@ -92,12 +92,10 @@ export default async function CourseDetailPage({
   const template = course.template;
   // Only the two bespoke templates have a matching mascot scene — "generic"
   // has no asset to show and keeps today's centered closing CTA layout.
-  const mascotSrc =
-    template === "python-ai"
-      ? `${assetBasePath}/images/mascot/course-python.webp`
-      : template === "ui-ux"
-        ? `${assetBasePath}/images/mascot/course-uiux.webp`
-        : null;
+  const mascotName =
+    template === "python-ai" ? "course-python" : template === "ui-ux" ? "course-uiux" : null;
+  const mascotVideoSrc = mascotName ? `${assetBasePath}/images/mascot/${mascotName}.mp4` : null;
+  const mascotPosterSrc = mascotName ? `${assetBasePath}/images/mascot/${mascotName}.webp` : null;
   // The closing CTA heading and body are shared, CMS-editable copy (see
   // content/course-template.json) that render on every course's page —
   // each contains a literal "{shortName}" token marking where this
@@ -312,11 +310,12 @@ export default async function CourseDetailPage({
           <div className={cn("absolute left-1/2 top-1/2 size-[32rem] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[140px] opacity-30", theme.bgGlow)} />
         </div>
         <Container>
-          {mascotSrc ? (
+          {mascotName ? (
             <div className="grid items-center gap-10 lg:grid-cols-[0.8fr_1fr] lg:gap-16">
               <Reveal className="relative mx-auto w-full max-w-xs lg:order-1">
-                <Image
-                  src={mascotSrc}
+                <MascotVideo
+                  videoSrc={mascotVideoSrc!}
+                  posterSrc={mascotPosterSrc!}
                   alt=""
                   width={928}
                   height={1152}
