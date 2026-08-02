@@ -13,10 +13,13 @@ const API_BASE = "https://api.github.com";
 
 export class GithubApiError extends Error {
   status: number;
-  constructor(message: string, status: number) {
+  /** True when a 403 is GitHub's primary/secondary rate limiting rather than a permissions failure. */
+  rateLimited: boolean;
+  constructor(message: string, status: number, rateLimited = false) {
     super(message);
     this.name = "GithubApiError";
     this.status = status;
+    this.rateLimited = rateLimited;
   }
 }
 
@@ -55,13 +58,24 @@ async function githubFetch(path: string, token: string, init?: RequestInit) {
   });
   if (!res.ok) {
     let detail = "";
+    let message = "";
     try {
       const body = await res.json();
-      detail = body?.message ? ` — ${body.message}` : "";
+      message = typeof body?.message === "string" ? body.message : "";
+      detail = message ? ` — ${message}` : "";
     } catch {
       // response body wasn't JSON; ignore
     }
-    throw new GithubApiError(`GitHub API request failed (${res.status})${detail}`, res.status);
+    // GitHub returns 403 for both permission failures and rate limiting
+    // (primary or secondary/abuse-detection) — distinguish via the signals
+    // GitHub documents for each, rather than assuming every 403 means the
+    // token lacks write access.
+    const rateLimited =
+      res.status === 403 &&
+      (res.headers.get("x-ratelimit-remaining") === "0" ||
+        res.headers.has("retry-after") ||
+        /rate limit/i.test(message));
+    throw new GithubApiError(`GitHub API request failed (${res.status})${detail}`, res.status, rateLimited);
   }
   return res;
 }

@@ -8,7 +8,10 @@ type TimeLeft = { days: number; hours: number; minutes: number; seconds: number 
 
 function getTimeLeft(deadline: string): TimeLeft | null {
   const diff = new Date(deadline).getTime() - Date.now();
-  if (diff <= 0) return null;
+  // An unparseable CMS-entered deadline makes getTime() return NaN, and
+  // NaN <= 0 is false — without this check the countdown would render
+  // "NaN" in every digit instead of falling back to the closed state.
+  if (!Number.isFinite(diff) || diff <= 0) return null;
   return {
     days: Math.floor(diff / (1000 * 60 * 60 * 24)),
     hours: Math.floor((diff / (1000 * 60 * 60)) % 24),

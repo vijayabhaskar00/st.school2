@@ -2,11 +2,17 @@
 
 import { useState, type FormEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, CheckCircle2 } from "lucide-react";
+import { AlertTriangle, ArrowUpRight, CheckCircle2, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { courses } from "@/data/content";
+import { courses, contact } from "@/data/content";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
+
+// This is a static export with no server of its own, so submissions need a
+// third-party destination (e.g. Formspree, Web3Forms) — set this once one is
+// chosen. Until then handleSubmit below surfaces an honest error instead of
+// the fake "we got it" message it used to show for every submission.
+const CONTACT_FORM_ENDPOINT = process.env.NEXT_PUBLIC_CONTACT_FORM_ENDPOINT;
 
 type FormState = {
   name: string;
@@ -51,9 +57,11 @@ const fieldClass =
 
 const labelClass = "text-xs font-semibold uppercase tracking-[0.14em]";
 
+type Status = "idle" | "submitting" | "submitted" | "error";
+
 export function ApplyForm() {
   const [form, setForm] = useState<FormState>(initialState);
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<Status>("idle");
   const [focusedField, setFocusedField] = useState<FieldKey | null>(null);
   const [shakeField, setShakeField] = useState<FieldKey | null>(null);
 
@@ -63,9 +71,24 @@ export function ApplyForm() {
     setShakeField((prev) => (prev === key ? null : prev));
   }
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSubmitted(true);
+    if (!CONTACT_FORM_ENDPOINT) {
+      setStatus("error");
+      return;
+    }
+    setStatus("submitting");
+    try {
+      const res = await fetch(CONTACT_FORM_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error(`Request failed (${res.status})`);
+      setStatus("submitted");
+    } catch {
+      setStatus("error");
+    }
   }
 
   // Literal hex values matching the --color-violet-light / --color-muted-soft
@@ -92,7 +115,7 @@ export function ApplyForm() {
       <div className="pointer-events-none absolute -right-24 -top-24 size-64 rounded-full bg-violet/20 blur-[100px]" aria-hidden />
 
       <AnimatePresence mode="wait">
-        {submitted ? (
+        {status === "submitted" ? (
           <motion.div
             key="success"
             initial={{ opacity: 0, y: 12 }}
@@ -120,7 +143,7 @@ export function ApplyForm() {
               type="button"
               onClick={() => {
                 setForm(initialState);
-                setSubmitted(false);
+                setStatus("idle");
               }}
               className="mt-2 inline-flex items-center gap-2 text-sm font-semibold text-paper/80 transition-colors hover:text-paper"
             >
@@ -247,16 +270,42 @@ export function ApplyForm() {
               />
             </motion.div>
 
+            {status === "error" && (
+              <motion.div
+                variants={fieldVariants}
+                className="flex items-start gap-2.5 rounded-xl border border-coral/30 bg-coral/10 p-3.5 text-sm text-coral-light"
+              >
+                <AlertTriangle className="mt-0.5 size-4 shrink-0" />
+                <span>
+                  Something went wrong sending your application. Please email us directly at{" "}
+                  <a href={`mailto:${contact.email}`} className="underline underline-offset-2">
+                    {contact.email}
+                  </a>{" "}
+                  in the meantime.
+                </span>
+              </motion.div>
+            )}
+
             <motion.button
               variants={fieldVariants}
               type="submit"
+              disabled={status === "submitting"}
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.96 }}
               transition={{ type: "spring", stiffness: 420, damping: 22 }}
-              className="group relative mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-paper px-6 py-3.5 text-sm font-semibold tracking-tight text-ink transition-shadow duration-300 hover:shadow-[0_0_0_1px_rgba(246,244,251,0.2),0_12px_30px_-8px_rgba(224,33,43,0.55)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet"
+              className="group relative mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-paper px-6 py-3.5 text-sm font-semibold tracking-tight text-ink transition-shadow duration-300 hover:shadow-[0_0_0_1px_rgba(246,244,251,0.2),0_12px_30px_-8px_rgba(224,33,43,0.55)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet disabled:opacity-60"
             >
-              Submit application
-              <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" strokeWidth={2.5} />
+              {status === "submitting" ? (
+                <>
+                  Sending…
+                  <Loader2 className="size-4 animate-spin" />
+                </>
+              ) : (
+                <>
+                  Submit application
+                  <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" strokeWidth={2.5} />
+                </>
+              )}
             </motion.button>
 
             <motion.p variants={fieldVariants} className="text-center text-xs text-muted-soft">

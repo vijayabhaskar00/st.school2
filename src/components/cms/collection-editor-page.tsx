@@ -58,6 +58,23 @@ export function CollectionEditorPage({
     // eslint-disable-next-line react-hooks/exhaustive-deps -- `load` is stable for a given config/token/branch triple; re-running on every render would re-fetch on each keystroke.
   }, [config.key]);
 
+  useEffect(() => {
+    // The "Unsaved changes" indicator below is otherwise purely cosmetic —
+    // without this, a refresh or tab close silently discards edits it was
+    // supposedly warning about.
+    if (!dirty) return;
+    const handler = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      e.returnValue = "";
+    };
+    window.addEventListener("beforeunload", handler);
+    return () => window.removeEventListener("beforeunload", handler);
+  }, [dirty]);
+
+  function confirmDiscard() {
+    return !dirty || window.confirm("You have unsaved changes that will be lost. Continue anyway?");
+  }
+
   async function handleSave() {
     if (sha === null) return;
     const parsed = config.schema.safeParse(value);
@@ -88,6 +105,12 @@ export function CollectionEditorPage({
           "This file changed on GitHub since you loaded it (someone else saved, or it was edited " +
             "directly). Reload to get the latest version before saving your changes again.",
         );
+      } else if (e instanceof GithubApiError && e.status === 403 && e.rateLimited) {
+        setError(
+          "GitHub is temporarily rate-limiting requests from this token. This isn't a permissions " +
+            "problem — wait a few minutes and try saving again. Your edits above are still in this " +
+            "browser tab, unsaved.",
+        );
       } else if (e instanceof GithubApiError && e.status === 403) {
         setError(
           "GitHub rejected the write — this token isn't allowed to change repo contents. This is " +
@@ -113,7 +136,7 @@ export function CollectionEditorPage({
         <div className="flex items-center gap-3">
           <button
             type="button"
-            onClick={onBack}
+            onClick={() => confirmDiscard() && onBack()}
             className="flex size-8 items-center justify-center rounded-full border border-white/10 text-muted-soft transition-colors hover:text-paper"
             aria-label="Back to dashboard"
           >
@@ -131,7 +154,7 @@ export function CollectionEditorPage({
           )}
           <button
             type="button"
-            onClick={load}
+            onClick={() => confirmDiscard() && load()}
             disabled={status === "loading" || status === "saving"}
             className="flex items-center gap-1.5 rounded-full border border-white/15 px-3 py-1.5 text-xs font-semibold text-paper/80 transition-colors hover:border-white/30 hover:text-paper disabled:opacity-40"
           >
