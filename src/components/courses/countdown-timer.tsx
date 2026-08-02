@@ -23,9 +23,6 @@ function getTimeLeft(deadline: string): TimeLeft | null {
 function Digit({ value, textClassName }: { value: number; textClassName: string }) {
   const padded = String(value).padStart(2, "0");
   return (
-    // A tight `em`-based height clips the glyph's ascenders/descenders once
-    // you factor in the font's natural line-height — this needs real
-    // headroom, not just enough to fit the digit's cap-height.
     <span className="relative inline-flex h-[1.5em] w-[1.5ch] overflow-hidden text-center leading-none">
       <AnimatePresence mode="popLayout" initial={false}>
         <motion.span
@@ -42,6 +39,20 @@ function Digit({ value, textClassName }: { value: number; textClassName: string 
           {padded}
         </motion.span>
       </AnimatePresence>
+    </span>
+  );
+}
+
+// A non-animated stand-in for the moment before the real deadline is known.
+// Same box dimensions as Digit so there's no layout shift once it's swapped
+// out, but it renders "00" statically instead of feeding it into Digit's
+// AnimatePresence — otherwise the jump from this placeholder to the real
+// first value reads as a value *change*, sliding/flipping every digit at
+// once on mount and clipping mid-flight against the box's tight headroom.
+function StaticDigit({ textClassName }: { textClassName: string }) {
+  return (
+    <span className="relative inline-flex h-[1.5em] w-[1.5ch] items-center justify-center overflow-hidden text-center leading-none">
+      <span className={cn("leading-none tabular-nums", textClassName)}>00</span>
     </span>
   );
 }
@@ -103,7 +114,11 @@ export function CountdownTimer({
         {units.map((unit, i) => (
           <div key={unit.label} className="flex items-end gap-3">
             <div className="flex flex-col items-center gap-1">
-              <Digit value={unit.value} textClassName={textClassName} />
+              {timeLeft ? (
+                <Digit value={unit.value} textClassName={textClassName} />
+              ) : (
+                <StaticDigit textClassName={textClassName} />
+              )}
               <span className="text-[0.6rem] font-medium uppercase tracking-wider text-muted-soft">
                 {unit.label}
               </span>
