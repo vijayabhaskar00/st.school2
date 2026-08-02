@@ -11,6 +11,7 @@ import { ProcessProgressLine } from "@/components/about/process-progress-line";
 import { StaggerHeadline } from "@/components/about/stagger-headline";
 import { HeroParallaxGlow } from "@/components/about/hero-parallax-glow";
 import { WhyUsRow } from "@/components/about/why-us-row";
+import { WHY_US_ICONS } from "@/components/sections/why-us";
 import { GlowBorderPanel } from "@/components/about/glow-border-panel";
 import { site, parentBrand, whyUs, process, contact, aboutPage } from "@/data/content";
 import { cn } from "@/lib/utils";
@@ -131,6 +132,7 @@ export default function AboutPage() {
                 index={i}
                 title={item.title}
                 description={item.description}
+                icon={WHY_US_ICONS[i % WHY_US_ICONS.length]}
                 reverse={i % 2 === 1}
               />
             ))}

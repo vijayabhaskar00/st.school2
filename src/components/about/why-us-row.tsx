@@ -2,6 +2,7 @@
 
 import { type MouseEvent, useRef } from "react";
 import { motion, useInView, useMotionValue } from "framer-motion";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 // Each row used to be a plain fade-up with a CSS group-hover color swap on
@@ -14,11 +15,13 @@ export function WhyUsRow({
   index,
   title,
   description,
+  icon,
   reverse,
 }: {
   index: number;
   title: string;
   description: string;
+  icon: string;
   reverse: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -62,14 +65,17 @@ export function WhyUsRow({
         }}
       />
 
-      <motion.span
+      <motion.div
         initial={{ scale: 0.6, opacity: 0 }}
         animate={isInView ? { scale: 1, opacity: 1 } : {}}
         transition={{ type: "spring", damping: 12, stiffness: 200, delay: 0.1 + index * 0.07 }}
-        className="font-display relative shrink-0 text-3xl font-semibold text-muted-soft transition-colors group-hover:text-violet-light sm:w-24 sm:text-4xl"
+        className="relative flex shrink-0 items-center gap-3 sm:w-24 sm:flex-col sm:items-start sm:gap-2"
       >
-        {String(index + 1).padStart(2, "0")}
-      </motion.span>
+        <Image src={icon} alt="" width={48} height={48} className="size-10 object-contain sm:size-12" />
+        <span className="font-display text-2xl font-semibold text-muted-soft transition-colors group-hover:text-violet-light sm:text-3xl">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+      </motion.div>
       <div className="relative flex flex-col gap-2">
         <h3 className="font-display text-xl font-medium text-paper sm:text-2xl">{title}</h3>
         <p className="max-w-xl text-sm leading-relaxed text-muted sm:text-base">{description}</p>
