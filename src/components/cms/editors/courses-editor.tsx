@@ -1,6 +1,6 @@
 "use client";
 
-import type { Course } from "@/data/content";
+import type { Course, Batch } from "@/data/content";
 import { TextField, TextAreaField, NumberField, SelectField, StringListField, ObjectListField } from "@/components/cms/fields";
 
 const COLOR_OPTIONS: { value: Course["color"]; label: string }[] = [
@@ -13,6 +13,24 @@ const TEMPLATE_OPTIONS: { value: Course["template"]; label: string }[] = [
   { value: "ui-ux", label: "Design hero (bespoke Remotion)" },
   { value: "generic", label: "Generic hero (default — works for any program)" },
 ];
+
+const BATCH_MODE_OPTIONS: { value: Batch["mode"]; label: string }[] = [
+  { value: "online", label: "Online" },
+  { value: "offline", label: "Offline" },
+];
+
+function createBatch(): Batch {
+  return {
+    mode: "online",
+    label: "",
+    priceAmount: 0,
+    priceOriginalAmount: 0,
+    priceNote: "",
+    applicationDeadline: "",
+    seatsTotal: 33,
+    seatsClaimed: 0,
+  };
+}
 
 function createCourse(): Course {
   return {
@@ -211,6 +229,73 @@ export function CoursesEditor({ value, onChange }: { value: Course[]; onChange: 
             label="Seats claimed"
             value={course.seatsClaimed}
             onChange={(v) => update({ ...course, seatsClaimed: v })}
+          />
+
+          <div className="mt-1 border-t border-white/10 pt-4">
+            <span className="text-xs font-semibold uppercase tracking-[0.1em] text-muted-soft">
+              Online/Offline batches (optional)
+            </span>
+          </div>
+          <p className="-mt-2 text-xs leading-relaxed text-muted-soft">
+            Leave empty for a single undifferentiated cohort (the Price/Application
+            deadline/Seats fields above are used as-is). Add two entries — one
+            &quot;online&quot;, one &quot;offline&quot; — to show a mode toggle on the
+            course page with separate price, deadline, and seats per batch.
+          </p>
+          <ObjectListField
+            label="Batches"
+            items={course.batches}
+            onChange={(batches) => update({ ...course, batches })}
+            createItem={createBatch}
+            itemLabel={(batch) => batch.label || "New batch"}
+            renderItem={(batch, updateBatch) => (
+              <>
+                <SelectField
+                  label="Mode"
+                  value={batch.mode}
+                  onChange={(v) => updateBatch({ ...batch, mode: v })}
+                  options={BATCH_MODE_OPTIONS}
+                />
+                <TextField
+                  label="Label"
+                  value={batch.label}
+                  onChange={(v) => updateBatch({ ...batch, label: v })}
+                  hint='e.g. "Online cohort" or "Offline — Hyderabad campus"'
+                />
+                <NumberField
+                  label="Price"
+                  value={batch.priceAmount}
+                  onChange={(v) => updateBatch({ ...batch, priceAmount: v })}
+                />
+                <NumberField
+                  label="Compare-at price (optional)"
+                  value={batch.priceOriginalAmount}
+                  onChange={(v) => updateBatch({ ...batch, priceOriginalAmount: v })}
+                  hint="Set to 0 to hide the strikethrough price."
+                />
+                <TextField
+                  label="Price note"
+                  value={batch.priceNote}
+                  onChange={(v) => updateBatch({ ...batch, priceNote: v })}
+                />
+                <TextField
+                  label="Application deadline"
+                  value={batch.applicationDeadline}
+                  onChange={(v) => updateBatch({ ...batch, applicationDeadline: v })}
+                  hint="ISO datetime with offset, e.g. 2026-08-16T23:59:59+05:30"
+                />
+                <NumberField
+                  label="Seats total"
+                  value={batch.seatsTotal}
+                  onChange={(v) => updateBatch({ ...batch, seatsTotal: v })}
+                />
+                <NumberField
+                  label="Seats claimed"
+                  value={batch.seatsClaimed}
+                  onChange={(v) => updateBatch({ ...batch, seatsClaimed: v })}
+                />
+              </>
+            )}
           />
         </>
         );
