@@ -115,6 +115,23 @@ export const ParentBrandSchema = z.object({
 });
 export type ParentBrandContent = z.infer<typeof ParentBrandSchema>;
 
+// One delivery-mode cohort of a course — e.g. an Online batch and an
+// Offline batch of the same program can run with different prices,
+// deadlines, and seat pools. Optional on Course (defaults to []) so a
+// course with a single, undifferentiated cohort (the common case) needs
+// no changes at all — see Course.batches below.
+export const BatchSchema = z.object({
+  mode: z.enum(["online", "offline"]),
+  label: z.string().min(1),
+  priceAmount: z.number().positive(),
+  priceOriginalAmount: z.number().min(0).default(0),
+  priceNote: z.string().default(""),
+  applicationDeadline: z.string().min(1),
+  seatsTotal: z.number().int().positive(),
+  seatsClaimed: z.number().int().min(0),
+});
+export type BatchContent = z.infer<typeof BatchSchema>;
+
 export const CourseSchema = z.object({
   slug: z.string().min(1),
   name: z.string().min(1),
@@ -167,6 +184,12 @@ export const CourseSchema = z.object({
   applicationDeadline: z.string().min(1),
   seatsTotal: z.number().int().positive(),
   seatsClaimed: z.number().int().min(0),
+  // When a course runs as separate Online/Offline cohorts with their own
+  // price/deadline/seats, list them here — the course page's ApplyPanel
+  // shows a mode toggle and uses the selected batch's numbers instead of
+  // the fields above. Empty (the default) means "one undifferentiated
+  // cohort" and every field above continues to be used exactly as today.
+  batches: z.array(BatchSchema).default([]),
 });
 export type CourseContent = z.infer<typeof CourseSchema>;
 

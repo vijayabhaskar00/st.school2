@@ -37,6 +37,7 @@ function createCourse(): Course {
     applicationDeadline: "",
     seatsTotal: 33,
     seatsClaimed: 0,
+    batches: [],
   };
 }
 
