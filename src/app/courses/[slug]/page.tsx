@@ -12,6 +12,7 @@ import { StackChips } from "@/components/courses/stack-chips";
 import { OutcomeList } from "@/components/courses/outcome-list";
 import { CurriculumTimeline } from "@/components/courses/curriculum-timeline";
 import { HighlightGrid } from "@/components/courses/highlight-grid";
+import { ClassroomGallery } from "@/components/courses/classroom-gallery";
 import { CourseCrossLink } from "@/components/courses/cross-link-card";
 import { ApplyPanel } from "@/components/courses/apply-panel";
 import { StickyCtaBar } from "@/components/courses/sticky-cta-bar";
@@ -259,6 +260,21 @@ export default async function CourseDetailPage({
           />
         </Container>
       </section>
+
+      {/* d.7 Real classroom photos — UI/UX only for now; a trust-building
+          beat right before the closing CTA, not stock photography. */}
+      {template === "ui-ux" && (
+        <section className="relative py-20 sm:py-28">
+          <Container className="flex flex-col gap-12">
+            <SectionHeading
+              eyebrow="Inside the room"
+              title="Real cohorts, real sessions"
+              description="Inside a real St.School session — full room, real mentors, no stock photos."
+            />
+            <ClassroomGallery />
+          </Container>
+        </section>
+      )}
 
       {/* d.5 The actual build, phase by phase — UI/UX only, replaces a
           generic before/after with the real curriculum driving a mockup

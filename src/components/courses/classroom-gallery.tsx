@@ -2,12 +2,17 @@
 
 import Image from "next/image";
 import { Reveal } from "@/components/motion/reveal";
+import { assetBasePath } from "@/lib/base-path";
 
+// next.config.ts sets images.unoptimized: true (required for static export),
+// which bypasses next/image's usual automatic basePath prefixing — without
+// this, these 404 under the GitHub Pages /st.school2 basePath exactly like
+// the metadata icons in layout.tsx would without the same prefix.
 const PHOTOS = [
-  { src: "/images/classroom/session-1.jpg", width: 1600, height: 1205, alt: "A full room at a live St.School session, mentor presenting at the front" },
-  { src: "/images/classroom/session-2.jpg", width: 1600, height: 1205, alt: "Students seated in rows during a live St.School session" },
-  { src: "/images/classroom/session-3.jpg", width: 1600, height: 1067, alt: "A mentor talking with students seated around a conference table" },
-  { src: "/images/classroom/session-4.jpg", width: 1600, height: 1205, alt: "Students in a St.School classroom listening to a session" },
+  { src: `${assetBasePath}/images/classroom/session-1.jpg`, width: 1600, height: 1205, alt: "A full room at a live St.School session, mentor presenting at the front" },
+  { src: `${assetBasePath}/images/classroom/session-2.jpg`, width: 1600, height: 1205, alt: "Students seated in rows during a live St.School session" },
+  { src: `${assetBasePath}/images/classroom/session-3.jpg`, width: 1600, height: 1067, alt: "A mentor talking with students seated around a conference table" },
+  { src: `${assetBasePath}/images/classroom/session-4.jpg`, width: 1600, height: 1205, alt: "Students in a St.School classroom listening to a session" },
 ] as const;
 
 export function ClassroomGallery() {
