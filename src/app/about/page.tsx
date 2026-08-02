@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { Building2, UserRound, MapPin } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
@@ -14,6 +13,7 @@ import { HeroParallaxGlow } from "@/components/about/hero-parallax-glow";
 import { WhyUsRow } from "@/components/about/why-us-row";
 import { WHY_US_ICONS } from "@/components/sections/why-us";
 import { GlowBorderPanel } from "@/components/about/glow-border-panel";
+import { MascotVideo } from "@/components/mascot/mascot-video";
 import { site, parentBrand, whyUs, process, contact, aboutPage } from "@/data/content";
 import { assetBasePath } from "@/lib/base-path";
 import { cn } from "@/lib/utils";
@@ -107,8 +107,9 @@ export default function AboutPage() {
 
           <Reveal delay={0.16} className="relative mx-auto w-full max-w-xs">
             <div className="pointer-events-none absolute -inset-10 -z-10 rounded-full bg-gradient-to-br from-violet/20 via-transparent to-coral/25 blur-3xl" />
-            <Image
-              src={`${assetBasePath}/images/mascot/about-story.webp`}
+            <MascotVideo
+              videoSrc={`${assetBasePath}/images/mascot/about-story.mp4`}
+              posterSrc={`${assetBasePath}/images/mascot/about-story.webp`}
               alt="A St.School student waving"
               width={928}
               height={1152}
