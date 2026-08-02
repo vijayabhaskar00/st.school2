@@ -1,11 +1,19 @@
-import { Users, Hammer, Network, UserCheck, type LucideIcon } from "lucide-react";
+import Image from "next/image";
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Reveal } from "@/components/motion/reveal";
 import { whyUs } from "@/data/content";
+import { assetBasePath } from "@/lib/base-path";
 import { cn } from "@/lib/utils";
 
-const icons: LucideIcon[] = [Users, Hammer, Network, UserCheck];
+// Positional match to the `whyUs` content array (content/why-us.json) —
+// same coupling already used by `accents` below.
+export const WHY_US_ICONS = [
+  `${assetBasePath}/images/icons/why-us-1.webp`,
+  `${assetBasePath}/images/icons/why-us-2.webp`,
+  `${assetBasePath}/images/icons/why-us-3.webp`,
+  `${assetBasePath}/images/icons/why-us-4.webp`,
+];
 
 const accents = [
   "from-violet/25 via-violet/5 to-transparent",
@@ -13,8 +21,6 @@ const accents = [
   "from-acid/20 via-acid/5 to-transparent",
   "from-violet/20 via-coral/10 to-transparent",
 ];
-
-const iconColors = ["text-violet-light", "text-coral-light", "text-acid", "text-violet-light"];
 
 export function WhyUs() {
   return (
@@ -38,7 +44,6 @@ export function WhyUs() {
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-6">
           {whyUs.map((item, i) => {
-            const Icon = icons[i % icons.length];
             const isFeatured = i === 0;
             return (
               <Reveal
@@ -65,12 +70,15 @@ export function WhyUs() {
 
                   <div className={cn("relative flex flex-col gap-5", isFeatured && "sm:max-w-md")}>
                     <span
-                      className={cn(
-                        "flex size-12 items-center justify-center rounded-2xl border border-white/15 bg-white/5",
-                        iconColors[i % iconColors.length],
-                      )}
+                      className="flex size-16 items-center justify-center rounded-2xl border border-white/15 bg-white/5"
                     >
-                      <Icon className="size-6" strokeWidth={1.75} />
+                      <Image
+                        src={WHY_US_ICONS[i % WHY_US_ICONS.length]}
+                        alt=""
+                        width={64}
+                        height={64}
+                        className="size-12 object-contain"
+                      />
                     </span>
                     <h3 className="font-display text-2xl font-medium tracking-tight text-paper">
                       {item.title}
