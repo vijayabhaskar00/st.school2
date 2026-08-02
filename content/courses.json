@@ -112,6 +112,28 @@
     "priceOriginalAmount": 99999,
     "priceCurrency": "₹",
     "priceNote": "One-time program fee · No-cost EMI available",
+    "batches": [
+      {
+        "mode": "online",
+        "label": "Online cohort",
+        "priceAmount": 50000,
+        "priceOriginalAmount": 79999,
+        "priceNote": "One-time program fee · No-cost EMI available",
+        "applicationDeadline": "2026-08-16T23:59:59+05:30",
+        "seatsTotal": 18,
+        "seatsClaimed": 12
+      },
+      {
+        "mode": "offline",
+        "label": "Offline — Hyderabad campus",
+        "priceAmount": 99999,
+        "priceOriginalAmount": 129999,
+        "priceNote": "One-time program fee · No-cost EMI available",
+        "applicationDeadline": "2026-08-16T23:59:59+05:30",
+        "seatsTotal": 15,
+        "seatsClaimed": 9
+      }
+    ],
     "stack": [
       "Figma",
       "User Research",

@@ -25,6 +25,7 @@ import {
   CoursesPageSchema,
   CourseTemplateSchema,
   type CourseContent,
+  type BatchContent,
 } from "@/lib/cms/schema";
 
 import siteJson from "@content/site.json";
@@ -72,3 +73,4 @@ export const coursesPage = loadContent(CoursesPageSchema, coursesPageJson, "cour
 export const courseTemplate = loadContent(CourseTemplateSchema, courseTemplateJson, "course-template.json");
 
 export type Course = CourseContent;
+export type Batch = BatchContent;
