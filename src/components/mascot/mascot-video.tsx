@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useInView, useReducedMotion } from "framer-motion";
-import Image from "next/image";
 
 // Video output from image-to-video generation has no alpha channel, unlike
 // the source WebP stills — this mask fades the video's rectangular edges
@@ -32,37 +31,28 @@ export function MascotVideo({
   className?: string;
 }) {
   const reduceMotion = useReducedMotion();
-  const [mounted, setMounted] = useState(false);
   const ref = useRef<HTMLVideoElement>(null);
   const isInView = useInView(ref, { margin: "-10% 0px" });
 
-  useEffect(() => {
-    // The client's first render must match the server-rendered markup, so
-    // this gate needs an immediate flip on mount rather than a deferred
-    // subscription.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setMounted(true);
-  }, []);
-
+  // The <video> element is always rendered — the server render, the
+  // client's first (hydration) render, and every render after all produce
+  // the same markup, so there's no element-type mismatch to hydrate
+  // around. It also means `ref` is already attached to a real DOM node by
+  // the time useInView's IntersectionObserver effect runs on mount (that
+  // effect only fires once, so a ref that only shows up after a later
+  // conditional swap would never get observed). Reduced motion is handled
+  // purely by never calling .play(): a <video poster> shows that static
+  // frame until playback starts, so a user who never gets a .play() call
+  // sees exactly the still image, with no separate <Image> branch needed.
   useEffect(() => {
     const video = ref.current;
     if (!video) return;
-    if (isInView) {
+    if (isInView && !reduceMotion) {
       video.play().catch(() => {});
     } else {
       video.pause();
     }
-  }, [isInView]);
-
-  // Until hydration completes, always render the poster image so the
-  // client's first render matches the server-rendered HTML exactly.
-  // `useReducedMotion()` resolves synchronously to a boolean on the
-  // client's very first render but is `null` during server rendering, so
-  // branching on it before hydration finishes would swap element types
-  // (<video> vs <img>) and produce an unrecoverable hydration mismatch.
-  if (!mounted || reduceMotion) {
-    return <Image src={posterSrc} alt={alt} width={width} height={height} className={className} />;
-  }
+  }, [isInView, reduceMotion]);
 
   return (
     <>
