@@ -154,19 +154,46 @@ export async function downloadBrochure(course: Course) {
   doc.setFont("helvetica", "bold");
   doc.setFontSize(16);
   doc.setTextColor(...CHARCOAL);
-  const priceText =
-    course.priceOriginalAmount > course.priceAmount
-      ? `${course.priceCurrency}${course.priceAmount.toLocaleString("en-IN")}  (was ${course.priceCurrency}${course.priceOriginalAmount.toLocaleString("en-IN")})`
-      : `${course.priceCurrency}${course.priceAmount.toLocaleString("en-IN")}`;
-  doc.text(`Program fee: ${priceText}`, MARGIN, y);
-  y += 16;
-  if (course.priceNote) {
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(9.5);
-    doc.setTextColor(...MUTED);
-    doc.text(course.priceNote, MARGIN, y);
+
+  if (course.batches.length > 0) {
+    doc.text("Program fee", MARGIN, y);
+    y += 20;
+    for (const batch of course.batches) {
+      ensureSpace(30);
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(12);
+      doc.setTextColor(...CHARCOAL);
+      const batchPriceText =
+        batch.priceOriginalAmount > batch.priceAmount
+          ? `${course.priceCurrency}${batch.priceAmount.toLocaleString("en-IN")}  (was ${course.priceCurrency}${batch.priceOriginalAmount.toLocaleString("en-IN")})`
+          : `${course.priceCurrency}${batch.priceAmount.toLocaleString("en-IN")}`;
+      doc.text(`${batch.label}: ${batchPriceText}`, MARGIN, y);
+      y += 15;
+      if (batch.priceNote) {
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(9.5);
+        doc.setTextColor(...MUTED);
+        doc.text(batch.priceNote, MARGIN, y);
+        y += 15;
+      }
+    }
+    y += 2;
+  } else {
+    const priceText =
+      course.priceOriginalAmount > course.priceAmount
+        ? `${course.priceCurrency}${course.priceAmount.toLocaleString("en-IN")}  (was ${course.priceCurrency}${course.priceOriginalAmount.toLocaleString("en-IN")})`
+        : `${course.priceCurrency}${course.priceAmount.toLocaleString("en-IN")}`;
+    doc.text(`Program fee: ${priceText}`, MARGIN, y);
     y += 16;
+    if (course.priceNote) {
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(9.5);
+      doc.setTextColor(...MUTED);
+      doc.text(course.priceNote, MARGIN, y);
+      y += 16;
+    }
   }
+
   doc.setFont("helvetica", "bold");
   doc.setFontSize(13);
   doc.setTextColor(...RED);
