@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Building2, UserRound, MapPin } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
@@ -14,6 +15,7 @@ import { WhyUsRow } from "@/components/about/why-us-row";
 import { WHY_US_ICONS } from "@/components/sections/why-us";
 import { GlowBorderPanel } from "@/components/about/glow-border-panel";
 import { site, parentBrand, whyUs, process, contact, aboutPage } from "@/data/content";
+import { assetBasePath } from "@/lib/base-path";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -71,34 +73,47 @@ export default function AboutPage() {
       </section>
 
       {/* Brand story */}
-      <section className="relative py-24 sm:py-32">
-        <Container className="flex flex-col gap-10">
-          <SectionHeading
-            eyebrow={aboutPage.storyEyebrow}
-            title={
-              <>
-                {aboutPage.storyHeadingPrefix}{" "}
-                <span className="text-gradient">{aboutPage.storyHeadingHighlight}</span>
-              </>
-            }
-            description={parentBrand.description}
-          />
+      <section className="relative overflow-hidden py-24 sm:py-32">
+        <Container className="grid items-center gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:gap-10">
+          <div className="flex flex-col gap-10">
+            <SectionHeading
+              eyebrow={aboutPage.storyEyebrow}
+              title={
+                <>
+                  {aboutPage.storyHeadingPrefix}{" "}
+                  <span className="text-gradient">{aboutPage.storyHeadingHighlight}</span>
+                </>
+              }
+              description={parentBrand.description}
+            />
 
-          <Reveal delay={0.1}>
-            <div className="flex flex-wrap items-center gap-x-10 gap-y-4 border-t border-white/10 pt-6 text-sm">
-              <span className="flex items-center gap-2.5 text-paper/85">
-                <UserRound className="size-4 text-violet-light" strokeWidth={2.25} />
-                Founded by <span className="font-medium text-paper">{parentBrand.founder}</span>
-              </span>
-              <span className="flex items-center gap-2.5 text-paper/85">
-                <MapPin className="size-4 text-coral-light" strokeWidth={2.25} />
-                Headquartered in <span className="font-medium text-paper">{parentBrand.hq}</span>
-              </span>
-              <span className="flex items-center gap-2.5 text-paper/85">
-                <Building2 className="size-4 text-acid" strokeWidth={2.25} />
-                Runs today as <span className="font-medium text-paper">{site.name}</span>
-              </span>
-            </div>
+            <Reveal delay={0.1}>
+              <div className="flex flex-wrap items-center gap-x-10 gap-y-4 border-t border-white/10 pt-6 text-sm">
+                <span className="flex items-center gap-2.5 text-paper/85">
+                  <UserRound className="size-4 text-violet-light" strokeWidth={2.25} />
+                  Founded by <span className="font-medium text-paper">{parentBrand.founder}</span>
+                </span>
+                <span className="flex items-center gap-2.5 text-paper/85">
+                  <MapPin className="size-4 text-coral-light" strokeWidth={2.25} />
+                  Headquartered in <span className="font-medium text-paper">{parentBrand.hq}</span>
+                </span>
+                <span className="flex items-center gap-2.5 text-paper/85">
+                  <Building2 className="size-4 text-acid" strokeWidth={2.25} />
+                  Runs today as <span className="font-medium text-paper">{site.name}</span>
+                </span>
+              </div>
+            </Reveal>
+          </div>
+
+          <Reveal delay={0.16} className="relative mx-auto w-full max-w-xs">
+            <div className="pointer-events-none absolute -inset-10 -z-10 rounded-full bg-gradient-to-br from-violet/20 via-transparent to-coral/25 blur-3xl" />
+            <Image
+              src={`${assetBasePath}/images/mascot/about-story.webp`}
+              alt="A St.School student waving"
+              width={928}
+              height={1152}
+              className="mx-auto h-auto w-full max-w-[18rem]"
+            />
           </Reveal>
         </Container>
       </section>
