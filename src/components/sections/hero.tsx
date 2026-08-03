@@ -1,28 +1,15 @@
 "use client";
 
 import { useRef } from "react";
-import dynamic from "next/dynamic";
 import { motion, useReducedMotion, useScroll, useTransform, type Variants } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { Counter } from "@/components/motion/counter";
-import { TiltCard } from "@/components/motion/tilt-card";
+import { MascotVideo } from "@/components/mascot/mascot-video";
 import { heroStats, site } from "@/data/content";
-
-const SelectionFieldPlayer = dynamic(
-  () => import("@/components/remotion/selection-field-player").then((m) => m.SelectionFieldPlayer),
-  {
-    ssr: false,
-    loading: () => (
-      <div
-        className="aspect-square w-full animate-pulse rounded-full border border-white/10 bg-ink-elevated/60"
-        aria-hidden="true"
-      />
-    ),
-  },
-);
+import { assetBasePath } from "@/lib/base-path";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -138,12 +125,20 @@ export function Hero() {
           initial={{ opacity: 0, y: 24, scale: 0.98 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.9, delay: 0.35, ease: EASE }}
-          className="relative"
+          className="relative mx-auto w-full max-w-sm"
         >
-          <div className="absolute -inset-8 -z-10 rounded-full bg-gradient-to-br from-violet/20 via-transparent to-coral/20 blur-2xl" />
-          <TiltCard intensity={10}>
-            <SelectionFieldPlayer className="overflow-hidden rounded-full" />
-          </TiltCard>
+          <div
+            className="pointer-events-none absolute -inset-10 -z-10 rounded-full bg-gradient-to-br from-coral/25 via-transparent to-violet/20 blur-3xl"
+            aria-hidden
+          />
+          <MascotVideo
+            videoSrc={`${assetBasePath}/images/mascot/hero-select.mp4`}
+            posterSrc={`${assetBasePath}/images/mascot/hero-select.webp`}
+            alt="A St.School student celebrating after being selected into a cohort"
+            width={928}
+            height={1152}
+            className="mx-auto h-auto w-full"
+          />
           <p className="mt-5 text-center text-xs uppercase tracking-[0.18em] text-muted-soft">
             1,000+ apply. 33 selected. 95% placed.
           </p>
