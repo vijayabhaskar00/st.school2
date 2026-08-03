@@ -12,18 +12,18 @@ import {
 // resolves into the brand ramp, Figma-style redlines flash over the spacing,
 // and the whole board settles into a "shipped" state before looping.
 //
-// Deliberately unlike the other two compositions in this repo: neural-pulse is
-// a node graph, selection-field is a radial ring — this one is orthogonal,
-// snapped, and rectilinear, because that's what the craft actually looks like.
+// Deliberately unlike the other composition in this repo: neural-pulse is a
+// node graph — this one is orthogonal, snapped, and rectilinear, because
+// that's what the craft actually looks like.
 // Deterministic throughout (remotion's seeded `random`, never Math.random).
 
 const FPS = 30;
 
 // Six acts, one shared clock. Every sub-component below derives its own
-// timing from `getPhaseWeights(frame)` — the same discipline selection-field
-// uses — so the board state, the redlines, the cursor and the act label can
-// never drift apart. `local` is exported in the return value so components
-// can stagger their own springs off the one canonical cycle position.
+// timing from `getPhaseWeights(frame)` so the board state, the redlines, the
+// cursor and the act label can never drift apart. `local` is exported in the
+// return value so components can stagger their own springs off the one
+// canonical cycle position.
 const CYCLE_LENGTH = 240;
 
 const clamp = {

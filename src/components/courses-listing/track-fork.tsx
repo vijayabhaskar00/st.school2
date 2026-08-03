@@ -9,7 +9,7 @@ import { COLOR_THEME } from "@/components/courses/color-theme";
 import { cn } from "@/lib/utils";
 
 // Every other hero on the site pairs its headline with a visual companion
-// (SelectionField on the homepage, OriginNetwork on About, SeatsGauge on
+// (a mascot video on the homepage, OriginNetwork on About, SeatsGauge on
 // Contact, a Remotion piece per course on the detail pages) — this masthead
 // was the one exception, just text against a gradient blob. This fills that
 // gap with a "fork" diagram: one applicant, two real tracks, one outcome —

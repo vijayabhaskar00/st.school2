@@ -64,7 +64,7 @@ export default function CoursesPage() {
           </div>
 
           {/* The one hero on the site without a visual companion — every other
-              page pairs its headline with something (SelectionField on the
+              page pairs its headline with something (a mascot video on the
               homepage, OriginNetwork on About, SeatsGauge on Contact, a
               bespoke Remotion piece per course detail page). This fills that
               gap with a real, data-driven diagram instead of decoration. */}

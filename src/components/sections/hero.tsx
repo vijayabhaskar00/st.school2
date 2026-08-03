@@ -31,7 +31,7 @@ export function Hero() {
   });
 
   // Only the one blob here (the other side of the hero already carries the
-  // SelectionField visual), so it just needs a single drift path — tied to
+  // mascot video), so it just needs a single drift path — tied to
   // scroll instead of the old `animate-float` loop-in-place.
   const blobY = useTransform(scrollYProgress, [0, 1], [0, -120]);
   const blobX = useTransform(scrollYProgress, [0, 1], [0, 45]);
@@ -134,7 +134,7 @@ export function Hero() {
           <MascotVideo
             videoSrc={`${assetBasePath}/images/mascot/hero-select.mp4`}
             posterSrc={`${assetBasePath}/images/mascot/hero-select.webp`}
-            alt="A St.School student celebrating after being selected into a cohort"
+            alt="A St.School student applying to a cohort, then celebrating being selected"
             width={928}
             height={1152}
             className="mx-auto h-auto w-full"
